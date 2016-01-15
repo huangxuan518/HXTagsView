@@ -4,6 +4,7 @@
 HXTagsView是一款支持自动布局的标签tag
 
 特性： 
+
 -流式展示标签 
 
 -可以配置标签的字体大小、颜色、边框颜色、边框弧度大小、边框的宽度、高度、间隔、外边距等 
@@ -17,6 +18,7 @@ HXTagsView是一款支持自动布局的标签tag
 -不使用UICollectionView. 
 
 # 效果展示
+
 
 ![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/xiaoguo.gif)
 # 适用
