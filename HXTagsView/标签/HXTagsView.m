@@ -18,18 +18,21 @@
         self.showsVerticalScrollIndicator = YES;
         self.frame = frame;
         self.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
+        int r = arc4random() % 255;
+        int g = arc4random() % 255;
+        int b = arc4random() % 255;
         _tagSpace = 9.0;
         _tagHeight = 32.0;
         _tagOriginX = 10.0;
         _tagOriginY = 10.0;
         _tagHorizontalSpace = 10.0;
         _tagVerticalSpace = 10.0;
-        _borderColor = [UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1.0];
+        _borderColor = [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
         _borderWidth = 0.5f;
         _masksToBounds = YES;
         _cornerRadius = 2.0;
         _titleSize = 14;
-        _titleColor = [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];;
+        _titleColor = [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];;
         _normalBackgroundImage = [self imageWithColor:[UIColor whiteColor] size:CGSizeMake(1.0, 1.0)];
         _highlightedBackgroundImage = [self imageWithColor:[UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1.0] size:CGSizeMake(1.0, 1.0)];
     }

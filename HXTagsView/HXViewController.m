@@ -1,27 +1,29 @@
 //
-//  ViewController.m
+//  HXViewController.m
 //  HXTagsView
 //
 //  Created by 黄轩 on 16/1/14.
 //  Copyright © 2016年 IT小子. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "HXViewController.h"
+#import "HXWebViewController.h"
 #import "HXTagsView.h"
 
-@interface ViewController ()
+@interface HXViewController ()
 
 @end
 
-@implementation ViewController
+@implementation HXViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"标签";
 
     //单行不滚动 ===============
     NSArray *tagAry = @[@"英雄联盟",@"穿越火线",@"地下城与勇士"];
     
-    UILabel *titleLable = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, 200, 20)];
+    UILabel *titleLable = [[UILabel alloc] initWithFrame:CGRectMake(10, 70, 200, 20)];
     titleLable.text = @"单行不滚动";
     [self.view addSubview:titleLable];
     
@@ -84,6 +86,10 @@
  */
 - (void)tagsViewButtonAction:(HXTagsView *)tagsView button:(UIButton *)sender {
     NSLog(@"tag:%@ index:%ld",sender.titleLabel.text,(long)sender.tag);
+
+    HXWebViewController *vc = [[HXWebViewController alloc] init];
+    vc.keyWord = sender.titleLabel.text;
+    [self.navigationController pushViewController:vc animated:NO];
 }
 
 - (void)didReceiveMemoryWarning {

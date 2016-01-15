@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  HXViewController.h
 //  HXTagsView
 //
 //  Created by 黄轩 on 16/1/14.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface HXViewController : UIViewController
 
 
 @end
