@@ -6,10 +6,6 @@
 //  Copyright © 2015年 IT小子. All rights reserved.
 
 #import "HXTagsView.h"
-#import "NSString+FDDExtention.h"
-#import "UIImage+Tint.h"
-#import "UIColor+RGBValues.h"
-#import "UIView+Helpers.h"
 
 @implementation HXTagsView {
     NSArray *disposeAry;
@@ -18,26 +14,24 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        // 设置scrollview的属性
+        self.showsHorizontalScrollIndicator = YES;
+        self.showsVerticalScrollIndicator = YES;
+        self.frame = frame;
+        self.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
         _tagSpace = 9.0;
         _tagHeight = 32.0;
         _tagOriginX = 10.0;
         _tagOriginY = 10.0;
         _tagHorizontalSpace = 10.0;
         _tagVerticalSpace = 10.0;
-        _borderColor = UIColorHexFromRGB(0xD8D8D8);
+        _borderColor = [UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1.0];
         _borderWidth = 0.5f;
         _masksToBounds = YES;
         _cornerRadius = 2.0;
         _titleSize = 14;
-        _titleColor = UIColorHexFromRGB(0x666666);
-        _normalBackgroundImage = [UIImage imageWithColor:UIColorHexFromRGB(0xFFFFFF)];
-        _highlightedBackgroundImage = [UIImage imageWithColor:UIColorHexFromRGB(0xEAEAEA)];
-        
-        self.showsHorizontalScrollIndicator = YES;
-        self.showsVerticalScrollIndicator = YES;
-        self.frame = frame;
-        self.backgroundColor = UIColorHexFromRGB(0xF5F5F5);
+        _titleColor = [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];;
+        _normalBackgroundImage = [self imageWithColor:[UIColor whiteColor] size:CGSizeMake(1.0, 1.0)];
+        _highlightedBackgroundImage = [self imageWithColor:[UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1.0] size:CGSizeMake(1.0, 1.0)];
     }
     return self;
 }
@@ -79,7 +73,7 @@
     
     //多行
     if (self.frame.size.height <= 0) {
-        self.frameSizeHeight = [self getDisposeTagsViewHeight:disposeAry];
+        self.frame = CGRectMake(CGRectGetMinX([self frame]), CGRectGetMinY([self frame]), CGRectGetWidth([self frame]), [self getDisposeTagsViewHeight:disposeAry]);
     }
     
     if (disposeAry.count > 0) {
@@ -152,11 +146,18 @@
 }
 
 //获取处理后的tagsView的高度根据标签的数组
-- (float)getDisposeTagsViewHeight:(NSArray *)disposeTags {
+- (float)getDisposeTagsViewHeight:(NSArray *)ary {
+    
+    if (ary.count == disposeAry.count) {
+        
+    } else {
+        [self disposeTags:ary];
+    }
+    
     float height = 0;
-    if (disposeTags.count > 0) {
+    if (disposeAry.count > 0) {
         if (_type == 0) {
-            height = _tagOriginY+disposeTags.count*(_tagHeight+_tagVerticalSpace);
+            height = _tagOriginY+disposeAry.count*(_tagHeight+_tagVerticalSpace);
         } else if (_type == 1) {
             height = _tagOriginY+_tagHeight+_tagVerticalSpace;
         }
@@ -168,6 +169,61 @@
     if (_tagDelegate && [_tagDelegate respondsToSelector:@selector(tagsViewButtonAction:button:)]) {
         [_tagDelegate tagsViewButtonAction:self button:sender];
     }
+}
+
+//颜色生成图片方法
+- (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size {
+    CGRect rect = CGRectMake(0, 0, size.width, size.height);
+    
+    UIGraphicsBeginImageContext(rect.size);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context,
+                                   
+                                   color.CGColor);
+    CGContextFillRect(context, rect);
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return img;
+}
+
+@end
+
+#pragma mark - 扩展方法
+
+@implementation NSString (FDDExtention)
+
+- (CGSize)fdd_sizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size {
+    CGSize resultSize;
+    if ([self respondsToSelector:@selector(boundingRectWithSize:options:attributes:context:)]) {
+        NSMethodSignature *signature = [[self class] instanceMethodSignatureForSelector:@selector(boundingRectWithSize:options:attributes:context:)];
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+        [invocation setTarget:self];
+        [invocation setSelector:@selector(boundingRectWithSize:options:attributes:context:)];
+        NSDictionary *attributes = @{ NSFontAttributeName:font };
+        NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin;
+        NSStringDrawingContext *context;
+        [invocation setArgument:&size atIndex:2];
+        [invocation setArgument:&options atIndex:3];
+        [invocation setArgument:&attributes atIndex:4];
+        [invocation setArgument:&context atIndex:5];
+        [invocation invoke];
+        CGRect rect;
+        [invocation getReturnValue:&rect];
+        resultSize = rect.size;
+    } else {
+        NSMethodSignature *signature = [[self class] instanceMethodSignatureForSelector:@selector(sizeWithFont:constrainedToSize:)];
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+        [invocation setTarget:self];
+        [invocation setSelector:@selector(sizeWithFont:constrainedToSize:)];
+        [invocation setArgument:&font atIndex:2];
+        [invocation setArgument:&size atIndex:3];
+        [invocation invoke];
+        [invocation getReturnValue:&resultSize];
+    }
+    return resultSize;
 }
 
 @end

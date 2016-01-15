@@ -11,11 +11,6 @@
 
 @class HXTagsView;
 
-/**
- *  使用方式是UIColorHexFromRGB(0x067AB5);
- */
-#define UIColorHexFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
-
 @protocol HXTagsViewDelegate <NSObject>
 
 @optional
@@ -54,4 +49,11 @@
  */
 - (void)setTagAry:(NSArray *)tagAry delegate:(id)delegate;
 
+@end
+
+
+#pragma mark - 扩展方法
+
+@interface NSString (FDDExtention)
+- (CGSize)fdd_sizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size;
 @end

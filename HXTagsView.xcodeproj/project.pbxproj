@@ -12,10 +12,6 @@
 		30E706261C476F5200F12FD1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E706251C476F5200F12FD1 /* ViewController.m */; };
 		30E7062B1C476F5200F12FD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30E7062A1C476F5200F12FD1 /* Assets.xcassets */; };
 		30E706381C47751900F12FD1 /* HXTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E706371C47751900F12FD1 /* HXTagsView.m */; };
-		30E7063C1C47774C00F12FD1 /* NSString+FDDExtention.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E7063B1C47774C00F12FD1 /* NSString+FDDExtention.m */; };
-		30E7063F1C47776000F12FD1 /* UIImage+Tint.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E7063E1C47776000F12FD1 /* UIImage+Tint.m */; };
-		30E706421C47776B00F12FD1 /* UIColor+RGBValues.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E706411C47776B00F12FD1 /* UIColor+RGBValues.m */; };
-		30E706451C47790700F12FD1 /* UIView+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E706441C47790700F12FD1 /* UIView+Helpers.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,14 +25,6 @@
 		30E7062F1C476F5200F12FD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30E706361C47751900F12FD1 /* HXTagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HXTagsView.h; sourceTree = "<group>"; };
 		30E706371C47751900F12FD1 /* HXTagsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HXTagsView.m; sourceTree = "<group>"; };
-		30E7063A1C47774C00F12FD1 /* NSString+FDDExtention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FDDExtention.h"; sourceTree = "<group>"; };
-		30E7063B1C47774C00F12FD1 /* NSString+FDDExtention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FDDExtention.m"; sourceTree = "<group>"; };
-		30E7063D1C47776000F12FD1 /* UIImage+Tint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Tint.h"; sourceTree = "<group>"; };
-		30E7063E1C47776000F12FD1 /* UIImage+Tint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Tint.m"; sourceTree = "<group>"; };
-		30E706401C47776B00F12FD1 /* UIColor+RGBValues.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RGBValues.h"; sourceTree = "<group>"; };
-		30E706411C47776B00F12FD1 /* UIColor+RGBValues.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+RGBValues.m"; sourceTree = "<group>"; };
-		30E706431C47790700F12FD1 /* UIView+Helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Helpers.h"; sourceTree = "<group>"; };
-		30E706441C47790700F12FD1 /* UIView+Helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Helpers.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,14 +90,6 @@
 		30E706391C47773B00F12FD1 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				30E706431C47790700F12FD1 /* UIView+Helpers.h */,
-				30E706441C47790700F12FD1 /* UIView+Helpers.m */,
-				30E7063A1C47774C00F12FD1 /* NSString+FDDExtention.h */,
-				30E7063B1C47774C00F12FD1 /* NSString+FDDExtention.m */,
-				30E7063D1C47776000F12FD1 /* UIImage+Tint.h */,
-				30E7063E1C47776000F12FD1 /* UIImage+Tint.m */,
-				30E706401C47776B00F12FD1 /* UIColor+RGBValues.h */,
-				30E706411C47776B00F12FD1 /* UIColor+RGBValues.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -182,14 +162,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				30E706421C47776B00F12FD1 /* UIColor+RGBValues.m in Sources */,
-				30E7063F1C47776000F12FD1 /* UIImage+Tint.m in Sources */,
-				30E706451C47790700F12FD1 /* UIView+Helpers.m in Sources */,
 				30E706261C476F5200F12FD1 /* ViewController.m in Sources */,
 				30E706231C476F5200F12FD1 /* AppDelegate.m in Sources */,
 				30E706201C476F5200F12FD1 /* main.m in Sources */,
 				30E706381C47751900F12FD1 /* HXTagsView.m in Sources */,
-				30E7063C1C47774C00F12FD1 /* NSString+FDDExtention.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +295,7 @@
 				30E706341C476F5200F12FD1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
