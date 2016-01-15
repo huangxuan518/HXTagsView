@@ -117,7 +117,7 @@
             if (_type == 0) {
                 self.showsHorizontalScrollIndicator = NO;
                 //多行
-                if (originX + contentSize.width+_tagSpace > self.frame.size.width-_tagOriginX*2) {
+                if (originX + contentSize.width > self.frame.size.width-_tagOriginX*2) {
                     //当前标签的X坐标+当前标签的长度>屏幕的横向总长度则换行
                     [tags addObject:subTags];
                     //换行标签的起点坐标初始化
