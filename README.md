@@ -1,5 +1,6 @@
 # HXTagsView
 公司最近新做的一个项目中有个标签的需求,标签内容是服务器控制,也就是说,标签的位置需要动态计算,在网上找了一下相关代码,发现都不能满足项目需求,于是自己动手写了此开源标签类,希望能给有同样需求的你一点帮助.
+
 ![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/lietu.png)
 
 # 适用
