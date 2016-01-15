@@ -49,6 +49,16 @@
  */
 - (void)setTagAry:(NSArray *)tagAry delegate:(id)delegate;
 
+/**
+ *  当把标签View放到cell中时,需要先计算出cell的高度,所以如果自己定制,则需要传入所有影响计算结果的参数
+ *
+ *  @param ary 标签字符串数组
+ *  @param dic frameSizeWidth \ type \ tagOriginX \ tagSpace \ tagHorizontalSpace \ tagOriginY \ tagHeight \ tagVerticalSpace
+ *
+ *  @return <#return value description#>
+ */
++ (float)getCellHeight:(NSArray *)ary dic:(NSDictionary *)dic;
+
 @end
 
 

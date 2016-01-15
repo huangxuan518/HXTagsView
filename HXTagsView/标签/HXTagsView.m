@@ -180,6 +180,77 @@
     }
 }
 
+//当把标签View放到cell中时,需要先计算出cell的高度,所以如果自己定制,则需要传入所有影响计算结果的参数
++ (float)getCellHeight:(NSArray *)ary dic:(NSDictionary *)dic {
+    int type = [dic[@"type"] length] > 0 ? [dic[@"type"] intValue] : 0;
+    float frameSizeWidth = [dic[@"frameSizeWidth"] length] > 0 ? [dic[@"frameSizeWidth"] floatValue] : [[UIScreen mainScreen] bounds].size.width;
+    float tagOriginX = [dic[@"tagOriginX"] length] > 0 ? [dic[@"tagOriginX"] floatValue] : 10.0;
+    float tagOriginY = [dic[@"tagOriginY"] length] > 0 ? [dic[@"tagOriginY"] floatValue] : 10.0;
+    float tagSpace = [dic[@"tagSpace"] length] > 0 ? [dic[@"tagSpace"] floatValue] : 9.0;
+    float tagHeight = [dic[@"tagHeight"] length] > 0 ? [dic[@"tagHeight"] floatValue] : 32.0;
+    float tagHorizontalSpace = [dic[@"tagHorizontalSpace"] length] > 0 ? [dic[@"tagHorizontalSpace"] floatValue] : 10.0;
+    float tagVerticalSpace = [dic[@"tagVerticalSpace"] length] > 0 ? [dic[@"tagVerticalSpace"] floatValue] : 10.0;
+
+    NSMutableArray *tags = [NSMutableArray new];//纵向数组
+    NSMutableArray *subTags = [NSMutableArray new];//横向数组
+    
+    float originX = tagOriginX;
+    for (NSString *tagTitle in ary) {
+        NSUInteger index = [ary indexOfObject:tagTitle];
+        
+        //计算每个tag的宽度
+        CGSize contentSize = [tagTitle fdd_sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(frameSizeWidth-tagOriginX*2, MAXFLOAT)];
+        
+        NSMutableDictionary *dict = [NSMutableDictionary new];
+        dict[@"tagTitle"] = tagTitle;//标签标题
+        dict[@"buttonWith"] = [NSString stringWithFormat:@"%f",contentSize.width+tagSpace];//标签的宽度
+        
+        if (index == 0) {
+            dict[@"originX"] = [NSString stringWithFormat:@"%f",originX];//标签的X坐标
+            [subTags addObject:dict];
+        } else {
+            if (type == 0) {
+                //多行
+                if (originX + contentSize.width > frameSizeWidth-tagOriginX*2) {
+                    //当前标签的X坐标+当前标签的长度>屏幕的横向总长度则换行
+                    [tags addObject:subTags];
+                    //换行标签的起点坐标初始化
+                    originX = tagOriginX;
+                    dict[@"originX"] = [NSString stringWithFormat:@"%f",originX];//标签的X坐标
+                    subTags = [NSMutableArray new];
+                    [subTags addObject:dict];
+                } else {
+                    //如果没有超过屏幕则继续加在前一个数组里
+                    dict[@"originX"] = [NSString stringWithFormat:@"%f",originX];//标签的X坐标
+                    [subTags addObject:dict];
+                }
+            } else {
+                //一行
+                dict[@"originX"] = [NSString stringWithFormat:@"%f",originX];//标签的X坐标
+                [subTags addObject:dict];
+            }
+        }
+        
+        if (index +1 == ary.count) {
+            //最后一个标签加完将横向数组加到纵向数组中
+            [tags addObject:subTags];
+        }
+        
+        //标签的X坐标每次都是前一个标签的宽度+标签左右空隙+标签距下个标签的距离
+        originX += contentSize.width+tagHorizontalSpace+tagSpace;
+    }
+    
+    float height = 0;
+    if (tags.count > 0) {
+        if (type == 0) {
+            height = tagOriginY+tags.count*(tagHeight+tagVerticalSpace);
+        } else {
+            height = tagOriginY+tagHeight+tagVerticalSpace;
+        }
+    }
+    return height;
+}
+
 //颜色生成图片方法
 - (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size {
     CGRect rect = CGRectMake(0, 0, size.width, size.height);
