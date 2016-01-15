@@ -23,7 +23,7 @@
 @property (nonatomic,assign) id<HXTagsViewDelegate> tagDelegate;
 
 #pragma mark 必须设置
-@property (nonatomic,assign) NSInteger type;//0.多行不可滑动 1.一行可滑动
+@property (nonatomic,assign) NSInteger type;//0.平铺 1.单行
 
 #pragma mark 可不设置,不设置则用默认值
 @property (nonatomic,assign) float tagSpace;//标签内部左右间距(标题距离边框2边的距离和)

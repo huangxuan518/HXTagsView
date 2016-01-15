@@ -71,11 +71,6 @@
         }
     }
     
-    //多行
-    if (self.frame.size.height <= 0) {
-        self.frame = CGRectMake(CGRectGetMinX([self frame]), CGRectGetMinY([self frame]), CGRectGetWidth([self frame]), [self getDisposeTagsViewHeight:disposeAry]);
-    }
-    
     if (disposeAry.count > 0) {
         if (_type == 0) {
             //多行
@@ -88,6 +83,17 @@
             float originX = [tagDic[@"originX"] floatValue];
             float buttonWith = [tagDic[@"buttonWith"] floatValue];
             self.contentSize = CGSizeMake(originX+buttonWith+_tagOriginX,self.frame.size.height);
+        }
+    }
+    
+    //多行
+    if (self.frame.size.height <= 0) {
+        self.frame = CGRectMake(CGRectGetMinX([self frame]), CGRectGetMinY([self frame]), CGRectGetWidth([self frame]), [self getDisposeTagsViewHeight:disposeAry]);
+    } else {
+        if (_type == 0) {
+            if (self.frame.size.height > self.contentSize.height) {
+                self.frame = CGRectMake(CGRectGetMinX([self frame]), CGRectGetMinY([self frame]), CGRectGetWidth([self frame]), self.contentSize.height);
+            }
         }
     }
 }
