@@ -19,15 +19,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         // 设置scrollview的属性
-        self.showsHorizontalScrollIndicator = YES;
-        self.showsVerticalScrollIndicator = YES;
-        self.frame = frame;
-        self.backgroundColor = UIColorHexFromRGB(0xF5F5F5);
-        if (self.frame.size.height > 0) {
-            _maxHeight = self.frame.size.height;
-        } else {
-            _maxHeight = [[UIScreen mainScreen] bounds].size.height - self.frame.origin.y;
-        }
         _tagSpace = 9.0;
         _tagHeight = 32.0;
         _tagOriginX = 10.0;
@@ -42,6 +33,17 @@
         _titleColor = UIColorHexFromRGB(0x666666);
         _normalBackgroundImage = [UIImage imageWithColor:UIColorHexFromRGB(0xFFFFFF)];
         _highlightedBackgroundImage = [UIImage imageWithColor:UIColorHexFromRGB(0xEAEAEA)];
+        
+        self.showsHorizontalScrollIndicator = YES;
+        self.showsVerticalScrollIndicator = YES;
+        self.frame = frame;
+        self.backgroundColor = UIColorHexFromRGB(0xF5F5F5);
+        if (self.frame.size.height > 0) {
+            _maxHeight = self.frame.size.height;
+        } else {
+            self.frameSizeHeight = _tagOriginY+_tagHeight+_tagVerticalSpace;
+            _maxHeight = [[UIScreen mainScreen] bounds].size.height - self.frame.origin.y-self.frameSizeHeight;
+        }
     }
     return self;
 }
@@ -165,6 +167,7 @@
     if (disposeAry.count > 0) {
         if (_type == 0) {
             height = _tagOriginY+disposeAry.count*(_tagHeight+_tagVerticalSpace);
+            _maxHeight = height;
         } else if (_type == 1) {
             height = _tagOriginY+_tagHeight+_tagVerticalSpace;
         }
