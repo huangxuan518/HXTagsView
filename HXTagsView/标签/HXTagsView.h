@@ -31,7 +31,6 @@
 @property (nonatomic,assign) NSInteger type;//0.多行不可滑动 1.一行可滑动
 
 #pragma mark 可不设置,不设置则用默认值
-@property (nonatomic,assign) float maxHeight;//标签最大高度
 @property (nonatomic,assign) float tagSpace;//标签内部左右间距(标题距离边框2边的距离和)
 @property (nonatomic,assign) float tagHeight;//所有标签高度
 @property (nonatomic,assign) float tagOriginX;//第一个标签起点X坐标
@@ -54,14 +53,5 @@
  *  @param delegate 代理
  */
 - (void)setTagAry:(NSArray *)tagAry delegate:(id)delegate;
-
-/**
- *  获取tagsView的高度根据标签的数组
- *
- *  @param tagAry <#tagAry description#>
- *
- *  @return <#return value description#>
- */
-- (float)getTagsViewHeight:(NSArray *)tagAry;
 
 @end

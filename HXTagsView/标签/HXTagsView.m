@@ -12,7 +12,7 @@
 #import "UIView+Helpers.h"
 
 @implementation HXTagsView {
-    NSArray *disposeAry;//根据type处理后的数据源
+    NSArray *disposeAry;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -38,12 +38,6 @@
         self.showsVerticalScrollIndicator = YES;
         self.frame = frame;
         self.backgroundColor = UIColorHexFromRGB(0xF5F5F5);
-        if (self.frame.size.height > 0) {
-            _maxHeight = self.frame.size.height;
-        } else {
-            self.frameSizeHeight = _tagOriginY+_tagHeight+_tagVerticalSpace;
-            _maxHeight = [[UIScreen mainScreen] bounds].size.height - self.frame.origin.y-self.frameSizeHeight;
-        }
     }
     return self;
 }
@@ -83,15 +77,15 @@
         }
     }
     
+    //多行
+    if (self.frame.size.height <= 0) {
+        self.frameSizeHeight = [self getDisposeTagsViewHeight:disposeAry];
+    }
+    
     if (disposeAry.count > 0) {
         if (_type == 0) {
             //多行
             float contentSizeHeight = _tagOriginY+disposeAry.count*(_tagHeight+_tagVerticalSpace);
-            if (_maxHeight > contentSizeHeight) {
-                self.frameSizeHeight = contentSizeHeight;
-            } else {
-                self.frameSizeHeight = _maxHeight;
-            }
             self.contentSize = CGSizeMake(self.frame.size.width,contentSizeHeight);
         } else if (_type == 1) {
             //单行
@@ -157,17 +151,12 @@
     }
 }
 
-//获取tagsView的高度根据标签的数组
-- (float)getTagsViewHeight:(NSArray *)tagAry {
-    
-    [self disposeTags:tagAry];
-    
+//获取处理后的tagsView的高度根据标签的数组
+- (float)getDisposeTagsViewHeight:(NSArray *)disposeTags {
     float height = 0;
-    
-    if (disposeAry.count > 0) {
+    if (disposeTags.count > 0) {
         if (_type == 0) {
-            height = _tagOriginY+disposeAry.count*(_tagHeight+_tagVerticalSpace);
-            _maxHeight = height;
+            height = _tagOriginY+disposeTags.count*(_tagHeight+_tagVerticalSpace);
         } else if (_type == 1) {
             height = _tagOriginY+_tagHeight+_tagVerticalSpace;
         }

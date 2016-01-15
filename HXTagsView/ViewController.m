@@ -57,7 +57,6 @@
     //多行不滚动,则计算出全部展示的高度,让maxHeight等于计算出的高度即可,初始化不需要设置高度
     tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frameOriginY+titleLable.frameSizeHeight+10, self.view.frame.size.width, 0)];
     tagsView.type = 0;
-    tagsView.maxHeight = [tagsView getTagsViewHeight:tagAry];
     [tagsView setTagAry:tagAry delegate:self];
     [self.view addSubview:tagsView];
     
