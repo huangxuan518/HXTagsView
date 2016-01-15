@@ -9,17 +9,25 @@
 #import "NSString+FDDExtention.h"
 #import "UIImage+Tint.h"
 #import "UIColor+RGBValues.h"
+#import "UIView+Helpers.h"
 
-@implementation HXTagsView
+@implementation HXTagsView {
+    NSArray *disposeAry;//根据type处理后的数据源
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         // 设置scrollview的属性
-        self.showsHorizontalScrollIndicator = NO;
-        self.showsVerticalScrollIndicator = NO;
-        self.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, frame.size.height);
+        self.showsHorizontalScrollIndicator = YES;
+        self.showsVerticalScrollIndicator = YES;
+        self.frame = frame;
         self.backgroundColor = UIColorHexFromRGB(0xF5F5F5);
+        if (self.frame.size.height > 0) {
+            _maxHeight = self.frame.size.height;
+        } else {
+            _maxHeight = [[UIScreen mainScreen] bounds].size.height - self.frame.origin.y;
+        }
         _tagSpace = 9.0;
         _tagHeight = 32.0;
         _tagOriginX = 10.0;
@@ -38,6 +46,7 @@
     return self;
 }
 
+//设置标签数据和代理
 - (void)setTagAry:(NSArray *)tagAry delegate:(id)delegate {
     _tagDelegate = delegate;
     [self disposeTags:tagAry];
@@ -45,8 +54,8 @@
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     //遍历标签数组,将标签显示在界面上,并给每个标签打上tag加以区分
-    for (NSArray *iTags in _disposeAry) {
-        NSUInteger i = [_disposeAry indexOfObject:iTags];
+    for (NSArray *iTags in disposeAry) {
+        NSUInteger i = [disposeAry indexOfObject:iTags];
         
         for (NSDictionary *tagDic in iTags) {
             NSUInteger j = [iTags indexOfObject:tagDic];
@@ -72,29 +81,28 @@
         }
     }
     
-    if (_disposeAry.count > 0) {
-        float heightOrWidth = 0;
+    if (disposeAry.count > 0) {
         if (_type == 0) {
-            heightOrWidth = _tagOriginY+_disposeAry.count*(_tagHeight+_tagVerticalSpace);
-            self.contentSize = CGSizeMake(self.frame.size.width,heightOrWidth);
+            //多行
+            float contentSizeHeight = _tagOriginY+disposeAry.count*(_tagHeight+_tagVerticalSpace);
+            if (_maxHeight > contentSizeHeight) {
+                self.frameSizeHeight = contentSizeHeight;
+            } else {
+                self.frameSizeHeight = _maxHeight;
+            }
+            self.contentSize = CGSizeMake(self.frame.size.width,contentSizeHeight);
         } else if (_type == 1) {
-            NSArray *a = _disposeAry[0];
+            //单行
+            NSArray *a = disposeAry[0];
             NSDictionary *tagDic = a[a.count-1];
             float originX = [tagDic[@"originX"] floatValue];
             float buttonWith = [tagDic[@"buttonWith"] floatValue];
-            heightOrWidth = originX+buttonWith+_tagOriginX;
-            self.contentSize = CGSizeMake(heightOrWidth,self.frame.size.height);
+            self.contentSize = CGSizeMake(originX+buttonWith+_tagOriginX,self.frame.size.height);
         }
     }
 }
 
-/**
- *  将标签数组根据type以及其他参数进行分组装入数组
- *
- *  @param tagAry <#tagAry description#>
- *
- *  @return <#return value description#>
- */
+//将标签数组根据type以及其他参数进行分组装入数组
 - (void)disposeTags:(NSArray *)ary {
     NSMutableArray *tags = [NSMutableArray new];//纵向数组
     NSMutableArray *subTags = [NSMutableArray new];//横向数组
@@ -115,7 +123,6 @@
             [subTags addObject:dict];
         } else {
             if (_type == 0) {
-                self.showsHorizontalScrollIndicator = NO;
                 //多行
                 if (originX + contentSize.width > self.frame.size.width-_tagOriginX*2) {
                     //当前标签的X坐标+当前标签的长度>屏幕的横向总长度则换行
@@ -131,7 +138,6 @@
                     [subTags addObject:dict];
                 }
             } else {
-                self.showsHorizontalScrollIndicator = YES;
                 //一行
                 dict[@"originX"] = [NSString stringWithFormat:@"%f",originX];//标签的X坐标
                 [subTags addObject:dict];
@@ -141,7 +147,7 @@
         if (index +1 == ary.count) {
             //最后一个标签加完将横向数组加到纵向数组中
             [tags addObject:subTags];
-            _disposeAry = tags;
+            disposeAry = tags;
         }
         
         //标签的X坐标每次都是前一个标签的宽度+标签左右空隙+标签距下个标签的距离
@@ -149,31 +155,21 @@
     }
 }
 
-/**
- *  获取contentSize
- *
- *  @param tagAry <#tagAry description#>
- *
- *  @return <#return value description#>
- */
-- (float)getCellFrame:(NSArray *)ary {
+//获取tagsView的高度根据标签的数组
+- (float)getTagsViewHeight:(NSArray *)tagAry {
     
-    [self disposeTags:ary];
+    [self disposeTags:tagAry];
     
-    float heightOrWidth = 0;
+    float height = 0;
     
-    if (_disposeAry.count > 0) {
+    if (disposeAry.count > 0) {
         if (_type == 0) {
-            heightOrWidth = _tagOriginY+_disposeAry.count*(_tagHeight+_tagVerticalSpace);
+            height = _tagOriginY+disposeAry.count*(_tagHeight+_tagVerticalSpace);
         } else if (_type == 1) {
-            NSArray *a = _disposeAry[0];
-            NSDictionary *tagDic = a[a.count-1];
-            float originX = [tagDic[@"originX"] floatValue];
-            float buttonWith = [tagDic[@"buttonWith"] floatValue];
-            heightOrWidth = originX+buttonWith+_tagOriginX;
+            height = _tagOriginY+_tagHeight+_tagVerticalSpace;
         }
     }
-    return heightOrWidth;
+    return height;
 }
 
 - (void)buttonAction:(UIButton *)sender {

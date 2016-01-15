@@ -26,8 +26,12 @@
 @interface HXTagsView : UIScrollView
 
 @property (nonatomic,assign) id<HXTagsViewDelegate> tagDelegate;
-@property (nonatomic,strong) NSArray *disposeAry;
-@property (nonatomic,assign) NSInteger type;//0.多行不可滑动 1.一行可滑动 
+
+#pragma mark 必须设置
+@property (nonatomic,assign) NSInteger type;//0.多行不可滑动 1.一行可滑动
+
+#pragma mark 可不设置,不设置则用默认值
+@property (nonatomic,assign) float maxHeight;//标签最大高度
 @property (nonatomic,assign) float tagSpace;//标签内部左右间距(标题距离边框2边的距离和)
 @property (nonatomic,assign) float tagHeight;//所有标签高度
 @property (nonatomic,assign) float tagOriginX;//第一个标签起点X坐标
@@ -43,7 +47,21 @@
 @property (nonatomic,strong) UIImage *normalBackgroundImage;//标签默认背景颜色
 @property (nonatomic,strong) UIImage *highlightedBackgroundImage;//标签高亮背景颜色
 
+/**
+ *  设置标签数据和代理
+ *
+ *  @param tagAry   标签数组,只支持字符串数组
+ *  @param delegate 代理
+ */
 - (void)setTagAry:(NSArray *)tagAry delegate:(id)delegate;
-- (float)getCellFrame:(NSArray *)tagAry;
+
+/**
+ *  获取tagsView的高度根据标签的数组
+ *
+ *  @param tagAry <#tagAry description#>
+ *
+ *  @return <#return value description#>
+ */
+- (float)getTagsViewHeight:(NSArray *)tagAry;
 
 @end
