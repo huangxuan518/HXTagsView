@@ -80,18 +80,10 @@
 		30E706351C47750F00F12FD1 /* 标签 */ = {
 			isa = PBXGroup;
 			children = (
-				30E706391C47773B00F12FD1 /* Category */,
 				30E706361C47751900F12FD1 /* HXTagsView.h */,
 				30E706371C47751900F12FD1 /* HXTagsView.m */,
 			);
 			path = "标签";
-			sourceTree = "<group>";
-		};
-		30E706391C47773B00F12FD1 /* Category */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
