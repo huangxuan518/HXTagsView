@@ -19,6 +19,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"标签";
+    
+    /*单行是否滚动是标签的数量决定的,当标签排列在一起的长度大于屏幕的长度,则会滚动*/
 
     //单行不滚动 ===============
     NSArray *tagAry = @[@"英雄联盟",@"穿越火线",@"地下城与勇士"];
@@ -28,8 +30,8 @@
     [self.view addSubview:titleLable];
     
     //单行不需要设置高度,内部根据初始化参数自动计算高度
-    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, 0)];
-    tagsView.type = 1;
+    float height = [HXTagsView getTagsViewHeight:tagAry dic:nil];
+    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, height)];
     [tagsView setTagAry:tagAry delegate:self];
     [self.view addSubview:tagsView];
     
@@ -42,11 +44,13 @@
     [self.view addSubview:titleLable];
     
     //单行不需要设置高度,内部根据初始化参数自动计算高度
-    tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, 0)];
-    tagsView.type = 1;
+    tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, height)];
     [tagsView setTagAry:tagAry delegate:self];
     [self.view addSubview:tagsView];
     
+    
+    
+    /*多行是否滚动是HXTagsView的高度和标签计算出的高度比较后决定的,当HXTagsView的高度小于计算出的高度则自动滚动*/
     
     //多行不滚动 ===============
     tagAry = @[@"冒险岛",@"反恐精英ol",@"魔域",@"诛仙",@"火影ol",@"问道",@"天龙八部",@"枪神纪",@"英魂之刃",@"勇者大冒险",@"nba 2k",@"上古世纪",@"跑跑卡丁车",@"传奇世界",@"劲舞团",@"激战2"];
@@ -55,9 +59,11 @@
     titleLable.text = @"多行平铺";
     [self.view addSubview:titleLable];
 
-    //多行不滚动,则计算出全部展示的高度,让maxHeight等于计算出的高度即可,初始化不需要设置高度
-    tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, 0)];
-    tagsView.type = 0;
+    //多行不滚动,设置高度
+    NSDictionary *propertyDic = @{@"type":@"1"};
+    height = [HXTagsView getTagsViewHeight:tagAry dic:propertyDic];
+    tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, height)];
+    tagsView.propertyDic = propertyDic;
     [tagsView setTagAry:tagAry delegate:self];
     [self.view addSubview:tagsView];
     
@@ -71,7 +77,7 @@
     
     //多行滚动需要设置HXTagsView高度,当高度小于计算出的实际高度时,则自动滚动展示
     tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, 100)];
-    tagsView.type = 0;
+    tagsView.type = 1;
     [tagsView setTagAry:tagAry delegate:self];
     [self.view addSubview:tagsView];
 }

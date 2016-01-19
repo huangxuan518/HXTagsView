@@ -22,10 +22,9 @@
 
 @property (nonatomic,assign) id<HXTagsViewDelegate> tagDelegate;
 
-#pragma mark 必须设置
-@property (nonatomic,assign) NSInteger type;//0.平铺 1.单行
-
 #pragma mark 可不设置,不设置则用默认值
+@property (nonatomic,strong) NSDictionary *propertyDic;//属性字典
+@property (nonatomic,assign) NSInteger type;//0.单行 1.平铺 默认单行,单行可以不设置type
 @property (nonatomic,assign) float tagSpace;//标签内部左右间距(标题距离边框2边的距离和)
 @property (nonatomic,assign) float tagHeight;//所有标签高度
 @property (nonatomic,assign) float tagOriginX;//第一个标签起点X坐标
@@ -50,14 +49,14 @@
 - (void)setTagAry:(NSArray *)tagAry delegate:(id)delegate;
 
 /**
- *  当把标签View放到cell中时,需要先计算出cell的高度,所以如果自己定制,则需要传入所有影响计算结果的参数
+ *  计算标签的高度
  *
  *  @param ary 标签字符串数组
  *  @param dic frameSizeWidth \ type \ tagOriginX \ tagSpace \ tagHorizontalSpace \ tagOriginY \ tagHeight \ tagVerticalSpace
  *
  *  @return <#return value description#>
  */
-+ (float)getCellHeight:(NSArray *)ary dic:(NSDictionary *)dic;
++ (float)getTagsViewHeight:(NSArray *)ary dic:(NSDictionary *)dic;
 
 @end
 
