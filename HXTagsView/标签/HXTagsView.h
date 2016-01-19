@@ -73,6 +73,6 @@
 
 #pragma mark - 扩展方法
 
-@interface NSString (FDDExtention)
+@interface NSString (HXExtention)
 - (CGSize)fdd_sizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size;
 @end

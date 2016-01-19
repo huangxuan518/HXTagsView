@@ -307,7 +307,7 @@
 
 #pragma mark - 扩展方法
 
-@implementation NSString (FDDExtention)
+@implementation NSString (HXExtention)
 
 - (CGSize)fdd_sizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size {
     CGSize resultSize;
