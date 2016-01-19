@@ -25,6 +25,7 @@
         _tagOriginY = 10.0;
         _tagHorizontalSpace = 10.0;
         _tagVerticalSpace = 10.0;
+        
         _borderColor = [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
         _borderWidth = 0.5f;
         _masksToBounds = YES;
@@ -39,7 +40,22 @@
 
 - (void)setPropertyDic:(NSDictionary *)propertyDic {
     int type = [propertyDic[@"type"] length] > 0 ? [propertyDic[@"type"] intValue] : 0;
+    float frameSizeWidth = [propertyDic[@"frameSizeWidth"] length] > 0 ? [propertyDic[@"frameSizeWidth"] floatValue] : [[UIScreen mainScreen] bounds].size.width;
+    float tagOriginX = [propertyDic[@"tagOriginX"] length] > 0 ? [propertyDic[@"tagOriginX"] floatValue] : 10.0;
+    float tagOriginY = [propertyDic[@"tagOriginY"] length] > 0 ? [propertyDic[@"tagOriginY"] floatValue] : 10.0;
+    float tagSpace = [propertyDic[@"tagSpace"] length] > 0 ? [propertyDic[@"tagSpace"] floatValue] : 9.0;
+    float tagHeight = [propertyDic[@"tagHeight"] length] > 0 ? [propertyDic[@"tagHeight"] floatValue] : 32.0;
+    float tagHorizontalSpace = [propertyDic[@"tagHorizontalSpace"] length] > 0 ? [propertyDic[@"tagHorizontalSpace"] floatValue] : 10.0;
+    float tagVerticalSpace = [propertyDic[@"tagVerticalSpace"] length] > 0 ? [propertyDic[@"tagVerticalSpace"] floatValue] : 10.0;
+    
     _type = type;
+    self.frame = CGRectMake(CGRectGetMinX([self frame]), CGRectGetMinY([self frame]), frameSizeWidth, CGRectGetHeight([self frame]));
+    _tagOriginX = tagOriginX;
+    _tagOriginY = tagOriginY;
+    _tagSpace = tagSpace;
+    _tagHeight = tagHeight;
+    _tagHorizontalSpace = tagHorizontalSpace;
+    _tagVerticalSpace = tagVerticalSpace;
 }
 
 //设置标签数据和代理

@@ -31,6 +31,8 @@
 @property (nonatomic,assign) float tagOriginY;//第一个标签起点Y坐标
 @property (nonatomic,assign) float tagHorizontalSpace;//标签间横向间距
 @property (nonatomic,assign) float tagVerticalSpace;//标签间纵向间距
+
+#pragma mark 标签定制属性
 @property (nonatomic,strong) UIColor *borderColor;//标签边框颜色
 @property (nonatomic,assign) float borderWidth;//标签边框宽度
 @property (nonatomic,assign) BOOL masksToBounds;//标签是否有圆角
@@ -52,7 +54,15 @@
  *  计算标签的高度
  *
  *  @param ary 标签字符串数组
- *  @param dic frameSizeWidth \ type \ tagOriginX \ tagSpace \ tagHorizontalSpace \ tagOriginY \ tagHeight \ tagVerticalSpace
+ *  @param dic 
+             @{@"frameSizeWidth":@([[UIScreen mainScreen] bounds].size.width),
+             @"type":@(0),
+             @"tagOriginX":@(10),
+             @"tagSpace":@(9),
+             @"tagHorizontalSpace":@(10),
+             @"tagOriginY":@(10),
+             @"tagHeight":@(32),
+             @"tagVerticalSpace":@(10)};
  *
  *  @return <#return value description#>
  */
