@@ -9,6 +9,13 @@
 
 #import <UIKit/UIKit.h>
 
+#define HXTagSpace 18.0
+#define HXTagHeight 32.0
+#define HXTagOriginX 10.0
+#define HXTagOriginY 10.0
+#define HXTagHorizontalSpace 10.0
+#define HXTagVerticalSpace 10.0
+
 @class HXTagsView;
 
 @protocol HXTagsViewDelegate <NSObject>

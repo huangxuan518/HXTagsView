@@ -19,12 +19,12 @@
         int r = arc4random() % 255;
         int g = arc4random() % 255;
         int b = arc4random() % 255;
-        _tagSpace = 9.0;
-        _tagHeight = 32.0;
-        _tagOriginX = 10.0;
-        _tagOriginY = 10.0;
-        _tagHorizontalSpace = 10.0;
-        _tagVerticalSpace = 10.0;
+        _tagSpace = HXTagSpace;
+        _tagHeight = HXTagHeight;
+        _tagOriginX = HXTagOriginX;
+        _tagOriginY = HXTagOriginY;
+        _tagHorizontalSpace = HXTagHorizontalSpace;
+        _tagVerticalSpace = HXTagVerticalSpace;
         
         _borderColor = [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
         _borderWidth = 0.5f;
@@ -41,12 +41,12 @@
 - (void)setPropertyDic:(NSDictionary *)propertyDic {
     int type = [propertyDic[@"type"] length] > 0 ? [propertyDic[@"type"] intValue] : 0;
     float frameSizeWidth = [propertyDic[@"frameSizeWidth"] length] > 0 ? [propertyDic[@"frameSizeWidth"] floatValue] : [[UIScreen mainScreen] bounds].size.width;
-    float tagOriginX = [propertyDic[@"tagOriginX"] length] > 0 ? [propertyDic[@"tagOriginX"] floatValue] : 10.0;
-    float tagOriginY = [propertyDic[@"tagOriginY"] length] > 0 ? [propertyDic[@"tagOriginY"] floatValue] : 10.0;
-    float tagSpace = [propertyDic[@"tagSpace"] length] > 0 ? [propertyDic[@"tagSpace"] floatValue] : 9.0;
-    float tagHeight = [propertyDic[@"tagHeight"] length] > 0 ? [propertyDic[@"tagHeight"] floatValue] : 32.0;
-    float tagHorizontalSpace = [propertyDic[@"tagHorizontalSpace"] length] > 0 ? [propertyDic[@"tagHorizontalSpace"] floatValue] : 10.0;
-    float tagVerticalSpace = [propertyDic[@"tagVerticalSpace"] length] > 0 ? [propertyDic[@"tagVerticalSpace"] floatValue] : 10.0;
+    float tagOriginX = [propertyDic[@"tagOriginX"] length] > 0 ? [propertyDic[@"tagOriginX"] floatValue] : HXTagOriginX;
+    float tagOriginY = [propertyDic[@"tagOriginY"] length] > 0 ? [propertyDic[@"tagOriginY"] floatValue] : HXTagOriginY;
+    float tagSpace = [propertyDic[@"tagSpace"] length] > 0 ? [propertyDic[@"tagSpace"] floatValue] : HXTagSpace;
+    float tagHeight = [propertyDic[@"tagHeight"] length] > 0 ? [propertyDic[@"tagHeight"] floatValue] : HXTagHeight;
+    float tagHorizontalSpace = [propertyDic[@"tagHorizontalSpace"] length] > 0 ? [propertyDic[@"tagHorizontalSpace"] floatValue] : HXTagHorizontalSpace;
+    float tagVerticalSpace = [propertyDic[@"tagVerticalSpace"] length] > 0 ? [propertyDic[@"tagVerticalSpace"] floatValue] : HXTagVerticalSpace;
     
     _type = type;
     self.frame = CGRectMake(CGRectGetMinX([self frame]), CGRectGetMinY([self frame]), frameSizeWidth, CGRectGetHeight([self frame]));
@@ -153,7 +153,11 @@
         
         NSMutableDictionary *dict = [NSMutableDictionary new];
         dict[@"tagTitle"] = tagTitle;//标签标题
-        dict[@"buttonWith"] = [NSString stringWithFormat:@"%f",contentSize.width+_tagSpace];//标签的宽度
+        if (contentSize.width+_tagSpace > maxFrameWidth) {
+            dict[@"buttonWith"] = [NSString stringWithFormat:@"%f",maxFrameWidth];//标签的宽度
+        } else {
+            dict[@"buttonWith"] = [NSString stringWithFormat:@"%f",contentSize.width+_tagSpace];//标签的宽度
+        }
         
         if (index == 0) {
             dict[@"originX"] = [NSString stringWithFormat:@"%f",originX];//标签的X坐标
@@ -161,7 +165,7 @@
         } else {
             if (_type == 1) {
                 //多行
-                if (originX + contentSize.width > maxFrameWidth) {
+                if (originX + contentSize.width+_tagSpace > maxFrameWidth) {
                     //当前标签的X坐标+当前标签的长度>屏幕的横向总长度则换行
                     [disposeTags addObject:subTags];
                     //换行标签的起点坐标初始化
@@ -216,12 +220,12 @@
 + (float)getTagsViewHeight:(NSArray *)ary dic:(NSDictionary *)dic {
     int type = [dic[@"type"] length] > 0 ? [dic[@"type"] intValue] : 0;
     float frameSizeWidth = [dic[@"frameSizeWidth"] length] > 0 ? [dic[@"frameSizeWidth"] floatValue] : [[UIScreen mainScreen] bounds].size.width;
-    float tagOriginX = [dic[@"tagOriginX"] length] > 0 ? [dic[@"tagOriginX"] floatValue] : 10.0;
-    float tagOriginY = [dic[@"tagOriginY"] length] > 0 ? [dic[@"tagOriginY"] floatValue] : 10.0;
-    float tagSpace = [dic[@"tagSpace"] length] > 0 ? [dic[@"tagSpace"] floatValue] : 9.0;
-    float tagHeight = [dic[@"tagHeight"] length] > 0 ? [dic[@"tagHeight"] floatValue] : 32.0;
-    float tagHorizontalSpace = [dic[@"tagHorizontalSpace"] length] > 0 ? [dic[@"tagHorizontalSpace"] floatValue] : 10.0;
-    float tagVerticalSpace = [dic[@"tagVerticalSpace"] length] > 0 ? [dic[@"tagVerticalSpace"] floatValue] : 10.0;
+    float tagOriginX = [dic[@"tagOriginX"] length] > 0 ? [dic[@"tagOriginX"] floatValue] : HXTagOriginX;
+    float tagOriginY = [dic[@"tagOriginY"] length] > 0 ? [dic[@"tagOriginY"] floatValue] : HXTagOriginY;
+    float tagSpace = [dic[@"tagSpace"] length] > 0 ? [dic[@"tagSpace"] floatValue] : HXTagSpace;
+    float tagHeight = [dic[@"tagHeight"] length] > 0 ? [dic[@"tagHeight"] floatValue] : HXTagHeight;
+    float tagHorizontalSpace = [dic[@"tagHorizontalSpace"] length] > 0 ? [dic[@"tagHorizontalSpace"] floatValue] : HXTagHorizontalSpace;
+    float tagVerticalSpace = [dic[@"tagVerticalSpace"] length] > 0 ? [dic[@"tagVerticalSpace"] floatValue] : HXTagVerticalSpace;
 
     NSMutableArray *tags = [NSMutableArray new];//纵向数组
     NSMutableArray *subTags = [NSMutableArray new];//横向数组
@@ -237,7 +241,12 @@
         
         NSMutableDictionary *dict = [NSMutableDictionary new];
         dict[@"tagTitle"] = tagTitle;//标签标题
-        dict[@"buttonWith"] = [NSString stringWithFormat:@"%f",contentSize.width+tagSpace];//标签的宽度
+        
+        if (contentSize.width+tagSpace > maxFrameWidth) {
+            dict[@"buttonWith"] = [NSString stringWithFormat:@"%f",maxFrameWidth];//标签的宽度
+        } else {
+            dict[@"buttonWith"] = [NSString stringWithFormat:@"%f",contentSize.width+tagSpace];//标签的宽度
+        }
         
         if (index == 0) {
             dict[@"originX"] = [NSString stringWithFormat:@"%f",originX];//标签的X坐标
@@ -245,7 +254,7 @@
         } else {
             if (type == 1) {
                 //多行
-                if (originX + contentSize.width > maxFrameWidth) {
+                if (originX + contentSize.width+tagSpace > maxFrameWidth) {
                     //当前标签的X坐标+当前标签的长度>屏幕的横向总长度则换行
                     [tags addObject:subTags];
                     //换行标签的起点坐标初始化
