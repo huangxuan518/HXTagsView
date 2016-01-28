@@ -79,16 +79,15 @@
         
         for (NSDictionary *tagDic in iTags) {
             
-            NSUInteger j = [iTags indexOfObject:tagDic];
-            
             NSString *tagTitle = tagDic[@"tagTitle"];
+            NSUInteger index = [tagDic[@"index"] integerValue];
             float originX = [tagDic[@"originX"] floatValue];
             float buttonWith = [tagDic[@"buttonWith"] floatValue];
             
             CGRect frame = CGRectMake(originX, _tagOriginY+i*(_tagHeight+_tagVerticalSpace), buttonWith, _tagHeight);;
             UIButton *button = [self ittemButtonWithFrame:frame];
             [button setTitle:tagTitle forState:UIControlStateNormal];
-            button.tag = i*iTags.count+j;
+            button.tag = index;
             [self addSubview:button];
         }
     }
@@ -153,6 +152,7 @@
         
         NSMutableDictionary *dict = [NSMutableDictionary new];
         dict[@"tagTitle"] = tagTitle;//标签标题
+        dict[@"index"] = @(index);//位置
         if (contentSize.width+_tagSpace > maxFrameWidth) {
             dict[@"buttonWith"] = [NSString stringWithFormat:@"%f",maxFrameWidth];//标签的宽度
         } else {
