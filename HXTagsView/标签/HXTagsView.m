@@ -19,6 +19,9 @@
         int r = arc4random() % 255;
         int g = arc4random() % 255;
         int b = arc4random() % 255;
+        
+        _currentIndex = -1;
+        
         _tagSpace = HXTagSpace;
         _tagHeight = HXTagHeight;
         _tagOriginX = HXTagOriginX;
@@ -26,14 +29,15 @@
         _tagHorizontalSpace = HXTagHorizontalSpace;
         _tagVerticalSpace = HXTagVerticalSpace;
         
-        _borderColor = [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
         _borderWidth = 0.5f;
         _masksToBounds = YES;
         _cornerRadius = 2.0;
         _titleSize = 14;
-        _titleColor = [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];;
+        _titleNormalColor = [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
+        _titleSelectedColor = [UIColor colorWithRed:g/255.0 green:b/255.0 blue:r/255.0 alpha:1.0];
         _normalBackgroundImage = [self imageWithColor:[UIColor whiteColor] size:CGSizeMake(1.0, 1.0)];
         _highlightedBackgroundImage = [self imageWithColor:[UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1.0] size:CGSizeMake(1.0, 1.0)];
+        _selectedBackgroundImage = [self imageWithColor:[UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1.0] size:CGSizeMake(1.0, 1.0)];
     }
     return self;
 }
@@ -87,6 +91,11 @@
             CGRect frame = CGRectMake(originX, _tagOriginY+i*(_tagHeight+_tagVerticalSpace), buttonWith, _tagHeight);;
             UIButton *button = [self ittemButtonWithFrame:frame];
             [button setTitle:tagTitle forState:UIControlStateNormal];
+            if (index == _currentIndex) {
+                button.selected = YES;
+            } else {
+                button.selected = NO;
+            }
             button.tag = index;
             [self addSubview:button];
         }
@@ -124,14 +133,16 @@
 - (UIButton *)ittemButtonWithFrame:(CGRect)frame {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = frame;
-    button.layer.borderColor = _borderColor.CGColor;
+    button.layer.borderColor = _titleNormalColor.CGColor;
     button.layer.borderWidth = _borderWidth;
     button.layer.masksToBounds = _masksToBounds;
     button.layer.cornerRadius = _cornerRadius;
     button.titleLabel.font = [UIFont systemFontOfSize:_titleSize];
-    [button setTitleColor:_titleColor forState:UIControlStateNormal];
+    [button setTitleColor:_titleNormalColor forState:UIControlStateNormal];
+    [button setTitleColor:_titleSelectedColor forState:UIControlStateSelected];
     [button setBackgroundImage:_normalBackgroundImage forState:UIControlStateNormal];
     [button setBackgroundImage:_highlightedBackgroundImage forState:UIControlStateHighlighted];
+    [button setBackgroundImage:_selectedBackgroundImage forState:UIControlStateSelected];
     [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
     return button;
 }
@@ -213,6 +224,25 @@
 - (void)buttonAction:(UIButton *)sender {
     if (_tagDelegate && [_tagDelegate respondsToSelector:@selector(tagsViewButtonAction:button:)]) {
         [_tagDelegate tagsViewButtonAction:self button:sender];
+    }
+    
+    if (sender.tag != _currentIndex) {
+        //只有点击的按钮不是之前点击的才执行以下方法,寻找点击的按钮
+        for (UIButton *button in self.subviews) {
+            if ([button isKindOfClass:[UIButton class]]) {
+                if (button.tag == sender.tag) {
+                    button.selected = YES;
+                } else {
+                    button.selected = NO;
+                }
+                
+                if (button.selected) {
+                    button.layer.borderColor = _titleSelectedColor.CGColor;
+                } else {
+                    button.layer.borderColor = _titleNormalColor.CGColor;
+                }
+            }
+        }
     }
 }
 

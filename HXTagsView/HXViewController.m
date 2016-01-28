@@ -96,7 +96,7 @@
  */
 - (void)tagsViewButtonAction:(HXTagsView *)tagsView button:(UIButton *)sender {
     NSLog(@"tag:%@ index:%ld",sender.titleLabel.text,(long)sender.tag);
-
+    
     HXWebViewController *vc = [[HXWebViewController alloc] init];
     vc.keyWord = sender.titleLabel.text;
     [self.navigationController pushViewController:vc animated:NO];

@@ -40,14 +40,17 @@
 @property (nonatomic,assign) float tagVerticalSpace;//标签间纵向间距
 
 #pragma mark 标签定制属性
-@property (nonatomic,strong) UIColor *borderColor;//标签边框颜色
 @property (nonatomic,assign) float borderWidth;//标签边框宽度
 @property (nonatomic,assign) BOOL masksToBounds;//标签是否有圆角
 @property (nonatomic,assign) float cornerRadius;//标签圆角大小
 @property (nonatomic,assign) float titleSize;//标签字体大小
-@property (nonatomic,strong) UIColor *titleColor;//标签字体颜色
+@property (nonatomic,strong) UIColor *titleNormalColor;//标签字体默认颜色
+@property (nonatomic,strong) UIColor *titleSelectedColor;//标签字体选中颜色
 @property (nonatomic,strong) UIImage *normalBackgroundImage;//标签默认背景颜色
 @property (nonatomic,strong) UIImage *highlightedBackgroundImage;//标签高亮背景颜色
+@property (nonatomic,strong) UIImage *selectedBackgroundImage;//标签选中背景颜色
+
+@property (nonatomic,assign) NSInteger currentIndex;//当前点击的标签
 
 /**
  *  设置标签数据和代理
