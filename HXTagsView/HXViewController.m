@@ -76,6 +76,8 @@
     //多行滚动 ===
     tagAry = @[@"蜀山ol",@"天下3",@"大话西游2",@"热血江湖",@"游戏人生",@"梦三国",@"流星蝴蝶剑",@"九阴真经",@"斗战神",@"奇迹mu",@"最终幻想14",@"宠物小精灵",@"天龙八部3",@"qq三国",@"倩女幽魂ol",@"御龙在天"];
     
+    tagAry = @[@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol"];
+    
     titleLable = [[UILabel alloc] initWithFrame:CGRectMake(10, tagsView.frame.origin.y+tagsView.frame.size.height+10, 200, 20)];
     titleLable.text = @"多行滚动";
     [self.view addSubview:titleLable];

@@ -77,12 +77,10 @@
     NSArray *disposeAry = [self disposeTags:tagAry];
     
     //遍历标签数组,将标签显示在界面上,并给每个标签打上tag加以区分
-    for (NSArray *iTags in disposeAry) {
-        
-        NSUInteger i = [disposeAry indexOfObject:iTags];
-        
-        for (NSDictionary *tagDic in iTags) {
-            
+    for (int i = 0; i < disposeAry.count; i++) {
+        NSArray *iTags = disposeAry[i];
+        for (int j = 0; j < iTags.count; j++) {
+            NSDictionary *tagDic = iTags[j];
             NSString *tagTitle = tagDic[@"tagTitle"];
             NSUInteger index = [tagDic[@"index"] integerValue];
             float originX = [tagDic[@"originX"] floatValue];
@@ -155,8 +153,9 @@
     float originX = _tagOriginX;
     float maxFrameWidth = self.frame.size.width-_tagOriginX*2;
     
-    for (NSString *tagTitle in ary) {
-        NSUInteger index = [ary indexOfObject:tagTitle];
+    for (int i = 0; i < ary.count; i++) {
+        NSString *tagTitle = ary[i];
+        NSUInteger index = i;
         
         //计算每个tag的宽度
         CGSize contentSize = [tagTitle fdd_sizeWithFont:[UIFont systemFontOfSize:_titleSize] constrainedToSize:CGSizeMake(maxFrameWidth, MAXFLOAT)];
@@ -263,8 +262,9 @@
     float originX = tagOriginX;
     float maxFrameWidth = frameSizeWidth-tagOriginX*2;
     
-    for (NSString *tagTitle in ary) {
-        NSUInteger index = [ary indexOfObject:tagTitle];
+    for (int i = 0; i < ary.count; i++) {
+        NSString *tagTitle = ary[i];
+        NSUInteger index = i;
         
         //计算每个tag的宽度
         CGSize contentSize = [tagTitle fdd_sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(maxFrameWidth, MAXFLOAT)];
