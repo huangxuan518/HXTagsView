@@ -15,7 +15,7 @@ HXTagsView是一款支持自动布局的标签tag
 
 -不使用UICollectionView. 
 
-- 支持多选操作,控制字段isMultiSelect
+-支持多选操作,控制字段isMultiSelect
 
 # 效果展示
 
