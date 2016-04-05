@@ -220,29 +220,60 @@
     return height;
 }
 
-- (void)buttonAction:(UIButton *)sender {
-    if (_tagDelegate && [_tagDelegate respondsToSelector:@selector(tagsViewButtonAction:button:)]) {
-        [_tagDelegate tagsViewButtonAction:self button:sender];
-    }
-    
-    if (sender.tag != _currentIndex) {
-        //只有点击的按钮不是之前点击的才执行以下方法,寻找点击的按钮
+- (void)buttonAction:(UIButton *)sender {    
+    if (_isMultiSelect) {
+        sender.selected = !sender.selected;
+        
+        if (sender.selected) {
+            sender.layer.borderColor = _titleSelectedColor.CGColor;
+        } else {
+            sender.layer.borderColor = _titleNormalColor.CGColor;
+        }
+        
+        if (!_tags) {
+            _tags = [NSMutableArray new];
+        }
+        [_tags removeAllObjects];
+        
         for (UIButton *button in self.subviews) {
             if ([button isKindOfClass:[UIButton class]]) {
-                if (button.tag == sender.tag) {
-                    button.selected = YES;
-                } else {
-                    button.selected = NO;
+                if (button.selected == YES) {
+                    [_tags addObject:button.titleLabel.text];
                 }
-                
-                if (button.selected) {
-                    button.layer.borderColor = _titleSelectedColor.CGColor;
-                } else {
-                    button.layer.borderColor = _titleNormalColor.CGColor;
+            }
+        }
+        
+        if (_tagDelegate && [_tagDelegate respondsToSelector:@selector(tagsViewButtonAction:button:)]) {
+            [_tagDelegate tagsViewButtonAction:self button:sender];
+        }
+        
+    } else {
+        if (_tagDelegate && [_tagDelegate respondsToSelector:@selector(tagsViewButtonAction:button:)]) {
+            [_tagDelegate tagsViewButtonAction:self button:sender];
+        }
+        
+        //单选
+        if (sender.tag != _currentIndex) {
+            //只有点击的按钮不是之前点击的才执行以下方法,寻找点击的按钮
+            for (UIButton *button in self.subviews) {
+                if ([button isKindOfClass:[UIButton class]]) {
+                    if (button.tag == sender.tag) {
+                        button.selected = YES;
+                    } else {
+                        button.selected = NO;
+                    }
+                    
+                    if (button.selected) {
+                        button.layer.borderColor = _titleSelectedColor.CGColor;
+                    } else {
+                        button.layer.borderColor = _titleNormalColor.CGColor;
+                    }
                 }
             }
         }
     }
+    
+    
 }
 
 //当把标签View放到cell中时,需要先计算出cell的高度,所以如果自己定制,则需要传入所有影响计算结果的参数

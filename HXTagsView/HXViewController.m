@@ -35,6 +35,8 @@
     //以下2种方式皆可或者不设置,默认为单行
     tagsView.type = 0;
     //tagsView.propertyDic = propertyDic;
+    //是否可以多选
+    //tagsView.isMultiSelect = YES;
     [tagsView setTagAry:tagAry delegate:self];
     [self.view addSubview:tagsView];
     
@@ -51,6 +53,8 @@
     tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, height)];
     //以下2种方式皆可或者不设置,默认为单行
     //tagsView.type = 0;
+    //是否可以多选
+    //tagsView.isMultiSelect = YES;
     tagsView.propertyDic = propertyDic;
     [tagsView setTagAry:tagAry delegate:self];
     [self.view addSubview:tagsView];
@@ -99,9 +103,16 @@
 - (void)tagsViewButtonAction:(HXTagsView *)tagsView button:(UIButton *)sender {
     NSLog(@"tag:%@ index:%ld",sender.titleLabel.text,(long)sender.tag);
     
-    HXWebViewController *vc = [[HXWebViewController alloc] init];
-    vc.keyWord = sender.titleLabel.text;
-    [self.navigationController pushViewController:vc animated:NO];
+    //是否多选
+    BOOL isMultiSelect = NO;
+    
+    if (isMultiSelect) {
+        NSLog(@"选中的标签:%@",tagsView.tags);
+    } else {
+        HXWebViewController *vc = [[HXWebViewController alloc] init];
+        vc.keyWord = sender.titleLabel.text;
+        [self.navigationController pushViewController:vc animated:NO];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

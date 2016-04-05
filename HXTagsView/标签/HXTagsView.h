@@ -52,6 +52,9 @@
 
 @property (nonatomic,assign) NSInteger currentIndex;//当前点击的标签
 
+@property (nonatomic,assign) BOOL isMultiSelect;//是否可以多选 默认单选
+@property (nonatomic,strong) NSMutableArray *tags;//多选 选中的标签数组
+
 /**
  *  设置标签数据和代理
  *
