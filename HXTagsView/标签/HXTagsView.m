@@ -33,6 +33,7 @@
         _masksToBounds = YES;
         _cornerRadius = 2.0;
         _titleSize = 14;
+        _keyColor = [UIColor redColor];
         _titleNormalColor = [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
         _titleSelectedColor = [UIColor colorWithRed:g/255.0 green:b/255.0 blue:r/255.0 alpha:1.0];
         _normalBackgroundImage = [self imageWithColor:[UIColor whiteColor] size:CGSizeMake(1.0, 1.0)];
@@ -88,14 +89,29 @@
             
             CGRect frame = CGRectMake(originX, _tagOriginY+i*(_tagHeight+_tagVerticalSpace), buttonWith, _tagHeight);;
             UIButton *button = [self ittemButtonWithFrame:frame];
+            
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, button.frame.size.width, button.frame.size.height)];
+            label.font = [UIFont systemFontOfSize:_titleSize];
+            label.backgroundColor = [UIColor clearColor];
+            label.textAlignment = NSTextAlignmentCenter;
+            
             [button setTitle:tagTitle forState:UIControlStateNormal];
             if (index == _currentIndex) {
                 button.selected = YES;
+                label.textColor = _titleSelectedColor;
             } else {
                 button.selected = NO;
+                label.textColor = _titleNormalColor;
             }
             button.tag = index;
             [self addSubview:button];
+            
+            if (_key.length > 0) {
+                label.attributedText = [self searchTitle:tagTitle key:_key keyColor:_keyColor];
+            } else {
+                label.text = tagTitle;
+            }
+            [button addSubview:label];
         }
     }
     
@@ -127,6 +143,28 @@
     }
 }
 
+- (NSMutableAttributedString *)searchTitle:(NSString *)title key:(NSString *)key keyColor:(UIColor *)keyColor {
+    
+    NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:title];
+    NSString *copyStr = title;
+    
+    NSMutableString *xxstr = [NSMutableString new];
+    for (int i = 0; i < key.length; i++) {
+        [xxstr appendString:@"*"];
+    }
+    
+    while ([copyStr rangeOfString:key].location != NSNotFound) {
+        
+        NSRange range = [copyStr rangeOfString:key];
+        
+        [str1 addAttribute:NSForegroundColorAttributeName value:keyColor range:range];
+        [str1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:_titleSize] range:range];
+        
+        copyStr = [copyStr stringByReplacingCharactersInRange:NSMakeRange(range.location, range.length) withString:xxstr];
+    }
+    return str1;
+}
+
 //根据frame生成对应的标签按钮
 - (UIButton *)ittemButtonWithFrame:(CGRect)frame {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -136,12 +174,12 @@
     button.layer.masksToBounds = _masksToBounds;
     button.layer.cornerRadius = _cornerRadius;
     button.titleLabel.font = [UIFont systemFontOfSize:_titleSize];
-    [button setTitleColor:_titleNormalColor forState:UIControlStateNormal];
-    [button setTitleColor:_titleSelectedColor forState:UIControlStateSelected];
+    [button setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
     [button setBackgroundImage:_normalBackgroundImage forState:UIControlStateNormal];
     [button setBackgroundImage:_highlightedBackgroundImage forState:UIControlStateHighlighted];
     [button setBackgroundImage:_selectedBackgroundImage forState:UIControlStateSelected];
     [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+
     return button;
 }
 

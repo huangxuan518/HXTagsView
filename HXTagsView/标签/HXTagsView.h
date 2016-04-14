@@ -55,6 +55,10 @@
 @property (nonatomic,assign) BOOL isMultiSelect;//是否可以多选 默认单选
 @property (nonatomic,strong) NSMutableArray *tags;//多选 选中的标签数组
 
+#pragma mark 搜索标签加色
+@property (nonatomic,copy) NSString *key;//搜索关键词
+@property (nonatomic,strong) UIColor *keyColor;//搜索关键词颜色
+
 /**
  *  设置标签数据和代理
  *

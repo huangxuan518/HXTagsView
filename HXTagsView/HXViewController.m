@@ -42,7 +42,7 @@
     
     
     //单行滚动 ===
-    tagAry = @[@"魔兽世界",@"梦幻西游",@"qq飞车",@"传奇",@"逆战",@"炉石传说",@"剑灵",@"qq炫舞",@"dota2",@"300英雄",@"笑傲江湖ol",@"剑网3",@"坦克世界",@"神武",@"龙之谷"];
+    tagAry = @[@"魔兽世界魔兽世界sfd魔兽世界fsfs魔兽世界魔asfaf兽世界",@"梦幻西游",@"qq飞车",@"传奇",@"逆战",@"炉石传说",@"剑灵",@"qq炫舞",@"dota2",@"300英雄",@"笑傲江湖ol",@"剑网3",@"坦克世界",@"神武",@"龙之谷"];
     
     titleLable = [[UILabel alloc] initWithFrame:CGRectMake(10, tagsView.frame.origin.y+tagsView.frame.size.height+10, 200, 20)];
     titleLable.text = @"单行滚动";
@@ -55,6 +55,7 @@
     //tagsView.type = 0;
     //是否可以多选
     //tagsView.isMultiSelect = YES;
+    tagsView.key = @"魔兽世界";
     tagsView.propertyDic = propertyDic;
     [tagsView setTagAry:tagAry delegate:self];
     [self.view addSubview:tagsView];
