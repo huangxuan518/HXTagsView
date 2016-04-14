@@ -17,6 +17,8 @@ HXTagsView是一款支持自动布局的标签tag
 
 -支持多选操作,控制字段isMultiSelect
 
+-支持搜索关键词标签加量
+
 # 效果展示
 
 
