@@ -28,7 +28,7 @@
         int g = arc4random() % 255;
         int b = arc4random() % 255;
         
-        UIColor *normalColor = [UIColor colorWithRed:r/255.0 green:r/255.0 blue:b/255.0 alpha:1.0];
+        UIColor *normalColor = [UIColor colorWithRed:r/255.0 green:b/255.0 blue:g/255.0 alpha:1.0];
         UIColor *selectedColor = [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
         
         UIColor *normalBackgroundColor = [UIColor whiteColor];
