@@ -9,8 +9,9 @@
 #import "HXViewController.h"
 #import "HXWebViewController.h"
 #import "HXTagsView.h"
+#import "HXTagButton.h"
 
-@interface HXViewController ()
+@interface HXViewController () <HXTagsViewDelegate>
 
 @end
 
@@ -37,12 +38,13 @@
     //tagsView.propertyDic = propertyDic;
     //是否可以多选
     //tagsView.isMultiSelect = YES;
-    [tagsView setTagAry:tagAry delegate:self];
+    tagsView.tagAry = tagAry;
+    tagsView.tagDelegate = self;
     [self.view addSubview:tagsView];
     
     
     //单行滚动 ===
-    tagAry = @[@"魔兽世界魔兽世界sfd魔兽世界fsfs魔兽世界魔asfaf兽世界",@"梦幻西游",@"qq飞车",@"传奇",@"逆战",@"炉石传说",@"剑灵",@"qq炫舞",@"dota2",@"300英雄",@"笑傲江湖ol",@"剑网3",@"坦克世界",@"神武",@"龙之谷"];
+    tagAry = @[@"魔兽世界",@"梦幻西游",@"qq飞车",@"传奇",@"逆战",@"炉石传说",@"剑灵",@"qq炫舞",@"dota2",@"300英雄",@"笑傲江湖ol",@"剑网3",@"坦克世界",@"神武",@"龙之谷"];
     
     titleLable = [[UILabel alloc] initWithFrame:CGRectMake(10, tagsView.frame.origin.y+tagsView.frame.size.height+10, 200, 20)];
     titleLable.text = @"单行滚动";
@@ -53,18 +55,16 @@
     tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, height)];
     //以下2种方式皆可或者不设置,默认为单行
     //tagsView.type = 0;
-    //是否可以多选
-    //tagsView.isMultiSelect = YES;
-    tagsView.key = @"魔兽世界";
     tagsView.propertyDic = propertyDic;
-    [tagsView setTagAry:tagAry delegate:self];
+    tagsView.tagAry = tagAry;
+    tagsView.tagDelegate = self;
     [self.view addSubview:tagsView];
     
     
     /*多行是否滚动是HXTagsView的高度和标签计算出的高度比较后决定的,当HXTagsView的高度小于计算出的高度则自动滚动*/
     
     //多行不滚动 ===
-    tagAry = @[@"冒险岛",@"反恐精英ol",@"魔域",@"诛仙",@"火影ol",@"问道",@"天龙八部",@"枪神纪",@"英魂之刃",@"勇者大冒险",@"nba 2k",@"上古世纪",@"跑跑卡丁车",@"传奇世界",@"劲舞团",@"激战2"];
+    tagAry = @[@"冒险岛游戏",@"反恐精英ol游戏",@"游戏魔域",@"诛游戏仙",@"火游戏影ol游戏",@"问游戏道",@"天游戏龙游戏八游戏部",@"枪神纪游戏",@"英魂之游戏刃",@"勇者游戏大冒险",@"nba 游戏2k",@"上古世纪游戏",@"游戏跑跑卡游戏丁车",@"传奇世界游戏",@"劲舞游戏团",@"激游戏战2"];
     
     titleLable = [[UILabel alloc] initWithFrame:CGRectMake(10, tagsView.frame.origin.y+tagsView.frame.size.height+10, 200, 20)];
     titleLable.text = @"多行平铺";
@@ -73,47 +73,47 @@
     propertyDic = @{@"type":@"1"};
     height = [HXTagsView getTagsViewHeight:tagAry dic:propertyDic];
     tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, height)];
-    tagsView.propertyDic = propertyDic;
-    [tagsView setTagAry:tagAry delegate:self];
+    tagsView.type = 1;
+    tagsView.isMultiSelect = YES;
+    tagsView.key = @"游戏";
+    tagsView.tagAry = tagAry;
+    tagsView.tagDelegate = self;
     [self.view addSubview:tagsView];
     
     
     //多行滚动 ===
     tagAry = @[@"蜀山ol",@"天下3",@"大话西游2",@"热血江湖",@"游戏人生",@"梦三国",@"流星蝴蝶剑",@"九阴真经",@"斗战神",@"奇迹mu",@"最终幻想14",@"宠物小精灵",@"天龙八部3",@"qq三国",@"倩女幽魂ol",@"御龙在天"];
-    
-    tagAry = @[@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol",@"蜀山ol"];
-    
+        
     titleLable = [[UILabel alloc] initWithFrame:CGRectMake(10, tagsView.frame.origin.y+tagsView.frame.size.height+10, 200, 20)];
     titleLable.text = @"多行滚动";
     [self.view addSubview:titleLable];
     
     tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, 100)];
     tagsView.type = 1;
-    [tagsView setTagAry:tagAry delegate:self];
+    tagsView.tagAry = tagAry;
+    tagsView.tagDelegate = self;
     [self.view addSubview:tagsView];
 }
 
 #pragma mark HXTagsViewDelegate
 
+- (void)tagsViewButtonAction:(HXTagsView *)tagsView tags:(NSArray *)tags {
+    NSLog(@"选中的所有标签:{%@}",tags.description);
+}
+
 /**
- *  tagsView代理方法
+ *  单选模式
  *
- *  @param tagsView tagsView
- *  @param sender   tag:sender.titleLabel.text index:sender.tag
+ *  @param tagsView    <#tagsView description#>
+ *  @param selectIndex 当前选的标签index
+ *  @param title       当前选的标签标题
  */
-- (void)tagsViewButtonAction:(HXTagsView *)tagsView button:(UIButton *)sender {
-    NSLog(@"tag:%@ index:%ld",sender.titleLabel.text,(long)sender.tag);
+- (void)tagsViewButtonAction:(HXTagsView *)tagsView selectIndex:(NSInteger)selectIndex tagTitle:(NSString *)title {
+    NSLog(@"tag:%@ index:%ld",title,selectIndex);
     
-    //是否多选
-    BOOL isMultiSelect = NO;
-    
-    if (isMultiSelect) {
-        NSLog(@"选中的标签:%@",tagsView.tags);
-    } else {
-        HXWebViewController *vc = [[HXWebViewController alloc] init];
-        vc.keyWord = sender.titleLabel.text;
-        [self.navigationController pushViewController:vc animated:NO];
-    }
+    HXWebViewController *vc = [[HXWebViewController alloc] init];
+    vc.keyWord = title;
+    [self.navigationController pushViewController:vc animated:NO];
 }
 
 - (void)didReceiveMemoryWarning {

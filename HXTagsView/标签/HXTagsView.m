@@ -6,6 +6,14 @@
 //  Copyright © 2015年 IT小子. All rights reserved.
 
 #import "HXTagsView.h"
+#import "HXTagButton.h"
+
+@interface HXTagsView ()
+
+@property (nonatomic,strong) NSMutableArray *tags;//多选 选中的标签数组
+@property (nonatomic,assign) BOOL isFirst;//第一加载
+
+@end
 
 @implementation HXTagsView
 
@@ -20,6 +28,12 @@
         int g = arc4random() % 255;
         int b = arc4random() % 255;
         
+        UIColor *normalColor = [UIColor colorWithRed:r/255.0 green:r/255.0 blue:b/255.0 alpha:1.0];
+        UIColor *selectedColor = [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
+        
+        UIColor *normalBackgroundColor = [UIColor whiteColor];
+        UIColor *selectedBackgroundColor = [UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1.0];
+        
         _currentIndex = -1;
         
         _tagSpace = HXTagSpace;
@@ -30,157 +44,126 @@
         _tagVerticalSpace = HXTagVerticalSpace;
         
         _borderWidth = 0.5f;
-        _masksToBounds = YES;
         _cornerRadius = 2.0;
         _titleSize = 14;
         _keyColor = [UIColor redColor];
-        _titleNormalColor = [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
-        _titleSelectedColor = [UIColor colorWithRed:g/255.0 green:b/255.0 blue:r/255.0 alpha:1.0];
-        _normalBackgroundImage = [self imageWithColor:[UIColor whiteColor] size:CGSizeMake(1.0, 1.0)];
-        _highlightedBackgroundImage = [self imageWithColor:[UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1.0] size:CGSizeMake(1.0, 1.0)];
-        _selectedBackgroundImage = [self imageWithColor:[UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1.0] size:CGSizeMake(1.0, 1.0)];
+        _borderNormalColor = normalColor;
+        _borderSelectedColor = selectedColor;
+        _titleNormalColor = normalColor;
+        _titleSelectedColor = selectedColor;
+        _normalBackgroundColor = normalBackgroundColor;
+        _selectedBackgroundColor = selectedBackgroundColor;
+        _isFirst = YES;
     }
     return self;
 }
 
-- (void)setPropertyDic:(NSDictionary *)propertyDic {
-    int type = [propertyDic[@"type"] length] > 0 ? [propertyDic[@"type"] intValue] : 0;
-    float frameSizeWidth = [propertyDic[@"frameSizeWidth"] length] > 0 ? [propertyDic[@"frameSizeWidth"] floatValue] : [[UIScreen mainScreen] bounds].size.width;
-    float tagOriginX = [propertyDic[@"tagOriginX"] length] > 0 ? [propertyDic[@"tagOriginX"] floatValue] : HXTagOriginX;
-    float tagOriginY = [propertyDic[@"tagOriginY"] length] > 0 ? [propertyDic[@"tagOriginY"] floatValue] : HXTagOriginY;
-    float tagSpace = [propertyDic[@"tagSpace"] length] > 0 ? [propertyDic[@"tagSpace"] floatValue] : HXTagSpace;
-    float tagHeight = [propertyDic[@"tagHeight"] length] > 0 ? [propertyDic[@"tagHeight"] floatValue] : HXTagHeight;
-    float tagHorizontalSpace = [propertyDic[@"tagHorizontalSpace"] length] > 0 ? [propertyDic[@"tagHorizontalSpace"] floatValue] : HXTagHorizontalSpace;
-    float tagVerticalSpace = [propertyDic[@"tagVerticalSpace"] length] > 0 ? [propertyDic[@"tagVerticalSpace"] floatValue] : HXTagVerticalSpace;
-    
+- (void)setTagAry:(NSMutableArray *)tagAry {
+    _tagAry = tagAry;
+}
+
+- (void)setIsMultiSelect:(BOOL)isMultiSelect {
+    _isMultiSelect = isMultiSelect;
+}
+
+- (void)setType:(NSInteger)type {
     _type = type;
+}
+
+- (void)setPropertyDic:(NSDictionary *)propertyDic {
+    _propertyDic = propertyDic;
+    
+    int type = [_propertyDic[@"type"] length] > 0 ? [_propertyDic[@"type"] intValue] : 0;
+    float frameSizeWidth = [_propertyDic[@"frameSizeWidth"] length] > 0 ? [_propertyDic[@"frameSizeWidth"] floatValue] : [[UIScreen mainScreen] bounds].size.width;
+    float tagOriginX = [_propertyDic[@"tagOriginX"] length] > 0 ? [_propertyDic[@"tagOriginX"] floatValue] : HXTagOriginX;
+    float tagOriginY = [_propertyDic[@"tagOriginY"] length] > 0 ? [_propertyDic[@"tagOriginY"] floatValue] : HXTagOriginY;
+    float tagSpace = [_propertyDic[@"tagSpace"] length] > 0 ? [_propertyDic[@"tagSpace"] floatValue] : HXTagSpace;
+    float tagHeight = [_propertyDic[@"tagHeight"] length] > 0 ? [_propertyDic[@"tagHeight"] floatValue] : HXTagHeight;
+    float tagHorizontalSpace = [_propertyDic[@"tagHorizontalSpace"] length] > 0 ? [_propertyDic[@"tagHorizontalSpace"] floatValue] : HXTagHorizontalSpace;
+    float tagVerticalSpace = [_propertyDic[@"tagVerticalSpace"] length] > 0 ? [_propertyDic[@"tagVerticalSpace"] floatValue] : HXTagVerticalSpace;
+    
+    [self setType:type];
     self.frame = CGRectMake(CGRectGetMinX([self frame]), CGRectGetMinY([self frame]), frameSizeWidth, CGRectGetHeight([self frame]));
-    _tagOriginX = tagOriginX;
-    _tagOriginY = tagOriginY;
+    
+    [self setTagOriginX:tagOriginX];
+    [self setTagOriginY:tagOriginY];
+    [self setTagSpace:tagSpace];
+    
+    [self setTagHeight:tagHeight];
+    [self setTagHorizontalSpace:tagHorizontalSpace];
+    [self setTagVerticalSpace:tagVerticalSpace];
+}
+
+- (void)setTagDelegate:(id<HXTagsViewDelegate>)tagDelegate {
+    _tagDelegate = tagDelegate;
+}
+
+- (void)setTagSpace:(float)tagSpace {
     _tagSpace = tagSpace;
+}
+
+- (void)setTagHeight:(float)tagHeight {
     _tagHeight = tagHeight;
+}
+
+- (void)setTagOriginX:(float)tagOriginX {
+    _tagOriginX = tagOriginX;
+}
+
+- (void)setTagOriginY:(float)tagOriginY {
+    _tagOriginY = tagOriginY;
+}
+
+- (void)setTagHorizontalSpace:(float)tagHorizontalSpace {
     _tagHorizontalSpace = tagHorizontalSpace;
+}
+
+- (void)setTagVerticalSpace:(float)tagVerticalSpace {
     _tagVerticalSpace = tagVerticalSpace;
 }
 
-//设置标签数据和代理
-- (void)setTagAry:(NSArray *)tagAry delegate:(id)delegate {
-    
-    //先移除之前的View
-    if (self.subviews.count > 0) {
-        [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    }
-    
-    //代理
-    _tagDelegate = delegate;
-    
-    //将数组根据类型和参数进行处理分组
-    NSArray *disposeAry = [self disposeTags:tagAry];
-    
-    //遍历标签数组,将标签显示在界面上,并给每个标签打上tag加以区分
-    for (int i = 0; i < disposeAry.count; i++) {
-        NSArray *iTags = disposeAry[i];
-        for (int j = 0; j < iTags.count; j++) {
-            NSDictionary *tagDic = iTags[j];
-            NSString *tagTitle = tagDic[@"tagTitle"];
-            NSUInteger index = [tagDic[@"index"] integerValue];
-            float originX = [tagDic[@"originX"] floatValue];
-            float buttonWith = [tagDic[@"buttonWith"] floatValue];
-            
-            CGRect frame = CGRectMake(originX, _tagOriginY+i*(_tagHeight+_tagVerticalSpace), buttonWith, _tagHeight);;
-            UIButton *button = [self ittemButtonWithFrame:frame];
-            
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, button.frame.size.width, button.frame.size.height)];
-            label.font = [UIFont systemFontOfSize:_titleSize];
-            label.backgroundColor = [UIColor clearColor];
-            label.textAlignment = NSTextAlignmentCenter;
-            
-            [button setTitle:tagTitle forState:UIControlStateNormal];
-            if (index == _currentIndex) {
-                button.selected = YES;
-                label.textColor = _titleSelectedColor;
-            } else {
-                button.selected = NO;
-                label.textColor = _titleNormalColor;
-            }
-            button.tag = index;
-            [self addSubview:button];
-            
-            if (_key.length > 0) {
-                label.attributedText = [self searchTitle:tagTitle key:_key keyColor:_keyColor];
-            } else {
-                label.text = tagTitle;
-            }
-            [button addSubview:label];
-        }
-    }
-    
-    //设置当前scrollView的contentSize
-    if (disposeAry.count > 0) {
-        if (_type == 1) {
-            //多行
-            float contentSizeHeight = _tagOriginY+disposeAry.count*(_tagHeight+_tagVerticalSpace);
-            self.contentSize = CGSizeMake(self.frame.size.width,contentSizeHeight);
-        } else {
-            //单行
-            NSArray *a = disposeAry[0];
-            NSDictionary *tagDic = a[a.count-1];
-            float originX = [tagDic[@"originX"] floatValue];
-            float buttonWith = [tagDic[@"buttonWith"] floatValue];
-            self.contentSize = CGSizeMake(originX+buttonWith+_tagOriginX,self.frame.size.height);
-        }
-    }
-    
-    //设置当前scrollView的高度
-    if (self.frame.size.height <= 0) {
-        self.frame = CGRectMake(CGRectGetMinX([self frame]), CGRectGetMinY([self frame]), CGRectGetWidth([self frame]), [self getDisposeTagsViewHeight:disposeAry]);
-    } else {
-        if (_type == 1) {
-            if (self.frame.size.height > self.contentSize.height) {
-                self.frame = CGRectMake(CGRectGetMinX([self frame]), CGRectGetMinY([self frame]), CGRectGetWidth([self frame]), self.contentSize.height);
-            }
-        }
-    }
+-(void)setBorderWidth:(float)borderWidth {
+    _borderWidth = borderWidth;
 }
 
-- (NSMutableAttributedString *)searchTitle:(NSString *)title key:(NSString *)key keyColor:(UIColor *)keyColor {
-    
-    NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:title];
-    NSString *copyStr = title;
-    
-    NSMutableString *xxstr = [NSMutableString new];
-    for (int i = 0; i < key.length; i++) {
-        [xxstr appendString:@"*"];
-    }
-    
-    while ([copyStr rangeOfString:key].location != NSNotFound) {
-        
-        NSRange range = [copyStr rangeOfString:key];
-        
-        [str1 addAttribute:NSForegroundColorAttributeName value:keyColor range:range];
-        [str1 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:_titleSize] range:range];
-        
-        copyStr = [copyStr stringByReplacingCharactersInRange:NSMakeRange(range.location, range.length) withString:xxstr];
-    }
-    return str1;
+- (void)setCornerRadius:(float)cornerRadius {
+    _cornerRadius = cornerRadius;
 }
 
-//根据frame生成对应的标签按钮
-- (UIButton *)ittemButtonWithFrame:(CGRect)frame {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = frame;
-    button.layer.borderColor = _titleNormalColor.CGColor;
-    button.layer.borderWidth = _borderWidth;
-    button.layer.masksToBounds = _masksToBounds;
-    button.layer.cornerRadius = _cornerRadius;
-    button.titleLabel.font = [UIFont systemFontOfSize:_titleSize];
-    [button setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
-    [button setBackgroundImage:_normalBackgroundImage forState:UIControlStateNormal];
-    [button setBackgroundImage:_highlightedBackgroundImage forState:UIControlStateHighlighted];
-    [button setBackgroundImage:_selectedBackgroundImage forState:UIControlStateSelected];
-    [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+- (void)setBorderNormalColor:(UIColor *)borderNormalColor {
+    _borderNormalColor = borderNormalColor;
+}
 
-    return button;
+- (void)setBorderSelectedColor:(UIColor *)borderSelectedColor {
+    _borderSelectedColor = borderSelectedColor;
+}
+
+- (void)setTitleSize:(float)titleSize {
+    _titleSize = titleSize;
+}
+
+- (void)setTitleNormalColor:(UIColor *)titleNormalColor {
+    _titleNormalColor = titleNormalColor;
+}
+
+- (void)setTitleSelectedColor:(UIColor *)titleSelectedColor {
+    _titleSelectedColor = titleSelectedColor;
+}
+
+- (void)setNormalBackgroundColor:(UIColor *)normalBackgroundColor {
+    _normalBackgroundColor = normalBackgroundColor;
+}
+
+- (void)setSelectedBackgroundColor:(UIColor *)selectedBackgroundColor {
+    _selectedBackgroundColor = selectedBackgroundColor;
+}
+
+- (void)setKey:(NSString *)key {
+    _key = key;
+}
+
+- (void)setKeyColor:(UIColor *)keyColor {
+    _keyColor = keyColor;
 }
 
 //将标签数组根据type以及其他参数进行分组装入数组
@@ -258,60 +241,117 @@
     return height;
 }
 
-- (void)buttonAction:(UIButton *)sender {    
+- (void)buttonAction:(NSInteger)tag {
+    
+    HXTagButton *tagButton = (HXTagButton *)[self viewWithTag:tag];
+    
     if (_isMultiSelect) {
-        sender.selected = !sender.selected;
-        
-        if (sender.selected) {
-            sender.layer.borderColor = _titleSelectedColor.CGColor;
-        } else {
-            sender.layer.borderColor = _titleNormalColor.CGColor;
-        }
-        
         if (!_tags) {
             _tags = [NSMutableArray new];
         }
         [_tags removeAllObjects];
         
-        for (UIButton *button in self.subviews) {
-            if ([button isKindOfClass:[UIButton class]]) {
+        
+        tagButton.selected = !tagButton.selected;
+        
+        for (HXTagButton *button in self.subviews) {
+            if ([button isKindOfClass:[HXTagButton class]]) {
                 if (button.selected == YES) {
-                    [_tags addObject:button.titleLabel.text];
+                    [_tags addObject:button.title];
                 }
             }
         }
         
-        if (_tagDelegate && [_tagDelegate respondsToSelector:@selector(tagsViewButtonAction:button:)]) {
-            [_tagDelegate tagsViewButtonAction:self button:sender];
+        if (_tagDelegate && [_tagDelegate respondsToSelector:@selector(tagsViewButtonAction:tags:)]) {
+            [_tagDelegate tagsViewButtonAction:self tags:_tags];
         }
         
     } else {
-        if (_tagDelegate && [_tagDelegate respondsToSelector:@selector(tagsViewButtonAction:button:)]) {
-            [_tagDelegate tagsViewButtonAction:self button:sender];
-        }
-        
         //单选
-        if (sender.tag != _currentIndex) {
-            //只有点击的按钮不是之前点击的才执行以下方法,寻找点击的按钮
-            for (UIButton *button in self.subviews) {
-                if ([button isKindOfClass:[UIButton class]]) {
-                    if (button.tag == sender.tag) {
-                        button.selected = YES;
-                    } else {
-                        button.selected = NO;
-                    }
-                    
-                    if (button.selected) {
-                        button.layer.borderColor = _titleSelectedColor.CGColor;
-                    } else {
-                        button.layer.borderColor = _titleNormalColor.CGColor;
-                    }
+        //只有点击的按钮不是之前点击的才执行以下方法,寻找点击的按钮
+        for (HXTagButton *button in self.subviews) {
+            if ([button isKindOfClass:[HXTagButton class]]) {
+                if (button.tag == tag) {
+                    button.selected = YES;
+                } else {
+                    button.selected = NO;
                 }
             }
         }
+
+        if (_tagDelegate && [_tagDelegate respondsToSelector:@selector(tagsViewButtonAction:selectIndex:tagTitle:)]) {
+            [_tagDelegate tagsViewButtonAction:self selectIndex:tag-1 tagTitle:tagButton.title];
+        }
+    }
+}
+
+- (void)reloadData {
+    //先移除之前的View
+    if (self.subviews.count > 0) {
+        [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
     
+    //将数组根据类型和参数进行处理分组
+    NSArray *disposeAry = [self disposeTags:_tagAry];
     
+    //遍历标签数组,将标签显示在界面上,并给每个标签打上tag加以区分
+    for (int i = 0; i < disposeAry.count; i++) {
+        NSArray *iTags = disposeAry[i];
+        for (int j = 0; j < iTags.count; j++) {
+            NSDictionary *tagDic = iTags[j];
+            NSString *tagTitle = tagDic[@"tagTitle"];
+            NSUInteger index = [tagDic[@"index"] integerValue];
+            float originX = [tagDic[@"originX"] floatValue];
+            float buttonWith = [tagDic[@"buttonWith"] floatValue];
+            
+            HXTagButton *tagButton = [[HXTagButton alloc] initWithFrame:CGRectMake(originX, _tagOriginY+i*(_tagHeight+_tagVerticalSpace), buttonWith, _tagHeight)];
+            tagButton.titleSize = _titleSize;
+            tagButton.title = tagTitle;
+            tagButton.cornerRadius = _cornerRadius;
+            tagButton.borderWidth = _borderWidth;
+            tagButton.borderNormalColor = _borderNormalColor;
+            tagButton.borderSelectedColor = _borderSelectedColor;
+            tagButton.titleNormalColor = _titleNormalColor;
+            tagButton.titleSelectedColor = _titleSelectedColor;
+            tagButton.normalBackgroundColor = _normalBackgroundColor;
+            tagButton.selectedBackgroundColor = _selectedBackgroundColor;
+            tagButton.tagKey = _key;
+            tagButton.keyColor = _keyColor;
+            tagButton.tag = index + 1;
+            tagButton.isMultiSelect = _isMultiSelect;
+            tagButton.buttonAction = ^(NSInteger tag) {
+                [self buttonAction:tag];
+            };
+            [self addSubview:tagButton];
+        }
+    }
+    
+    //设置当前scrollView的contentSize
+    if (disposeAry.count > 0) {
+        if (_type == 1) {
+            //多行
+            float contentSizeHeight = _tagOriginY+disposeAry.count*(_tagHeight+_tagVerticalSpace);
+            self.contentSize = CGSizeMake(self.frame.size.width,contentSizeHeight);
+        } else {
+            //单行
+            NSArray *a = disposeAry[0];
+            NSDictionary *tagDic = a[a.count-1];
+            float originX = [tagDic[@"originX"] floatValue];
+            float buttonWith = [tagDic[@"buttonWith"] floatValue];
+            self.contentSize = CGSizeMake(originX+buttonWith+_tagOriginX,self.frame.size.height);
+        }
+    }
+    
+    //设置当前scrollView的高度
+    if (self.frame.size.height <= 0) {
+        self.frame = CGRectMake(CGRectGetMinX([self frame]), CGRectGetMinY([self frame]), CGRectGetWidth([self frame]), [self getDisposeTagsViewHeight:disposeAry]);
+    } else {
+        if (_type == 1) {
+            if (self.frame.size.height > self.contentSize.height) {
+                self.frame = CGRectMake(CGRectGetMinX([self frame]), CGRectGetMinY([self frame]), CGRectGetWidth([self frame]), self.contentSize.height);
+            }
+        }
+    }
 }
 
 //当把标签View放到cell中时,需要先计算出cell的高度,所以如果自己定制,则需要传入所有影响计算结果的参数
@@ -393,22 +433,12 @@
     return height;
 }
 
-//颜色生成图片方法
-- (UIImage *)imageWithColor:(UIColor *)color size:(CGSize)size {
-    CGRect rect = CGRectMake(0, 0, size.width, size.height);
-    
-    UIGraphicsBeginImageContext(rect.size);
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context,
-                                   
-                                   color.CGColor);
-    CGContextFillRect(context, rect);
-    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return img;
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    if (_isFirst) {
+        _isFirst = NO;
+        [self reloadData];
+    }
 }
 
 @end

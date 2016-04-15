@@ -21,7 +21,23 @@
 @protocol HXTagsViewDelegate <NSObject>
 
 @optional
-- (void)tagsViewButtonAction:(HXTagsView *)tagsView button:(UIButton *)sender;
+
+/**
+ *  多选模式
+ *
+ *  @param tagsView <#tagsView description#>
+ *  @param tags     多选的标签数组
+ */
+- (void)tagsViewButtonAction:(HXTagsView *)tagsView tags:(NSArray *)tags;
+
+/**
+ *  单选模式
+ *
+ *  @param tagsView    <#tagsView description#>
+ *  @param selectIndex 当前选的标签index
+ *  @param title       当前选的标签标题
+ */
+- (void)tagsViewButtonAction:(HXTagsView *)tagsView selectIndex:(NSInteger)selectIndex tagTitle:(NSString *)title;
 
 @end
 
@@ -29,11 +45,19 @@
 
 @property (nonatomic,assign) id<HXTagsViewDelegate> tagDelegate;
 
-#pragma mark 可不设置,不设置则用默认值
-@property (nonatomic,strong) NSDictionary *propertyDic;//属性字典
+#pragma mark 多选开关
+@property (nonatomic,assign) BOOL isMultiSelect;//是否可以多选 默认单选
+
+#pragma mark 多行开关
 @property (nonatomic,assign) NSInteger type;//0.单行 1.平铺 默认单行,单行可以不设置type
+
+#pragma mark 数据源
+@property (nonatomic,strong) NSArray *tagAry;//传入的标签数组
+
+#pragma mark 可不设置,不设置则用默认值 以下影响标签的布局计算参数,可以把所有参数全部设置到propertyDic字典中
+@property (nonatomic,strong) NSDictionary *propertyDic;//属性字典
 @property (nonatomic,assign) float tagSpace;//标签内部左右间距(标题距离边框2边的距离和)
-@property (nonatomic,assign) float tagHeight;//所有标签高度
+@property (nonatomic,assign) float tagHeight;//标签高度
 @property (nonatomic,assign) float tagOriginX;//第一个标签起点X坐标
 @property (nonatomic,assign) float tagOriginY;//第一个标签起点Y坐标
 @property (nonatomic,assign) float tagHorizontalSpace;//标签间横向间距
@@ -41,31 +65,19 @@
 
 #pragma mark 标签定制属性
 @property (nonatomic,assign) float borderWidth;//标签边框宽度
-@property (nonatomic,assign) BOOL masksToBounds;//标签是否有圆角
 @property (nonatomic,assign) float cornerRadius;//标签圆角大小
+@property (nonatomic,strong) UIColor *borderNormalColor;//标签边框默认颜色
+@property (nonatomic,strong) UIColor *borderSelectedColor;//标签边框选中颜色
 @property (nonatomic,assign) float titleSize;//标签字体大小
 @property (nonatomic,strong) UIColor *titleNormalColor;//标签字体默认颜色
 @property (nonatomic,strong) UIColor *titleSelectedColor;//标签字体选中颜色
-@property (nonatomic,strong) UIImage *normalBackgroundImage;//标签默认背景颜色
-@property (nonatomic,strong) UIImage *highlightedBackgroundImage;//标签高亮背景颜色
-@property (nonatomic,strong) UIImage *selectedBackgroundImage;//标签选中背景颜色
-
+@property (nonatomic,strong) UIColor *normalBackgroundColor;//标签默认背景颜色
+@property (nonatomic,strong) UIColor *selectedBackgroundColor;//标签选中背景颜色
 @property (nonatomic,assign) NSInteger currentIndex;//当前点击的标签
-
-@property (nonatomic,assign) BOOL isMultiSelect;//是否可以多选 默认单选
-@property (nonatomic,strong) NSMutableArray *tags;//多选 选中的标签数组
 
 #pragma mark 搜索标签加色
 @property (nonatomic,copy) NSString *key;//搜索关键词
 @property (nonatomic,strong) UIColor *keyColor;//搜索关键词颜色
-
-/**
- *  设置标签数据和代理
- *
- *  @param tagAry   标签数组,只支持字符串数组
- *  @param delegate 代理
- */
-- (void)setTagAry:(NSArray *)tagAry delegate:(id)delegate;
 
 /**
  *  计算标签的高度
