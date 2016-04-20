@@ -45,8 +45,8 @@ tagsView.tagDelegate = self;
     NSArray *tagAry = @[@"魔兽世界",@"梦幻西游",@"qq飞车",@"传奇",@"逆战",@"炉石传说",@"剑灵",@"qq炫舞",@"dota2",@"300英雄",@"笑傲江湖ol",@"剑网3",@"坦克世界",@"神武",@"龙之谷"];
     
     HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
-tagsView.tagAry = tagAry;
-tagsView.tagDelegate = self;
+    tagsView.tagAry = tagAry;
+    tagsView.tagDelegate = self;
     [self.view addSubview:tagsView];
 
 ![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/danhanggundongxiaoguo.gif)
@@ -72,61 +72,56 @@ tagsView.tagDelegate = self;
     
     HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
     tagsView.type = 1;
-tagsView.tagAry = tagAry;
-tagsView.tagDelegate = self;
+    tagsView.tagAry = tagAry;
+    tagsView.tagDelegate = self;
     [self.view addSubview:tagsView];
 
 ![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/duohanggundongxiaoguo.gif)
 
     //多行不滚动多选
-NSArray *tagAry = @[@"冒险岛游戏",@"反恐精英ol游戏",@"游戏魔域",@"诛游戏仙",@"火游戏影ol游戏",@"问游戏道",@"天游戏龙游戏八游戏部",@"枪神纪游戏",@"英魂之游戏刃",@"勇者游戏大冒险",@"nba 游戏2k",@"上古世纪游戏",@"游戏跑跑卡游戏丁车",@"传奇世界游戏",@"劲舞游戏团",@"激游戏战2"];
+    NSArray *tagAry = @[@"冒险岛游戏",@"反恐精英ol游戏",@"游戏魔域",@"诛游戏仙",@"火游戏影ol游戏",@"问游戏道",@"天游戏龙游戏八游戏部",@"枪神纪游戏",@"英魂之游戏刃",@"勇者游戏大冒险",@"nba 游戏2k",@"上古世纪游戏",@"游戏跑跑卡游戏丁车",@"传奇世界游戏",@"劲舞游戏团",@"激游戏战2"];
 
-propertyDic = @{@"type":@"1"};
-height = [HXTagsView getTagsViewHeight:tagAry dic:propertyDic];
-HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, height)];
-tagsView.type = 1;
-tagsView.isMultiSelect = YES;
-tagsView.tagAry = tagAry;
-tagsView.tagDelegate = self;
-[self.view addSubview:tagsView];
+    propertyDic = @{@"type":@"1"};
+    height = [HXTagsView getTagsViewHeight:tagAry dic:propertyDic];
+    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, height)];
+    tagsView.type = 1;
+    tagsView.isMultiSelect = YES;
+    tagsView.tagAry = tagAry;
+    tagsView.tagDelegate = self;
+    [self.view addSubview:tagsView];
 
 ![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/duohangpingpudanxiaoguo.gif)
 
-//多行不滚动有关键字多选
-NSArray *tagAry = @[@"冒险岛游戏",@"反恐精英ol游戏",@"游戏魔域",@"诛游戏仙",@"火游戏影ol游戏",@"问游戏道",@"天游戏龙游戏八游戏部",@"枪神纪游戏",@"英魂之游戏刃",@"勇者游戏大冒险",@"nba 游戏2k",@"上古世纪游戏",@"游戏跑跑卡游戏丁车",@"传奇世界游戏",@"劲舞游戏团",@"激游戏战2"];
+    //多行不滚动有关键字多选
+    NSArray *tagAry = @[@"冒险岛游戏",@"反恐精英ol游戏",@"游戏魔域",@"诛游戏仙",@"火游戏影ol游戏",@"问游戏道",@"天游戏龙游戏八游戏部",@"枪神纪游戏",@"英魂之游戏刃",@"勇者游戏大冒险",@"nba 游戏2k",@"上古世纪游戏",@"游戏跑跑卡游戏丁车",@"传奇世界游戏",@"劲舞游戏团",@"激游戏战2"];
 
-propertyDic = @{@"type":@"1"};
-height = [HXTagsView getTagsViewHeight:tagAry dic:propertyDic];
-HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, height)];
-tagsView.type = 1;
-tagsView.isMultiSelect = YES;
-tagsView.key = @"游戏";
-tagsView.tagAry = tagAry;
-tagsView.tagDelegate = self;
-[self.view addSubview:tagsView];
+    propertyDic = @{@"type":@"1"};
+    height = [HXTagsView getTagsViewHeight:tagAry dic:propertyDic];
+    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, height)];
+    tagsView.type = 1;
+    tagsView.isMultiSelect = YES;
+    tagsView.key = @"游戏";
+    tagsView.tagAry = tagAry;
+    tagsView.tagDelegate = self;
+    [self.view addSubview:tagsView];
 
 ![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/duohangpingpuxiaoguo.gif)
     
     #pragma mark HXTagsViewDelegate
-- (void)tagsViewButtonAction:(HXTagsView *)tagsView tags:(NSArray *)tags {
-NSLog(@"选中的所有标签:{%@}",tags.description);
-}
+    - (void)tagsViewButtonAction:(HXTagsView *)tagsView tags:(NSArray *)tags {
+        NSLog(@"选中的所有标签:{%@}",tags.description);
+    }
 
-/**
-*  单选模式
-*
-*  @param tagsView    <#tagsView description#>
-*  @param selectIndex 当前选的标签index
-*  @param title       当前选的标签标题
-*/
-- (void)tagsViewButtonAction:(HXTagsView *)tagsView selectIndex:(NSInteger)selectIndex tagTitle:(NSString *)title {
-NSLog(@"tag:%@ index:%ld",title,selectIndex);
-return;
-
-HXWebViewController *vc = [[HXWebViewController alloc] init];
-vc.keyWord = title;
-[self.navigationController pushViewController:vc animated:NO];
-}
+    /**
+    *  单选模式
+    *
+    *  @param tagsView    <#tagsView description#>
+    *  @param selectIndex 当前选的标签index
+    *  @param title       当前选的标签标题
+    */
+    - (void)tagsViewButtonAction:(HXTagsView *)tagsView selectIndex:(NSInteger)selectIndex tagTitle:(NSString *)title {
+        NSLog(@"tag:%@ index:%ld",title,selectIndex);
+    }
     
 # 用法说明
 1. 当您选择平铺展示,并且设置了HXTagsView的高度,当您设置的高度有值并且小于标签的计算高度时,则滚动显示,否则全部平铺.当您设置的高度过大时,也会将高度更改为全铺显示.
