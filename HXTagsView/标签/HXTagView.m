@@ -84,7 +84,7 @@
 
 - (void)handTap:(UITapGestureRecognizer *)tap {
     if (_buttonAction) {
-        _buttonAction(self.tag);
+        _buttonAction(self);
     }
 }
 
@@ -92,18 +92,16 @@
     _selected = selected;
     if (selected) {
         self.layer.borderColor = _borderSelectedColor.CGColor;
+        _tagLabel.textColor = _titleSelectedColor;
         if (_tagKey.length > 0) {
             _tagLabel.attributedText = [self searchTitle:_title key:_tagKey keyColor:_keyColor size:_titleSize];
-        } else {
-            _tagLabel.textColor = _titleSelectedColor;
         }
         self.backgroundColor = _selectedBackgroundColor;
     } else {
         self.layer.borderColor = _borderNormalColor.CGColor;
+        _tagLabel.textColor = _titleNormalColor;
         if (_tagKey.length > 0) {
             _tagLabel.attributedText = [self searchTitle:_title key:_tagKey keyColor:_keyColor size:_titleSize];
-        } else {
-            _tagLabel.textColor = _titleNormalColor;
         }
         self.backgroundColor = _normalBackgroundColor;
     }

@@ -31,8 +31,9 @@
 #pragma mark 是否多选
 @property (nonatomic,assign) BOOL isMultiSelect;//是否可以多选 默认单选
 
+#pragma mark 选中状态
 @property (nonatomic,assign) BOOL selected;
 
-@property (nonatomic,copy) void(^buttonAction)(NSInteger tag);
+@property (nonatomic,copy) void(^buttonAction)(HXTagView *tagView);
 
 @end

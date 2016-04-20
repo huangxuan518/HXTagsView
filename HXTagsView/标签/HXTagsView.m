@@ -157,10 +157,8 @@
     return height;
 }
 
-- (void)buttonAction:(NSInteger)tag {
-    
-    HXTagView *tagButton = (HXTagView *)[self viewWithTag:tag];
-    
+- (void)buttonAction:(HXTagView *)tagView {
+
     if (_isMultiSelect) {
         if (!_tags) {
             _tags = [NSMutableArray new];
@@ -168,12 +166,12 @@
         [_tags removeAllObjects];
         
         
-        tagButton.selected = !tagButton.selected;
+        tagView.selected = !tagView.selected;
         
-        for (HXTagView *button in self.subviews) {
-            if ([button isKindOfClass:[HXTagView class]]) {
-                if (button.selected == YES) {
-                    [_tags addObject:button.title];
+        for (HXTagView *view in self.subviews) {
+            if ([view isKindOfClass:[HXTagView class]]) {
+                if (view.selected == YES) {
+                    [_tags addObject:view.title];
                 }
             }
         }
@@ -185,18 +183,18 @@
     } else {
         //单选
         //只有点击的按钮不是之前点击的才执行以下方法,寻找点击的按钮
-        for (HXTagView *button in self.subviews) {
-            if ([button isKindOfClass:[HXTagView class]]) {
-                if (button.tag == tag) {
-                    button.selected = YES;
+        for (HXTagView *view in self.subviews) {
+            if ([view isKindOfClass:[HXTagView class]]) {
+                if (view.tag == tagView.tag) {
+                    view.selected = YES;
                 } else {
-                    button.selected = NO;
+                    view.selected = NO;
                 }
             }
         }
 
         if (_tagDelegate && [_tagDelegate respondsToSelector:@selector(tagsViewButtonAction:selectIndex:tagTitle:)]) {
-            [_tagDelegate tagsViewButtonAction:self selectIndex:tag-1 tagTitle:tagButton.title];
+            [_tagDelegate tagsViewButtonAction:self selectIndex:tagView.tag tagTitle:tagView.title];
         }
     }
 }
@@ -233,10 +231,10 @@
             tagButton.selectedBackgroundColor = _selectedBackgroundColor;
             tagButton.tagKey = _key;
             tagButton.keyColor = _keyColor;
-            tagButton.tag = index + 1;
+            tagButton.tag = index;
             tagButton.isMultiSelect = _isMultiSelect;
-            tagButton.buttonAction = ^(NSInteger tag) {
-                [self buttonAction:tag];
+            tagButton.buttonAction = ^(HXTagView *tagView) {
+                [self buttonAction:tagView];
             };
             [self addSubview:tagButton];
         }
