@@ -22,16 +22,6 @@
     [super viewDidLoad];
     self.title = @"标签";
     
-//    HXTagView *tagView = [[HXTagView alloc] initWithFrame:CGRectMake(10, 100, 100, 30)];
-//    tagView.backgroundColor = [UIColor redColor];
-//    tagView.tagLabel.font = [UIFont systemFontOfSize:14];
-//    tagView.tagLabel.text = @"魔兽世界";
-//    tagView.tagLabel.layer.cornerRadius = 4;
-//    tagView.tagLabel.layer.borderWidth = 0.5;
-//    [self.view addSubview:tagView];
-//    
-//    return;
-    
     /*单行是否滚动是标签的数量决定的,当标签排列在一起的长度大于屏幕的长度,则会滚动*/
 
     //单行不滚动 ===
@@ -121,6 +111,7 @@
  */
 - (void)tagsViewButtonAction:(HXTagsView *)tagsView selectIndex:(NSInteger)selectIndex tagTitle:(NSString *)title {
     NSLog(@"tag:%@ index:%ld",title,selectIndex);
+    return;
     
     HXWebViewController *vc = [[HXWebViewController alloc] init];
     vc.keyWord = title;
