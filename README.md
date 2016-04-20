@@ -78,7 +78,7 @@ HXTagsView是一款支持自动布局的标签tag
 
     propertyDic = @{@"type":@"1"};
     height = [HXTagsView getTagsViewHeight:tagAry dic:propertyDic];
-    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, height)];
+    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
     tagsView.type = 1;
     tagsView.isMultiSelect = YES;
     tagsView.tagAry = tagAry;
@@ -92,7 +92,7 @@ HXTagsView是一款支持自动布局的标签tag
 
     propertyDic = @{@"type":@"1"};
     height = [HXTagsView getTagsViewHeight:tagAry dic:propertyDic];
-    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, height)];
+    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
     tagsView.type = 1;
     tagsView.isMultiSelect = YES;
     tagsView.key = @"游戏";
