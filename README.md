@@ -34,12 +34,11 @@ HXTagsView是一款支持自动布局的标签tag
     NSArray *tagAry = @[@"英雄联盟",@"穿越火线",@"地下城与勇士"];
     
     HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
-tagsView.tagAry = tagAry;
-tagsView.tagDelegate = self;
+    tagsView.tagAry = tagAry;
+    tagsView.tagDelegate = self;
     [self.view addSubview:tagsView];
 
     ![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/danhangbugundongxiaoguo.gif)
-    
     
     //单行滚动 ===
     NSArray *tagAry = @[@"魔兽世界",@"梦幻西游",@"qq飞车",@"传奇",@"逆战",@"炉石传说",@"剑灵",@"qq炫舞",@"dota2",@"300英雄",@"笑傲江湖ol",@"剑网3",@"坦克世界",@"神武",@"龙之谷"];
@@ -51,7 +50,6 @@ tagsView.tagDelegate = self;
 
 ![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/danhanggundongxiaoguo.gif)
     
-    
     /*多行是否滚动是HXTagsView的高度和标签计算出的高度比较后决定的,当HXTagsView的高度小于计算出的高度则自动滚动*/
     //多行不滚动单选 ===
     NSArray *tagAry = @[@"冒险岛",@"反恐精英ol",@"魔域",@"诛仙",@"火影ol",@"问道",@"天龙八部",@"枪神纪",@"英魂之刃",@"勇者大冒险",@"nba 2k",@"上古世纪",@"跑跑卡丁车",@"传奇世界",@"劲舞团",@"激战2"];
@@ -60,12 +58,11 @@ tagsView.tagDelegate = self;
     height = [HXTagsView getTagsViewHeight:tagAry dic:propertyDic];
     HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
     tagsView.propertyDic = propertyDic;
-tagsView.tagAry = tagAry;
-tagsView.tagDelegate = self;
+    tagsView.tagAry = tagAry;
+    tagsView.tagDelegate = self;
     [self.view addSubview:tagsView];
 
 ![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/duohangpingpudan1xiaoguo.gif)
-    
     
     //多行滚动单选 ===
     NSArray *tagAry = @[@"蜀山ol",@"天下3",@"大话西游2",@"热血江湖",@"游戏人生",@"梦三国",@"流星蝴蝶剑",@"九阴真经",@"斗战神",@"奇迹mu",@"最终幻想14",@"宠物小精灵",@"天龙八部3",@"qq三国",@"倩女幽魂ol",@"御龙在天"];
@@ -107,7 +104,14 @@ tagsView.tagDelegate = self;
 
 ![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/duohangpingpuxiaoguo.gif)
     
-    #pragma mark HXTagsViewDelegate
+# 代理方法
+    
+    /**
+    *  多选模式
+    *
+    *  @param tagsView <#tagsView description#>
+    *  @param tags     选中的标签组
+    */
     - (void)tagsViewButtonAction:(HXTagsView *)tagsView tags:(NSArray *)tags {
         NSLog(@"选中的所有标签:{%@}",tags.description);
     }
