@@ -6,7 +6,7 @@
 //  Copyright © 2015年 IT小子. All rights reserved.
 
 #import "HXTagsView.h"
-#import "HXTagButton.h"
+#import "HXTagView.h"
 
 @interface HXTagsView ()
 
@@ -58,18 +58,6 @@
     return self;
 }
 
-- (void)setTagAry:(NSMutableArray *)tagAry {
-    _tagAry = tagAry;
-}
-
-- (void)setIsMultiSelect:(BOOL)isMultiSelect {
-    _isMultiSelect = isMultiSelect;
-}
-
-- (void)setType:(NSInteger)type {
-    _type = type;
-}
-
 - (void)setPropertyDic:(NSDictionary *)propertyDic {
     _propertyDic = propertyDic;
     
@@ -92,78 +80,6 @@
     [self setTagHeight:tagHeight];
     [self setTagHorizontalSpace:tagHorizontalSpace];
     [self setTagVerticalSpace:tagVerticalSpace];
-}
-
-- (void)setTagDelegate:(id<HXTagsViewDelegate>)tagDelegate {
-    _tagDelegate = tagDelegate;
-}
-
-- (void)setTagSpace:(float)tagSpace {
-    _tagSpace = tagSpace;
-}
-
-- (void)setTagHeight:(float)tagHeight {
-    _tagHeight = tagHeight;
-}
-
-- (void)setTagOriginX:(float)tagOriginX {
-    _tagOriginX = tagOriginX;
-}
-
-- (void)setTagOriginY:(float)tagOriginY {
-    _tagOriginY = tagOriginY;
-}
-
-- (void)setTagHorizontalSpace:(float)tagHorizontalSpace {
-    _tagHorizontalSpace = tagHorizontalSpace;
-}
-
-- (void)setTagVerticalSpace:(float)tagVerticalSpace {
-    _tagVerticalSpace = tagVerticalSpace;
-}
-
--(void)setBorderWidth:(float)borderWidth {
-    _borderWidth = borderWidth;
-}
-
-- (void)setCornerRadius:(float)cornerRadius {
-    _cornerRadius = cornerRadius;
-}
-
-- (void)setBorderNormalColor:(UIColor *)borderNormalColor {
-    _borderNormalColor = borderNormalColor;
-}
-
-- (void)setBorderSelectedColor:(UIColor *)borderSelectedColor {
-    _borderSelectedColor = borderSelectedColor;
-}
-
-- (void)setTitleSize:(float)titleSize {
-    _titleSize = titleSize;
-}
-
-- (void)setTitleNormalColor:(UIColor *)titleNormalColor {
-    _titleNormalColor = titleNormalColor;
-}
-
-- (void)setTitleSelectedColor:(UIColor *)titleSelectedColor {
-    _titleSelectedColor = titleSelectedColor;
-}
-
-- (void)setNormalBackgroundColor:(UIColor *)normalBackgroundColor {
-    _normalBackgroundColor = normalBackgroundColor;
-}
-
-- (void)setSelectedBackgroundColor:(UIColor *)selectedBackgroundColor {
-    _selectedBackgroundColor = selectedBackgroundColor;
-}
-
-- (void)setKey:(NSString *)key {
-    _key = key;
-}
-
-- (void)setKeyColor:(UIColor *)keyColor {
-    _keyColor = keyColor;
 }
 
 //将标签数组根据type以及其他参数进行分组装入数组
@@ -243,7 +159,7 @@
 
 - (void)buttonAction:(NSInteger)tag {
     
-    HXTagButton *tagButton = (HXTagButton *)[self viewWithTag:tag];
+    HXTagView *tagButton = (HXTagView *)[self viewWithTag:tag];
     
     if (_isMultiSelect) {
         if (!_tags) {
@@ -254,8 +170,8 @@
         
         tagButton.selected = !tagButton.selected;
         
-        for (HXTagButton *button in self.subviews) {
-            if ([button isKindOfClass:[HXTagButton class]]) {
+        for (HXTagView *button in self.subviews) {
+            if ([button isKindOfClass:[HXTagView class]]) {
                 if (button.selected == YES) {
                     [_tags addObject:button.title];
                 }
@@ -269,8 +185,8 @@
     } else {
         //单选
         //只有点击的按钮不是之前点击的才执行以下方法,寻找点击的按钮
-        for (HXTagButton *button in self.subviews) {
-            if ([button isKindOfClass:[HXTagButton class]]) {
+        for (HXTagView *button in self.subviews) {
+            if ([button isKindOfClass:[HXTagView class]]) {
                 if (button.tag == tag) {
                     button.selected = YES;
                 } else {
@@ -304,7 +220,7 @@
             float originX = [tagDic[@"originX"] floatValue];
             float buttonWith = [tagDic[@"buttonWith"] floatValue];
             
-            HXTagButton *tagButton = [[HXTagButton alloc] initWithFrame:CGRectMake(originX, _tagOriginY+i*(_tagHeight+_tagVerticalSpace), buttonWith, _tagHeight)];
+            HXTagView *tagButton = [[HXTagView alloc] initWithFrame:CGRectMake(originX, _tagOriginY+i*(_tagHeight+_tagVerticalSpace), buttonWith, _tagHeight)];
             tagButton.titleSize = _titleSize;
             tagButton.title = tagTitle;
             tagButton.cornerRadius = _cornerRadius;

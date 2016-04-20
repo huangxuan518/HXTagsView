@@ -10,7 +10,7 @@
 		30093C7D1C48D10900B7EEED /* HXWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30093C7C1C48D10900B7EEED /* HXWebViewController.m */; };
 		30093C831C48DFF900B7EEED /* xiaoguo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 30093C821C48DFF900B7EEED /* xiaoguo.gif */; };
 		301FDD531C52262F00E5578B /* canshu.png in Resources */ = {isa = PBXBuildFile; fileRef = 301FDD521C52262F00E5578B /* canshu.png */; };
-		302D3B6D1CBF6F6F00C13621 /* HXTagButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D3B6C1CBF6F6F00C13621 /* HXTagButton.m */; };
+		302D3B6D1CBF6F6F00C13621 /* HXTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D3B6C1CBF6F6F00C13621 /* HXTagView.m */; };
 		30E706201C476F5200F12FD1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E7061F1C476F5200F12FD1 /* main.m */; };
 		30E706231C476F5200F12FD1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E706221C476F5200F12FD1 /* AppDelegate.m */; };
 		30E706261C476F5200F12FD1 /* HXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E706251C476F5200F12FD1 /* HXViewController.m */; };
@@ -23,8 +23,8 @@
 		30093C7C1C48D10900B7EEED /* HXWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HXWebViewController.m; sourceTree = "<group>"; };
 		30093C821C48DFF900B7EEED /* xiaoguo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = xiaoguo.gif; sourceTree = "<group>"; };
 		301FDD521C52262F00E5578B /* canshu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = canshu.png; sourceTree = "<group>"; };
-		302D3B6B1CBF6F6F00C13621 /* HXTagButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HXTagButton.h; sourceTree = "<group>"; };
-		302D3B6C1CBF6F6F00C13621 /* HXTagButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HXTagButton.m; sourceTree = "<group>"; };
+		302D3B6B1CBF6F6F00C13621 /* HXTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HXTagView.h; sourceTree = "<group>"; };
+		302D3B6C1CBF6F6F00C13621 /* HXTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HXTagView.m; sourceTree = "<group>"; };
 		30E7061B1C476F5100F12FD1 /* HXTagsView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HXTagsView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30E7061F1C476F5200F12FD1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		30E706211C476F5200F12FD1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -96,8 +96,8 @@
 			children = (
 				30E706361C47751900F12FD1 /* HXTagsView.h */,
 				30E706371C47751900F12FD1 /* HXTagsView.m */,
-				302D3B6B1CBF6F6F00C13621 /* HXTagButton.h */,
-				302D3B6C1CBF6F6F00C13621 /* HXTagButton.m */,
+				302D3B6B1CBF6F6F00C13621 /* HXTagView.h */,
+				302D3B6C1CBF6F6F00C13621 /* HXTagView.m */,
 			);
 			path = "标签";
 			sourceTree = "<group>";
@@ -174,7 +174,7 @@
 			files = (
 				30E706261C476F5200F12FD1 /* HXViewController.m in Sources */,
 				30093C7D1C48D10900B7EEED /* HXWebViewController.m in Sources */,
-				302D3B6D1CBF6F6F00C13621 /* HXTagButton.m in Sources */,
+				302D3B6D1CBF6F6F00C13621 /* HXTagView.m in Sources */,
 				30E706231C476F5200F12FD1 /* AppDelegate.m in Sources */,
 				30E706201C476F5200F12FD1 /* main.m in Sources */,
 				30E706381C47751900F12FD1 /* HXTagsView.m in Sources */,

@@ -1,5 +1,5 @@
 //
-//  HXTagButton.h
+//  HXTagView.h
 //  HXTagsView
 //
 //  Created by 黄轩 on 16/4/14.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HXTagButton : UIView
+@interface HXTagView : UIView
 
 #pragma mark 标签关键字加亮
 @property (nonatomic,copy) NSString *tagKey;//关键字
