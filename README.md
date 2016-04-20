@@ -28,7 +28,6 @@ HXTagsView是一款支持自动布局的标签tag
 ![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/canshu.png)
 
 # 使用示例
-    /*单行是否滚动是标签的数量决定的,当标签排列在一起的长度大于屏幕的长度,则会滚动*/
 
     //单行不滚动 ===
     NSArray *tagAry = @[@"英雄联盟",@"穿越火线",@"地下城与勇士"];
@@ -38,7 +37,7 @@ HXTagsView是一款支持自动布局的标签tag
     tagsView.tagDelegate = self;
     [self.view addSubview:tagsView];
 
-    ![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/danhangbugundongxiaoguo.gif)
+![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/danhangbugundongxiaoguo.gif)
     
     //单行滚动 ===
     NSArray *tagAry = @[@"魔兽世界",@"梦幻西游",@"qq飞车",@"传奇",@"逆战",@"炉石传说",@"剑灵",@"qq炫舞",@"dota2",@"300英雄",@"笑傲江湖ol",@"剑网3",@"坦克世界",@"神武",@"龙之谷"];
@@ -50,7 +49,6 @@ HXTagsView是一款支持自动布局的标签tag
 
 ![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/danhanggundongxiaoguo.gif)
     
-    /*多行是否滚动是HXTagsView的高度和标签计算出的高度比较后决定的,当HXTagsView的高度小于计算出的高度则自动滚动*/
     //多行不滚动单选 ===
     NSArray *tagAry = @[@"冒险岛",@"反恐精英ol",@"魔域",@"诛仙",@"火影ol",@"问道",@"天龙八部",@"枪神纪",@"英魂之刃",@"勇者大冒险",@"nba 2k",@"上古世纪",@"跑跑卡丁车",@"传奇世界",@"劲舞团",@"激战2"];
     
