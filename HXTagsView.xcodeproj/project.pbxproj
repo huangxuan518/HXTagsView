@@ -22,7 +22,6 @@
 		30E706261C476F5200F12FD1 /* HXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E706251C476F5200F12FD1 /* HXViewController.m */; };
 		30E7062B1C476F5200F12FD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30E7062A1C476F5200F12FD1 /* Assets.xcassets */; };
 		30E706381C47751900F12FD1 /* HXTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E706371C47751900F12FD1 /* HXTagsView.m */; };
-		9CB522291D20D50E0047DD2B /* HXTagAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB522281D20D50E0047DD2B /* HXTagAttribute.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,8 +47,6 @@
 		30E7062F1C476F5200F12FD1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30E706361C47751900F12FD1 /* HXTagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HXTagsView.h; sourceTree = "<group>"; };
 		30E706371C47751900F12FD1 /* HXTagsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HXTagsView.m; sourceTree = "<group>"; };
-		9CB522271D20D50E0047DD2B /* HXTagAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HXTagAttribute.h; sourceTree = "<group>"; };
-		9CB522281D20D50E0047DD2B /* HXTagAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HXTagAttribute.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,8 +124,6 @@
 				30E706371C47751900F12FD1 /* HXTagsView.m */,
 				302D3B6B1CBF6F6F00C13621 /* HXTagButton.h */,
 				302D3B6C1CBF6F6F00C13621 /* HXTagButton.m */,
-				9CB522271D20D50E0047DD2B /* HXTagAttribute.h */,
-				9CB522281D20D50E0047DD2B /* HXTagAttribute.m */,
 			);
 			path = "标签";
 			sourceTree = "<group>";
@@ -212,7 +207,6 @@
 				30E706261C476F5200F12FD1 /* HXViewController.m in Sources */,
 				30093C7D1C48D10900B7EEED /* HXWebViewController.m in Sources */,
 				302D3B6D1CBF6F6F00C13621 /* HXTagButton.m in Sources */,
-				9CB522291D20D50E0047DD2B /* HXTagAttribute.m in Sources */,
 				30E706231C476F5200F12FD1 /* AppDelegate.m in Sources */,
 				30E706201C476F5200F12FD1 /* main.m in Sources */,
 				30E706381C47751900F12FD1 /* HXTagsView.m in Sources */,

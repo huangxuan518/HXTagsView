@@ -7,11 +7,18 @@
 
 #import "HXTagsView.h"
 #import "HXTagButton.h"
-#import "HXTagAttribute.h"
+
+#define HXTagSpace 18.0
+#define HXTagHeight 32.0
+#define HXTagOriginX 10.0
+#define HXTagOriginY 10.0
+#define HXTagHorizontalSpace 10.0
+#define HXTagVerticalSpace 10.0
 
 @interface HXTagsView ()
 
 @property (nonatomic,strong) NSMutableArray *tags;//多选 选中的标签数组
+@property (nonatomic,assign) NSInteger currentIndex;
 @property (nonatomic,assign) BOOL isFirst;//第一加载
 
 @end
@@ -26,71 +33,22 @@
         self.frame = frame;
         self.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
 
-        _tagAttribute = [self defauleTagAttribute];
+        _tagAttribute = [HXTagAttribute new];
         
         _currentIndex = -1;
         
-        _tagSpace = HXTagSpace;
-        _tagHeight = HXTagHeight;
-        _tagOriginX = HXTagOriginX;
-        _tagOriginY = HXTagOriginY;
-        _tagHorizontalSpace = HXTagHorizontalSpace;
-        _tagVerticalSpace = HXTagVerticalSpace;
+        _tagLayout = [HXTagLayout new];
+        
+        _tagLayout.tagSpace = HXTagSpace;
+        _tagLayout.tagHeight = HXTagHeight;
+        _tagLayout.tagOriginX = HXTagOriginX;
+        _tagLayout.tagOriginY = HXTagOriginY;
+        _tagLayout.tagHorizontalSpace = HXTagHorizontalSpace;
+        _tagLayout.tagVerticalSpace = HXTagVerticalSpace;
     
         _isFirst = YES;
     }
     return self;
-}
-
-//默认样式
-- (HXTagAttribute *)defauleTagAttribute {
-    HXTagAttribute *tagAttribute = [[HXTagAttribute alloc] init];
-    int r = arc4random() % 255;
-    int g = arc4random() % 255;
-    int b = arc4random() % 255;
-    
-    UIColor *normalColor = [UIColor colorWithRed:r/255.0 green:b/255.0 blue:g/255.0 alpha:1.0];
-    UIColor *selectedColor = [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
-    
-    UIColor *normalBackgroundColor = [UIColor whiteColor];
-    UIColor *selectedBackgroundColor = [UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1.0];
-    
-    tagAttribute.borderWidth = 0.5f;
-    tagAttribute.borderNormalColor = normalColor;
-    tagAttribute.borderSelectedColor = selectedColor;
-    tagAttribute.cornerRadius = 2.0;
-    tagAttribute.normalBackgroundColor = normalBackgroundColor;
-    tagAttribute.selectedBackgroundColor = selectedBackgroundColor;
-    tagAttribute.titleSize = 14;
-    tagAttribute.titleNormalColor = normalColor;
-    tagAttribute.titleSelectedColor = selectedColor;
-    
-    tagAttribute.keyColor = [UIColor redColor];
-    return tagAttribute;
-}
-
-- (void)setPropertyDic:(NSDictionary *)propertyDic {
-    _propertyDic = propertyDic;
-    
-    int type = [_propertyDic[@"type"] length] > 0 ? [_propertyDic[@"type"] intValue] : 0;
-    float frameSizeWidth = [_propertyDic[@"frameSizeWidth"] length] > 0 ? [_propertyDic[@"frameSizeWidth"] floatValue] : [[UIScreen mainScreen] bounds].size.width;
-    float tagOriginX = [_propertyDic[@"tagOriginX"] length] > 0 ? [_propertyDic[@"tagOriginX"] floatValue] : HXTagOriginX;
-    float tagOriginY = [_propertyDic[@"tagOriginY"] length] > 0 ? [_propertyDic[@"tagOriginY"] floatValue] : HXTagOriginY;
-    float tagSpace = [_propertyDic[@"tagSpace"] length] > 0 ? [_propertyDic[@"tagSpace"] floatValue] : HXTagSpace;
-    float tagHeight = [_propertyDic[@"tagHeight"] length] > 0 ? [_propertyDic[@"tagHeight"] floatValue] : HXTagHeight;
-    float tagHorizontalSpace = [_propertyDic[@"tagHorizontalSpace"] length] > 0 ? [_propertyDic[@"tagHorizontalSpace"] floatValue] : HXTagHorizontalSpace;
-    float tagVerticalSpace = [_propertyDic[@"tagVerticalSpace"] length] > 0 ? [_propertyDic[@"tagVerticalSpace"] floatValue] : HXTagVerticalSpace;
-    
-    [self setType:type];
-    self.frame = CGRectMake(CGRectGetMinX([self frame]), CGRectGetMinY([self frame]), frameSizeWidth, CGRectGetHeight([self frame]));
-    
-    [self setTagOriginX:tagOriginX];
-    [self setTagOriginY:tagOriginY];
-    [self setTagSpace:tagSpace];
-    
-    [self setTagHeight:tagHeight];
-    [self setTagHorizontalSpace:tagHorizontalSpace];
-    [self setTagVerticalSpace:tagVerticalSpace];
 }
 
 //将标签数组根据type以及其他参数进行分组装入数组
@@ -98,36 +56,36 @@
     NSMutableArray *disposeTags = [NSMutableArray new];//纵向数组
     NSMutableArray *subTags = [NSMutableArray new];//横向数组
     
-    float originX = _tagOriginX;
-    float maxFrameWidth = self.frame.size.width-_tagOriginX*2;
+    float originX = _tagLayout.tagOriginX;
+    float maxFrameWidth = self.frame.size.width-_tagLayout.tagOriginX*2;
     
     for (int i = 0; i < ary.count; i++) {
         NSString *tagTitle = ary[i];
         NSUInteger index = i;
         
         //计算每个tag的宽度
-        CGSize contentSize = [tagTitle fdd_sizeWithFont:[UIFont systemFontOfSize:_tagAttribute.titleSize] constrainedToSize:CGSizeMake(maxFrameWidth, MAXFLOAT)];
+        CGSize contentSize = [tagTitle ex_sizeWithFont:[UIFont systemFontOfSize:_tagAttribute.titleSize] constrainedToSize:CGSizeMake(maxFrameWidth, MAXFLOAT)];
         
         NSMutableDictionary *dict = [NSMutableDictionary new];
         dict[@"tagTitle"] = tagTitle;//标签标题
         dict[@"index"] = @(index);//标签index
-        if (contentSize.width+_tagSpace > maxFrameWidth) {
+        if (contentSize.width+_tagLayout.tagSpace > maxFrameWidth) {
             dict[@"buttonWith"] = [NSString stringWithFormat:@"%f",maxFrameWidth];//标签的宽度
         } else {
-            dict[@"buttonWith"] = [NSString stringWithFormat:@"%f",contentSize.width+_tagSpace];//标签的宽度
+            dict[@"buttonWith"] = [NSString stringWithFormat:@"%f",contentSize.width+_tagLayout.tagSpace];//标签的宽度
         }
         
         if (index == 0) {
             dict[@"originX"] = [NSString stringWithFormat:@"%f",originX];//标签的X坐标
             [subTags addObject:dict];
         } else {
-            if (_type == 1) {
+            if (_tagLayout.type == 1) {
                 //多行
-                if (originX + contentSize.width+_tagSpace > maxFrameWidth) {
+                if (originX + contentSize.width+_tagLayout.tagSpace > maxFrameWidth) {
                     //当前标签的X坐标+当前标签的长度>屏幕的横向总长度则换行
                     [disposeTags addObject:subTags];
                     //换行标签的起点坐标初始化
-                    originX = _tagOriginX;
+                    originX = _tagLayout.tagOriginX;
                     dict[@"originX"] = [NSString stringWithFormat:@"%f",originX];//标签的X坐标
                     subTags = [NSMutableArray new];
                     [subTags addObject:dict];
@@ -150,7 +108,7 @@
         }
         
         //标签的X坐标每次都是前一个标签的宽度+标签左右空隙+标签距下个标签的距离
-        originX += contentSize.width+_tagHorizontalSpace+_tagSpace;
+        originX += contentSize.width+_tagLayout.tagHorizontalSpace+_tagLayout.tagSpace;
     }
     return disposeTags;
 }
@@ -159,10 +117,10 @@
 - (float)getDisposeTagsViewHeight:(NSArray *)disposeTags {
     float height = 0;
     if (disposeTags.count > 0) {
-        if (_type == 1) {
-            height = _tagOriginY+disposeTags.count*(_tagHeight+_tagVerticalSpace);
+        if (_tagLayout.type == 1) {
+            height = _tagLayout.tagOriginY+disposeTags.count*(_tagLayout.tagHeight+_tagLayout.tagVerticalSpace);
         } else {
-            height = _tagOriginY+_tagHeight+_tagVerticalSpace;
+            height = _tagLayout.tagOriginY+_tagLayout.tagHeight+_tagLayout.tagVerticalSpace;
         }
     }
     return height;
@@ -229,15 +187,13 @@
             float originX = [tagDic[@"originX"] floatValue];
             float buttonWith = [tagDic[@"buttonWith"] floatValue];
             
-            HXTagButton *tagButton = [[HXTagButton alloc] initWithFrame:CGRectMake(originX, _tagOriginY+i*(_tagHeight+_tagVerticalSpace), buttonWith, _tagHeight)];
-            tagButton.tagAttribute = _tagAttribute;
+            HXTagButton *tagButton = [[HXTagButton alloc] initWithFrame:CGRectMake(originX, _tagLayout.tagOriginY+i*(_tagLayout.tagHeight+_tagLayout.tagVerticalSpace), buttonWith, _tagLayout.tagHeight)];
             tagButton.title = tagTitle;
             tagButton.tagKey = _key;
-            
+            tagButton.tagAttribute = _tagAttribute;
             tagButton.tag = index;
-            tagButton.isMultiSelect = _isMultiSelect;
-            tagButton.buttonAction = ^(HXTagButton *tagView) {
-                [self buttonAction:tagView];
+            tagButton.buttonAction = ^(HXTagButton *tagButton) {
+                [self buttonAction:tagButton];
             };
             [self addSubview:tagButton];
         }
@@ -245,9 +201,9 @@
     
     //设置当前scrollView的contentSize
     if (disposeAry.count > 0) {
-        if (_type == 1) {
+        if (_tagLayout.type == 1) {
             //多行
-            float contentSizeHeight = _tagOriginY+disposeAry.count*(_tagHeight+_tagVerticalSpace);
+            float contentSizeHeight = _tagLayout.tagOriginY+disposeAry.count*(_tagLayout.tagHeight+_tagLayout.tagVerticalSpace);
             self.contentSize = CGSizeMake(self.frame.size.width,contentSizeHeight);
         } else {
             //单行
@@ -255,7 +211,7 @@
             NSDictionary *tagDic = a[a.count-1];
             float originX = [tagDic[@"originX"] floatValue];
             float buttonWith = [tagDic[@"buttonWith"] floatValue];
-            self.contentSize = CGSizeMake(originX+buttonWith+_tagOriginX,self.frame.size.height);
+            self.contentSize = CGSizeMake(originX+buttonWith+_tagLayout.tagOriginX,self.frame.size.height);
         }
     }
     
@@ -263,7 +219,7 @@
     if (self.frame.size.height <= 0) {
         self.frame = CGRectMake(CGRectGetMinX([self frame]), CGRectGetMinY([self frame]), CGRectGetWidth([self frame]), [self getDisposeTagsViewHeight:disposeAry]);
     } else {
-        if (_type == 1) {
+        if (_tagLayout.type == 1) {
             if (self.frame.size.height > self.contentSize.height) {
                 self.frame = CGRectMake(CGRectGetMinX([self frame]), CGRectGetMinY([self frame]), CGRectGetWidth([self frame]), self.contentSize.height);
             }
@@ -272,49 +228,46 @@
 }
 
 //当把标签View放到cell中时,需要先计算出cell的高度,所以如果自己定制,则需要传入所有影响计算结果的参数
-+ (float)getTagsViewHeight:(NSArray *)ary dic:(NSDictionary *)dic {
-    int type = [dic[@"type"] length] > 0 ? [dic[@"type"] intValue] : 0;
-    float frameSizeWidth = [dic[@"frameSizeWidth"] length] > 0 ? [dic[@"frameSizeWidth"] floatValue] : [[UIScreen mainScreen] bounds].size.width;
-    float tagOriginX = [dic[@"tagOriginX"] length] > 0 ? [dic[@"tagOriginX"] floatValue] : HXTagOriginX;
-    float tagOriginY = [dic[@"tagOriginY"] length] > 0 ? [dic[@"tagOriginY"] floatValue] : HXTagOriginY;
-    float tagSpace = [dic[@"tagSpace"] length] > 0 ? [dic[@"tagSpace"] floatValue] : HXTagSpace;
-    float tagHeight = [dic[@"tagHeight"] length] > 0 ? [dic[@"tagHeight"] floatValue] : HXTagHeight;
-    float tagHorizontalSpace = [dic[@"tagHorizontalSpace"] length] > 0 ? [dic[@"tagHorizontalSpace"] floatValue] : HXTagHorizontalSpace;
-    float tagVerticalSpace = [dic[@"tagVerticalSpace"] length] > 0 ? [dic[@"tagVerticalSpace"] floatValue] : HXTagVerticalSpace;
++ (float)getTagsViewHeightWithTags:(NSArray *)ary tagLayout:(HXTagLayout *)tagLayout width:(float)width {
+    if (!tagLayout) {
+        tagLayout = [HXTagLayout new];
+    }
+
+    float frameSizeWidth = width > 0 ? width : [[UIScreen mainScreen] bounds].size.width;
 
     NSMutableArray *tags = [NSMutableArray new];//纵向数组
     NSMutableArray *subTags = [NSMutableArray new];//横向数组
     
-    float originX = tagOriginX;
-    float maxFrameWidth = frameSizeWidth-tagOriginX*2;
+    float originX = tagLayout.tagOriginX;
+    float maxFrameWidth = frameSizeWidth-tagLayout.tagOriginX*2;
     
     for (int i = 0; i < ary.count; i++) {
         NSString *tagTitle = ary[i];
         NSUInteger index = i;
         
         //计算每个tag的宽度
-        CGSize contentSize = [tagTitle fdd_sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(maxFrameWidth, MAXFLOAT)];
+        CGSize contentSize = [tagTitle ex_sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(maxFrameWidth, MAXFLOAT)];
         
         NSMutableDictionary *dict = [NSMutableDictionary new];
         dict[@"tagTitle"] = tagTitle;//标签标题
         
-        if (contentSize.width+tagSpace > maxFrameWidth) {
+        if (contentSize.width+tagLayout.tagSpace > maxFrameWidth) {
             dict[@"buttonWith"] = [NSString stringWithFormat:@"%f",maxFrameWidth];//标签的宽度
         } else {
-            dict[@"buttonWith"] = [NSString stringWithFormat:@"%f",contentSize.width+tagSpace];//标签的宽度
+            dict[@"buttonWith"] = [NSString stringWithFormat:@"%f",contentSize.width+tagLayout.tagSpace];//标签的宽度
         }
         
         if (index == 0) {
             dict[@"originX"] = [NSString stringWithFormat:@"%f",originX];//标签的X坐标
             [subTags addObject:dict];
         } else {
-            if (type == 1) {
+            if (tagLayout.type == 1) {
                 //多行
-                if (originX + contentSize.width+tagSpace > maxFrameWidth) {
+                if (originX + contentSize.width+tagLayout.tagSpace > maxFrameWidth) {
                     //当前标签的X坐标+当前标签的长度>屏幕的横向总长度则换行
                     [tags addObject:subTags];
                     //换行标签的起点坐标初始化
-                    originX = tagOriginX;
+                    originX = tagLayout.tagOriginX;
                     dict[@"originX"] = [NSString stringWithFormat:@"%f",originX];//标签的X坐标
                     subTags = [NSMutableArray new];
                     [subTags addObject:dict];
@@ -336,15 +289,15 @@
         }
         
         //标签的X坐标每次都是前一个标签的宽度+标签左右空隙+标签距下个标签的距离
-        originX += contentSize.width+tagHorizontalSpace+tagSpace;
+        originX += contentSize.width+tagLayout.tagHorizontalSpace+tagLayout.tagSpace;
     }
     
     float height = 0;
     if (tags.count > 0) {
-        if (type == 1) {
-            height = tagOriginY+tags.count*(tagHeight+tagVerticalSpace);
+        if (tagLayout.type == 1) {
+            height = tagLayout.tagOriginY+tags.count*(tagLayout.tagHeight+tagLayout.tagVerticalSpace);
         } else {
-            height = tagOriginY+tagHeight+tagVerticalSpace;
+            height = tagLayout.tagOriginY+tagLayout.tagHeight+tagLayout.tagVerticalSpace;
         }
     }
     return height;
@@ -360,11 +313,31 @@
 
 @end
 
+#pragma mark - 样式
+
+@implementation HXTagLayout
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _tagOriginX = HXTagOriginX;
+        _tagOriginY = HXTagOriginY;
+        _tagSpace = HXTagSpace;
+        _tagHeight = HXTagHeight;
+        _tagHorizontalSpace = HXTagHorizontalSpace;
+        _tagVerticalSpace = HXTagVerticalSpace;
+    }
+    return self;
+}
+
+@end
+
 #pragma mark - 扩展方法
 
 @implementation NSString (HXExtention)
 
-- (CGSize)fdd_sizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size {
+- (CGSize)ex_sizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size {
     CGSize resultSize;
     if ([self respondsToSelector:@selector(boundingRectWithSize:options:attributes:context:)]) {
         NSMethodSignature *signature = [[self class] instanceMethodSignatureForSelector:@selector(boundingRectWithSize:options:attributes:context:)];

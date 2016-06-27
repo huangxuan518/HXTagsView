@@ -113,3 +113,37 @@
 }
 
 @end
+
+
+@implementation HXTagAttribute
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        int r = arc4random() % 255;
+        int g = arc4random() % 255;
+        int b = arc4random() % 255;
+        
+        UIColor *normalColor = [UIColor colorWithRed:r/255.0 green:b/255.0 blue:g/255.0 alpha:1.0];
+        UIColor *selectedColor = [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
+        
+        UIColor *normalBackgroundColor = [UIColor whiteColor];
+        UIColor *selectedBackgroundColor = [UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1.0];
+        
+        _borderWidth = 0.5f;
+        _borderNormalColor = normalColor;
+        _borderSelectedColor = selectedColor;
+        _cornerRadius = 2.0;
+        _normalBackgroundColor = normalBackgroundColor;
+        _selectedBackgroundColor = selectedBackgroundColor;
+        _titleSize = 14;
+        _titleNormalColor = normalColor;
+        _titleSelectedColor = selectedColor;
+        
+        _keyColor = [UIColor redColor];
+    }
+    return self;
+}
+
+@end

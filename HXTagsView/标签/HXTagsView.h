@@ -8,16 +8,12 @@
 
 
 #import <UIKit/UIKit.h>
-#import "HXTagAttribute.h"
-
-#define HXTagSpace 18.0
-#define HXTagHeight 32.0
-#define HXTagOriginX 10.0
-#define HXTagOriginY 10.0
-#define HXTagHorizontalSpace 10.0
-#define HXTagVerticalSpace 10.0
 
 @class HXTagsView;
+@class HXTagLayout;
+@class HXTagAttribute;
+
+#pragma mark - 代理方法
 
 @protocol HXTagsViewDelegate <NSObject>
 
@@ -42,23 +38,38 @@
 
 @end
 
+#pragma mark - HXTagsView
+
 @interface HXTagsView : UIScrollView
 
-@property (nonatomic,assign) id<HXTagsViewDelegate> tagDelegate;
-
-@property (nonatomic,assign) NSInteger currentIndex;
-
-#pragma mark 多选开关
+@property (nonatomic,assign) id<HXTagsViewDelegate> tagDelegate;//代理
+@property (nonatomic,strong) HXTagLayout *tagLayout;//布局对象
+@property (nonatomic,strong) HXTagAttribute *tagAttribute;//按钮样式对象
+@property (nonatomic,strong) NSArray *tagAry;//传入的标签数组 字符串数组
+@property (nonatomic,copy) NSString *key;//搜索关键词
 @property (nonatomic,assign) BOOL isMultiSelect;//是否可以多选 默认单选
 
-#pragma mark 多行开关
+//刷新界面
+- (void)reloadData;
+
+/**
+ *  获取高度
+ *
+ *  @param ary       标签数组
+ *  @param tagLayout 标签的布局
+ *  @param width     标签的宽度
+ *
+ *  @return 标签View的高度
+ */
++ (float)getTagsViewHeightWithTags:(NSArray *)ary tagLayout:(HXTagLayout *)tagLayout width:(float)width;
+
+@end
+
+#pragma mark - 布局参数
+
+@interface HXTagLayout : NSObject
+
 @property (nonatomic,assign) NSInteger type;//0.单行 1.平铺 默认单行,单行可以不设置type
-
-#pragma mark 数据源
-@property (nonatomic,strong) NSArray *tagAry;//传入的标签数组
-
-#pragma mark 可不设置,不设置则用默认值 以下影响标签的布局计算参数,可以把所有参数全部设置到propertyDic字典中
-@property (nonatomic,strong) NSDictionary *propertyDic;//属性字典
 @property (nonatomic,assign) float tagSpace;//标签内部左右间距(标题距离边框2边的距离和)
 @property (nonatomic,assign) float tagHeight;//标签高度
 @property (nonatomic,assign) float tagOriginX;//第一个标签起点X坐标
@@ -66,36 +77,11 @@
 @property (nonatomic,assign) float tagHorizontalSpace;//标签间横向间距
 @property (nonatomic,assign) float tagVerticalSpace;//标签间纵向间距
 
-#pragma mark 标签定制属性
-@property (nonatomic,strong) HXTagAttribute *tagAttribute;
-
-#pragma mark 搜索标签加色
-@property (nonatomic,copy) NSString *key;//搜索关键词
-@property (nonatomic,strong) UIColor *keyColor;//搜索关键词颜色
-
-/**
- *  计算标签的高度
- *
- *  @param ary 标签字符串数组
- *  @param dic 
-             @{@"frameSizeWidth":@([[UIScreen mainScreen] bounds].size.width),
-             @"type":@(0),
-             @"tagOriginX":@(10),
-             @"tagSpace":@(9),
-             @"tagHorizontalSpace":@(10),
-             @"tagOriginY":@(10),
-             @"tagHeight":@(32),
-             @"tagVerticalSpace":@(10)};
- *
- *  @return <#return value description#>
- */
-+ (float)getTagsViewHeight:(NSArray *)ary dic:(NSDictionary *)dic;
-
 @end
 
 
 #pragma mark - 扩展方法
 
 @interface NSString (HXExtention)
-- (CGSize)fdd_sizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size;
+- (CGSize)ex_sizeWithFont:(UIFont *)font constrainedToSize:(CGSize)size;
 @end

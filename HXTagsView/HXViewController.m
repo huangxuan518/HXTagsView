@@ -21,6 +21,8 @@
     [super viewDidLoad];
     self.title = @"标签";
     
+    HXTagLayout *tagLayout = [HXTagLayout new];
+    
     /*单行是否滚动是标签的数量决定的,当标签排列在一起的长度大于屏幕的长度,则会滚动*/
 
     //单行不滚动 ===
@@ -30,16 +32,12 @@
     titleLable.text = @"单行不滚动";
     [self.view addSubview:titleLable];
     
-    NSDictionary *propertyDic = @{@"type":@"0"};//可添加多个属性
-    float height = [HXTagsView getTagsViewHeight:tagAry dic:propertyDic];
+    float height = 52;
     HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, height)];
-    //以下2种方式皆可或者不设置,默认为单行
-    tagsView.type = 0;
-    //tagsView.propertyDic = propertyDic;
-    //是否可以多选
-    //tagsView.isMultiSelect = YES;
     tagsView.tagAry = tagAry;
     tagsView.tagDelegate = self;
+    //改变参数后请执行刷新
+    //[tagsView reloadData];
     [self.view addSubview:tagsView];
     
     
@@ -50,14 +48,11 @@
     titleLable.text = @"单行滚动";
     [self.view addSubview:titleLable];
     
-    propertyDic = @{@"type":@"0"};
-    height = [HXTagsView getTagsViewHeight:tagAry dic:propertyDic];
     tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, height)];
-    //以下2种方式皆可或者不设置,默认为单行
-    //tagsView.type = 0;
-    tagsView.propertyDic = propertyDic;
     tagsView.tagAry = tagAry;
     tagsView.tagDelegate = self;
+    //改变参数后请执行刷新
+    //[tagsView reloadData];
     [self.view addSubview:tagsView];
     
     
@@ -70,14 +65,18 @@
     titleLable.text = @"多行平铺";
     [self.view addSubview:titleLable];
 
-    propertyDic = @{@"type":@"1"};
-    height = [HXTagsView getTagsViewHeight:tagAry dic:propertyDic];
+    tagLayout.type = 1;
+    height = [HXTagsView getTagsViewHeightWithTags:tagAry tagLayout:tagLayout width:self.view.frame.size.width];
     tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, height)];
-    tagsView.type = 1;
+    //改变标签的各种样式请修改tagAttribute字段
+    tagsView.tagAttribute.titleSize = 20;
+    tagsView.tagLayout.type = 1;
     tagsView.isMultiSelect = YES;
     tagsView.key = @"游戏";
     tagsView.tagAry = tagAry;
     tagsView.tagDelegate = self;
+    //改变参数后请执行刷新
+    //[tagsView reloadData];
     [self.view addSubview:tagsView];
     
     
@@ -89,9 +88,11 @@
     [self.view addSubview:titleLable];
     
     tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, titleLable.frame.origin.y+titleLable.frame.size.height+10, self.view.frame.size.width, 100)];
-    tagsView.type = 1;
     tagsView.tagAry = tagAry;
+    tagsView.tagLayout = tagLayout;
     tagsView.tagDelegate = self;
+    //改变参数后请执行刷新
+    //[tagsView reloadData];
     [self.view addSubview:tagsView];
 }
 
