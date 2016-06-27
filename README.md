@@ -58,11 +58,7 @@ HXTagsView是一款支持自动布局的标签tag
     tagLayout.type = 1;
     float height = [HXTagsView getTagsViewHeightWithTags:tagAry tagLayout:tagLayout width:self.view.frame.size.width];
     HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
-    //改变标签的各种样式请修改tagAttribute字段
-    tagsView.tagAttribute.titleSize = 20;
     tagsView.tagLayout = tagLayout;
-    tagsView.isMultiSelect = YES;
-    tagsView.key = @"游戏";
     tagsView.tagAry = tagAry;
     tagsView.tagDelegate = self;
     [self.view addSubview:tagsView];
@@ -137,6 +133,10 @@ HXTagsView是一款支持自动布局的标签tag
         NSLog(@"tag:%@ index:%ld",title,selectIndex);
     }
     
+# 刷新方法
+
+- (void)reloadData;
+
 # 用法说明
 1. 当您选择平铺展示,并且设置了HXTagsView的高度,当您设置的高度有值并且小于标签的计算高度时,则滚动显示,否则全部平铺.当您设置的高度过大时,也会将高度更改为全铺显示.
 2. 根据type来设置单行滚动还是多行不滚动,type=1,是平铺,0.为单行,默认单行
