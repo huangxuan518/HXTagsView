@@ -17,6 +17,10 @@ HXTagsView是一款支持自动布局的标签tag
 
 -支持搜索关键词标签加亮以及关键词颜色自定义,设置key字段的值即可
 
+-标签样式更改HXTagAttribute
+
+-标签布局计算属性更改HXTagLayout
+
 # 效果展示
 
 
