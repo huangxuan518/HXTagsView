@@ -15,7 +15,7 @@ HXTagsView是一款支持自动布局的标签tag
 
 -支持多选操作,控制字段isMultiSelect
 
--支持搜索关键词标签加亮以及关键词颜色自定义
+-支持搜索关键词标签加亮以及关键词颜色自定义,设置key字段的值即可
 
 # 效果展示
 
@@ -32,7 +32,8 @@ HXTagsView是一款支持自动布局的标签tag
     //单行不滚动 ===
     NSArray *tagAry = @[@"英雄联盟",@"穿越火线",@"地下城与勇士"];
     
-    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
+    float height = 52;
+    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, height)];
     tagsView.tagAry = tagAry;
     tagsView.tagDelegate = self;
     [self.view addSubview:tagsView];
@@ -42,7 +43,8 @@ HXTagsView是一款支持自动布局的标签tag
     //单行滚动 ===
     NSArray *tagAry = @[@"魔兽世界",@"梦幻西游",@"qq飞车",@"传奇",@"逆战",@"炉石传说",@"剑灵",@"qq炫舞",@"dota2",@"300英雄",@"笑傲江湖ol",@"剑网3",@"坦克世界",@"神武",@"龙之谷"];
     
-    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
+    float height = 52;
+    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, height)];
     tagsView.tagAry = tagAry;
     tagsView.tagDelegate = self;
     [self.view addSubview:tagsView];
@@ -52,10 +54,15 @@ HXTagsView是一款支持自动布局的标签tag
     //多行不滚动单选 ===
     NSArray *tagAry = @[@"冒险岛",@"反恐精英ol",@"魔域",@"诛仙",@"火影ol",@"问道",@"天龙八部",@"枪神纪",@"英魂之刃",@"勇者大冒险",@"nba 2k",@"上古世纪",@"跑跑卡丁车",@"传奇世界",@"劲舞团",@"激战2"];
     
-    propertyDic = @{@"type":@"1"};
-    height = [HXTagsView getTagsViewHeight:tagAry dic:propertyDic];
+    HXTagLayout *tagLayout = [HXTagLayout new];
+    tagLayout.type = 1;
+    float height = [HXTagsView getTagsViewHeightWithTags:tagAry tagLayout:tagLayout width:self.view.frame.size.width];
     HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
-    tagsView.propertyDic = propertyDic;
+    //改变标签的各种样式请修改tagAttribute字段
+    tagsView.tagAttribute.titleSize = 20;
+    tagsView.tagLayout = tagLayout;
+    tagsView.isMultiSelect = YES;
+    tagsView.key = @"游戏";
     tagsView.tagAry = tagAry;
     tagsView.tagDelegate = self;
     [self.view addSubview:tagsView];
@@ -65,8 +72,11 @@ HXTagsView是一款支持自动布局的标签tag
     //多行滚动单选 ===
     NSArray *tagAry = @[@"蜀山ol",@"天下3",@"大话西游2",@"热血江湖",@"游戏人生",@"梦三国",@"流星蝴蝶剑",@"九阴真经",@"斗战神",@"奇迹mu",@"最终幻想14",@"宠物小精灵",@"天龙八部3",@"qq三国",@"倩女幽魂ol",@"御龙在天"];
     
+    HXTagLayout *tagLayout = [HXTagLayout new];
+    tagLayout.type = 1;
+    float height = [HXTagsView getTagsViewHeightWithTags:tagAry tagLayout:tagLayout width:self.view.frame.size.width];
     HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100)];
-    tagsView.type = 1;
+    tagsView.tagLayout = tagLayout;
     tagsView.tagAry = tagAry;
     tagsView.tagDelegate = self;
     [self.view addSubview:tagsView];
@@ -75,11 +85,12 @@ HXTagsView是一款支持自动布局的标签tag
 
     //多行不滚动多选
     NSArray *tagAry = @[@"冒险岛游戏",@"反恐精英ol游戏",@"游戏魔域",@"诛游戏仙",@"火游戏影ol游戏",@"问游戏道",@"天游戏龙游戏八游戏部",@"枪神纪游戏",@"英魂之游戏刃",@"勇者游戏大冒险",@"nba 游戏2k",@"上古世纪游戏",@"游戏跑跑卡游戏丁车",@"传奇世界游戏",@"劲舞游戏团",@"激游戏战2"];
-
-    propertyDic = @{@"type":@"1"};
-    height = [HXTagsView getTagsViewHeight:tagAry dic:propertyDic];
+    
+    HXTagLayout *tagLayout = [HXTagLayout new];
+    tagLayout.type = 1;
+    float height = 100;
     HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
-    tagsView.type = 1;
+    tagsView.tagLayout = tagLayout;
     tagsView.isMultiSelect = YES;
     tagsView.tagAry = tagAry;
     tagsView.tagDelegate = self;
@@ -90,10 +101,11 @@ HXTagsView是一款支持自动布局的标签tag
     //多行不滚动有关键字多选
     NSArray *tagAry = @[@"冒险岛游戏",@"反恐精英ol游戏",@"游戏魔域",@"诛游戏仙",@"火游戏影ol游戏",@"问游戏道",@"天游戏龙游戏八游戏部",@"枪神纪游戏",@"英魂之游戏刃",@"勇者游戏大冒险",@"nba 游戏2k",@"上古世纪游戏",@"游戏跑跑卡游戏丁车",@"传奇世界游戏",@"劲舞游戏团",@"激游戏战2"];
 
-    propertyDic = @{@"type":@"1"};
-    height = [HXTagsView getTagsViewHeight:tagAry dic:propertyDic];
+    HXTagLayout *tagLayout = [HXTagLayout new];
+    tagLayout.type = 1;
+    float height = 100;
     HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, height)];
-    tagsView.type = 1;
+    tagsView.tagLayout = tagLayout;
     tagsView.isMultiSelect = YES;
     tagsView.key = @"游戏";
     tagsView.tagAry = tagAry;
@@ -129,7 +141,7 @@ HXTagsView是一款支持自动布局的标签tag
 1. 当您选择平铺展示,并且设置了HXTagsView的高度,当您设置的高度有值并且小于标签的计算高度时,则滚动显示,否则全部平铺.当您设置的高度过大时,也会将高度更改为全铺显示.
 2. 根据type来设置单行滚动还是多行不滚动,type=1,是平铺,0.为单行,默认单行
 3. 标签还有很多属性,比如标签边框颜色,边框宽度,圆角等等,所有都可以自己定制,详见.h文件,完全可以满足您的需要
-4. 高度计算+ (float)getTagsViewHeight:(NSArray *)ary dic:(NSDictionary *)dic计算,ary为标签字符串数组,字典里面装对应的更改的属性值进去,方法会根据传人的值进行高度计算,如果传nil则用默认值进行计算
+4. 高度计算+ (float)getTagsViewHeightWithTags:(NSArray *)ary tagLayout:(HXTagLayout *)tagLayout width:(float)width值进行高度计算,如果传nil则用默认值进行计算
 
 # 自动高度计算方法说明
 单行:第一个标签起点Y坐标+标签高度+标签间纵向间距
