@@ -6,7 +6,8 @@
 //  Copyright © 2015年 IT小子. All rights reserved.
 
 #import "HXTagsView.h"
-#import "HXTagView.h"
+#import "HXTagButton.h"
+#import "HXTagAttribute.h"
 
 @interface HXTagsView ()
 
@@ -24,15 +25,8 @@
         self.showsVerticalScrollIndicator = YES;
         self.frame = frame;
         self.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
-        int r = arc4random() % 255;
-        int g = arc4random() % 255;
-        int b = arc4random() % 255;
-        
-        UIColor *normalColor = [UIColor colorWithRed:r/255.0 green:b/255.0 blue:g/255.0 alpha:1.0];
-        UIColor *selectedColor = [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
-        
-        UIColor *normalBackgroundColor = [UIColor whiteColor];
-        UIColor *selectedBackgroundColor = [UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1.0];
+
+        _tagAttribute = [self defauleTagAttribute];
         
         _currentIndex = -1;
         
@@ -42,20 +36,37 @@
         _tagOriginY = HXTagOriginY;
         _tagHorizontalSpace = HXTagHorizontalSpace;
         _tagVerticalSpace = HXTagVerticalSpace;
-        
-        _borderWidth = 0.5f;
-        _cornerRadius = 2.0;
-        _titleSize = 14;
-        _keyColor = [UIColor redColor];
-        _borderNormalColor = normalColor;
-        _borderSelectedColor = selectedColor;
-        _titleNormalColor = normalColor;
-        _titleSelectedColor = selectedColor;
-        _normalBackgroundColor = normalBackgroundColor;
-        _selectedBackgroundColor = selectedBackgroundColor;
+    
         _isFirst = YES;
     }
     return self;
+}
+
+//默认样式
+- (HXTagAttribute *)defauleTagAttribute {
+    HXTagAttribute *tagAttribute = [[HXTagAttribute alloc] init];
+    int r = arc4random() % 255;
+    int g = arc4random() % 255;
+    int b = arc4random() % 255;
+    
+    UIColor *normalColor = [UIColor colorWithRed:r/255.0 green:b/255.0 blue:g/255.0 alpha:1.0];
+    UIColor *selectedColor = [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
+    
+    UIColor *normalBackgroundColor = [UIColor whiteColor];
+    UIColor *selectedBackgroundColor = [UIColor colorWithRed:234/255.0 green:234/255.0 blue:234/255.0 alpha:1.0];
+    
+    tagAttribute.borderWidth = 0.5f;
+    tagAttribute.borderNormalColor = normalColor;
+    tagAttribute.borderSelectedColor = selectedColor;
+    tagAttribute.cornerRadius = 2.0;
+    tagAttribute.normalBackgroundColor = normalBackgroundColor;
+    tagAttribute.selectedBackgroundColor = selectedBackgroundColor;
+    tagAttribute.titleSize = 14;
+    tagAttribute.titleNormalColor = normalColor;
+    tagAttribute.titleSelectedColor = selectedColor;
+    
+    tagAttribute.keyColor = [UIColor redColor];
+    return tagAttribute;
 }
 
 - (void)setPropertyDic:(NSDictionary *)propertyDic {
@@ -95,7 +106,7 @@
         NSUInteger index = i;
         
         //计算每个tag的宽度
-        CGSize contentSize = [tagTitle fdd_sizeWithFont:[UIFont systemFontOfSize:_titleSize] constrainedToSize:CGSizeMake(maxFrameWidth, MAXFLOAT)];
+        CGSize contentSize = [tagTitle fdd_sizeWithFont:[UIFont systemFontOfSize:_tagAttribute.titleSize] constrainedToSize:CGSizeMake(maxFrameWidth, MAXFLOAT)];
         
         NSMutableDictionary *dict = [NSMutableDictionary new];
         dict[@"tagTitle"] = tagTitle;//标签标题
@@ -157,7 +168,7 @@
     return height;
 }
 
-- (void)buttonAction:(HXTagView *)tagView {
+- (void)buttonAction:(HXTagButton *)tagButton {
 
     if (_isMultiSelect) {
         if (!_tags) {
@@ -166,10 +177,10 @@
         [_tags removeAllObjects];
         
         
-        tagView.selected = !tagView.selected;
+        tagButton.selected = !tagButton.selected;
         
-        for (HXTagView *view in self.subviews) {
-            if ([view isKindOfClass:[HXTagView class]]) {
+        for (HXTagButton *view in self.subviews) {
+            if ([view isKindOfClass:[HXTagButton class]]) {
                 if (view.selected == YES) {
                     [_tags addObject:view.title];
                 }
@@ -183,9 +194,9 @@
     } else {
         //单选
         //只有点击的按钮不是之前点击的才执行以下方法,寻找点击的按钮
-        for (HXTagView *view in self.subviews) {
-            if ([view isKindOfClass:[HXTagView class]]) {
-                if (view.tag == tagView.tag) {
+        for (HXTagButton *view in self.subviews) {
+            if ([view isKindOfClass:[HXTagButton class]]) {
+                if (view.tag == tagButton.tag) {
                     view.selected = YES;
                 } else {
                     view.selected = NO;
@@ -194,7 +205,7 @@
         }
 
         if (_tagDelegate && [_tagDelegate respondsToSelector:@selector(tagsViewButtonAction:selectIndex:tagTitle:)]) {
-            [_tagDelegate tagsViewButtonAction:self selectIndex:tagView.tag tagTitle:tagView.title];
+            [_tagDelegate tagsViewButtonAction:self selectIndex:tagButton.tag tagTitle:tagButton.title];
         }
     }
 }
@@ -218,22 +229,14 @@
             float originX = [tagDic[@"originX"] floatValue];
             float buttonWith = [tagDic[@"buttonWith"] floatValue];
             
-            HXTagView *tagButton = [[HXTagView alloc] initWithFrame:CGRectMake(originX, _tagOriginY+i*(_tagHeight+_tagVerticalSpace), buttonWith, _tagHeight)];
-            tagButton.titleSize = _titleSize;
+            HXTagButton *tagButton = [[HXTagButton alloc] initWithFrame:CGRectMake(originX, _tagOriginY+i*(_tagHeight+_tagVerticalSpace), buttonWith, _tagHeight)];
+            tagButton.tagAttribute = _tagAttribute;
             tagButton.title = tagTitle;
-            tagButton.cornerRadius = _cornerRadius;
-            tagButton.borderWidth = _borderWidth;
-            tagButton.borderNormalColor = _borderNormalColor;
-            tagButton.borderSelectedColor = _borderSelectedColor;
-            tagButton.titleNormalColor = _titleNormalColor;
-            tagButton.titleSelectedColor = _titleSelectedColor;
-            tagButton.normalBackgroundColor = _normalBackgroundColor;
-            tagButton.selectedBackgroundColor = _selectedBackgroundColor;
             tagButton.tagKey = _key;
-            tagButton.keyColor = _keyColor;
+            
             tagButton.tag = index;
             tagButton.isMultiSelect = _isMultiSelect;
-            tagButton.buttonAction = ^(HXTagView *tagView) {
+            tagButton.buttonAction = ^(HXTagButton *tagView) {
                 [self buttonAction:tagView];
             };
             [self addSubview:tagButton];

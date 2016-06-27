@@ -8,6 +8,7 @@
 
 
 #import <UIKit/UIKit.h>
+#import "HXTagAttribute.h"
 
 #define HXTagSpace 18.0
 #define HXTagHeight 32.0
@@ -45,6 +46,8 @@
 
 @property (nonatomic,assign) id<HXTagsViewDelegate> tagDelegate;
 
+@property (nonatomic,assign) NSInteger currentIndex;
+
 #pragma mark 多选开关
 @property (nonatomic,assign) BOOL isMultiSelect;//是否可以多选 默认单选
 
@@ -64,16 +67,7 @@
 @property (nonatomic,assign) float tagVerticalSpace;//标签间纵向间距
 
 #pragma mark 标签定制属性
-@property (nonatomic,assign) float borderWidth;//标签边框宽度
-@property (nonatomic,assign) float cornerRadius;//标签圆角大小
-@property (nonatomic,strong) UIColor *borderNormalColor;//标签边框默认颜色
-@property (nonatomic,strong) UIColor *borderSelectedColor;//标签边框选中颜色
-@property (nonatomic,assign) float titleSize;//标签字体大小
-@property (nonatomic,strong) UIColor *titleNormalColor;//标签字体默认颜色
-@property (nonatomic,strong) UIColor *titleSelectedColor;//标签字体选中颜色
-@property (nonatomic,strong) UIColor *normalBackgroundColor;//标签默认背景颜色
-@property (nonatomic,strong) UIColor *selectedBackgroundColor;//标签选中背景颜色
-@property (nonatomic,assign) NSInteger currentIndex;//当前点击的标签
+@property (nonatomic,strong) HXTagAttribute *tagAttribute;
 
 #pragma mark 搜索标签加色
 @property (nonatomic,copy) NSString *key;//搜索关键词

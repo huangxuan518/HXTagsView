@@ -9,8 +9,7 @@
 #import "HXViewController.h"
 #import "HXWebViewController.h"
 #import "HXTagsView.h"
-
-#import "HXTagView.h"
+#import "HXTagButton.h"
 
 @interface HXViewController () <HXTagsViewDelegate>
 
@@ -109,10 +108,7 @@
  *  @param selectIndex 当前选的标签index
  *  @param title       当前选的标签标题
  */
-- (void)tagsViewButtonAction:(HXTagsView *)tagsView selectIndex:(NSInteger)selectIndex tagTitle:(NSString *)title {
-    NSLog(@"tag:%@ index:%ld",title,selectIndex);
-    return;
-    
+- (void)tagsViewButtonAction:(HXTagsView *)tagsView selectIndex:(NSInteger)selectIndex tagTitle:(NSString *)title {    
     HXWebViewController *vc = [[HXWebViewController alloc] init];
     vc.keyWord = title;
     [self.navigationController pushViewController:vc animated:NO];

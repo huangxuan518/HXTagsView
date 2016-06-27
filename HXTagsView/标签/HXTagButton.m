@@ -1,21 +1,21 @@
 //
-//  HXTagView.m
+//  HXTagButton.m
 //  HXTagsView
 //
 //  Created by 黄轩 on 16/4/14.
 //  Copyright © 2016年 IT小子. All rights reserved.
 //
 
-#import "HXTagView.h"
+#import "HXTagButton.h"
 
-@interface HXTagView ()
+@interface HXTagButton ()
 
 @property (nonatomic,strong) UILabel *tagLabel;
 @property (nonatomic,strong) UITapGestureRecognizer *tap;
 
 @end
 
-@implementation HXTagView
+@implementation HXTagButton
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self == [super initWithFrame:frame] ) {
@@ -42,46 +42,6 @@
     [_tagLabel addGestureRecognizer:_tap];
 }
 
-- (void)setBorderWidth:(float)borderWidth {
-    _borderWidth = borderWidth;
-    self.layer.borderWidth = _borderWidth > 0 ? _borderWidth : 1.0f;
-}
-
-- (void)setBorderNormalColor:(UIColor *)borderNormalColor {
-    _borderNormalColor = borderNormalColor;
-    self.layer.borderColor = _borderNormalColor.CGColor;
-}
-
-- (void)setMasksToBounds:(BOOL)masksToBounds {
-    self.layer.masksToBounds = masksToBounds;
-}
-
-- (void)setCornerRadius:(float)cornerRadius {
-    _cornerRadius = cornerRadius;
-    
-    if (_cornerRadius > 0) {
-        [self setMasksToBounds:YES];
-        self.layer.cornerRadius = _cornerRadius;
-    } else {
-        [self setMasksToBounds:NO];
-    }
-}
-
-- (void)setTitleSize:(float)titleSize {
-    _titleSize = titleSize;
-    _tagLabel.font = [UIFont systemFontOfSize:_titleSize];
-}
-
-- (void)setTitleNormalColor:(UIColor *)titleNormalColor {
-    _titleNormalColor = titleNormalColor;
-    _tagLabel.textColor = _titleNormalColor;
-}
-
-- (void)setNormalBackgroundColor:(UIColor *)normalBackgroundColor {
-    _normalBackgroundColor = normalBackgroundColor;
-    self.backgroundColor = _normalBackgroundColor;
-}
-
 - (void)handTap:(UITapGestureRecognizer *)tap {
     if (_buttonAction) {
         _buttonAction(self);
@@ -91,26 +51,39 @@
 - (void)setSelected:(BOOL)selected {
     _selected = selected;
     if (selected) {
-        self.layer.borderColor = _borderSelectedColor.CGColor;
-        _tagLabel.textColor = _titleSelectedColor;
+        self.layer.borderColor = _tagAttribute.borderSelectedColor.CGColor;
+        _tagLabel.textColor = _tagAttribute.titleSelectedColor;
         if (_tagKey.length > 0) {
-            _tagLabel.attributedText = [self searchTitle:_title key:_tagKey keyColor:_keyColor size:_titleSize];
+            _tagLabel.attributedText = [self searchTitle:_title key:_tagKey keyColor:_tagAttribute.keyColor size:_tagAttribute.titleSize];
         }
-        self.backgroundColor = _selectedBackgroundColor;
+        self.backgroundColor = _tagAttribute.selectedBackgroundColor;
     } else {
-        self.layer.borderColor = _borderNormalColor.CGColor;
-        _tagLabel.textColor = _titleNormalColor;
+        self.layer.borderColor = _tagAttribute.borderNormalColor.CGColor;
+        _tagLabel.textColor = _tagAttribute.titleNormalColor;
         if (_tagKey.length > 0) {
-            _tagLabel.attributedText = [self searchTitle:_title key:_tagKey keyColor:_keyColor size:_titleSize];
+            _tagLabel.attributedText = [self searchTitle:_title key:_tagKey keyColor:_tagAttribute.keyColor size:_tagAttribute.titleSize];
         }
-        self.backgroundColor = _normalBackgroundColor;
+        self.backgroundColor = _tagAttribute.normalBackgroundColor;
     }
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    self.layer.borderWidth = _tagAttribute.borderWidth > 0 ? _tagAttribute.borderWidth : 1.0f;
+    self.layer.borderColor = _tagAttribute.borderNormalColor.CGColor;
+    if (_tagAttribute.cornerRadius > 0) {
+        self.layer.masksToBounds = YES;
+        self.layer.cornerRadius = _tagAttribute.cornerRadius;
+    } else {
+        self.layer.masksToBounds = NO;;
+    }
+
+    _tagLabel.font = [UIFont systemFontOfSize:_tagAttribute.titleSize];
+    _tagLabel.textColor = _tagAttribute.titleNormalColor;
+    self.backgroundColor = _tagAttribute.normalBackgroundColor;
+    
     if (_tagKey.length > 0) {
-        _tagLabel.attributedText = [self searchTitle:_title key:_tagKey keyColor:_keyColor size:_titleSize];
+        _tagLabel.attributedText = [self searchTitle:_title key:_tagKey keyColor:_tagAttribute.keyColor size:_tagAttribute.titleSize];
     } else {
         _tagLabel.text = _title;
     }
