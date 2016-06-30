@@ -11,6 +11,8 @@ HXTagsView是一款支持自动布局的标签tag
 
 -支持多选操作,控制字段isMultiSelect
 
+-支持cell，高度计算方法+ (CGFloat)getCellHeightWithTags:(NSArray *)tags layout:(HXTagCollectionViewFlowLayout *)layout tagAttribute:(HXTagAttribute *)tagAttribute width:(CGFloat)width;
+
 -支持搜索关键词标签加亮以及关键词颜色自定义,设置key字段的值即可
 
 -标签样式更改tagAttribute
@@ -24,7 +26,7 @@ HXTagsView是一款支持自动布局的标签tag
 # 适用
 本标签类适用于标签长度不确定等动态计算的标签显示需求
 
-# 使用示例
+# View上使用HXTagsView示例
 
     //单行不滚动 ===
     NSArray *tagAry = @[@"英雄联盟",@"穿越火线",@"地下城与勇士"];
@@ -88,6 +90,27 @@ HXTagsView是一款支持自动布局的标签tag
     [self.view addSubview:tagsView];
 
 ![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/duohangpingpuxiaoguo.gif)
+
+# UITableView上使用HXTagsCell示例
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    HXTagsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(HXTagsCell.classs)];
+    if (!cell) {
+    cell = [[HXTagsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass(HXTagsCell.classs)];
+    }
+
+    cell.tags = @[@"冒险岛游戏",@"反恐精英ol游戏",@"游戏魔域",@"诛游戏仙",@"火游戏影ol游戏",@"问游戏道",@"天游戏龙游戏八游戏部",@"枪神纪游戏",@"英魂之游戏刃",@"勇者游戏大冒险",@"nba 游戏2k",@"上古世纪游戏",@"游戏跑跑卡游戏丁车",@"传奇世界游戏",@"劲舞游戏团",@"激游戏战2"];
+    
+    [cell reloadData];
+
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = [HXTagsView getHeightWithTags:self.tagsView.tags layout:self.tagsView.layout tagAttribute:self.tagsView.tagAttribute width:self.view.frame.size.width];
+    return height;
+}
     
 # 选择回调方法
     

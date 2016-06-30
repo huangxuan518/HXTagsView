@@ -84,6 +84,10 @@
     }
     
     self.titleLabel.text = str;
+    
+    
+    CGFloat height = [HXTagsView getHeightWithTags:self.tagsView.tags layout:self.tagsView.layout tagAttribute:self.tagsView.tagAttribute width:self.view.frame.size.width];
+    NSLog(@"高度:==== %f",height);
 }
 
 /**

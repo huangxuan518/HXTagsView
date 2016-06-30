@@ -19,6 +19,19 @@
 
 @implementation HXTagCollectionViewFlowLayout
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        self.itemSize = CGSizeMake(100.0f, 34.0f);
+        self.minimumInteritemSpacing = 10.0f;
+        self.minimumLineSpacing = 10.0f;
+        self.sectionInset = UIEdgeInsetsMake(10.0f, 10.0f, 10.0f, 10.0f);
+    }
+    return self;
+}
+
 #pragma mark -
 
 - (void)prepareLayout

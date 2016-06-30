@@ -1,23 +1,23 @@
 //
-//  HXTagsView.m
-//  黄轩 https://github.com/huangxuan518
+//  HXTagsCell.m
+//  HXTagsView
 //
-//  Created by 黄轩 on 16/1/13.
-//  Copyright © 2015年 IT小子. All rights reserved.
+//  Created by Love on 16/6/30.
+//  Copyright © 2016年 IT小子. All rights reserved.
 //
 
-#import "HXTagsView.h"
+#import "HXTagsCell.h"
 #import "HXTagCollectionViewCell.h"
 #import "HXTagAttribute.h"
 
-@interface HXTagsView () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface HXTagsCell () <UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (nonatomic,strong) NSMutableArray *selectedTags;
 @property (nonatomic,strong) UICollectionView *collectionView;
 
 @end
 
-@implementation HXTagsView
+@implementation HXTagsCell
 
 static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
 
@@ -87,14 +87,14 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
     } else {
         cell.titleLabel.text = title;
     }
-        
+    
     if ([self.selectedTags containsObject:self.tags[indexPath.item]]) {
         cell.backgroundColor = _tagAttribute.selectedBackgroundColor;
     }
     
     if (indexPath.item + 1 == _tags.count) {
         if (!_layout.isMultiLineRoll) {
-        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.collectionView.collectionViewLayout.collectionViewContentSize.height);
+            self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.collectionView.collectionViewLayout.collectionViewContentSize.height);
         } else {
             self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, _layout.defauleRect.size.height);
         }
@@ -184,7 +184,7 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
     return _collectionView;
 }
 
-+ (CGFloat)getHeightWithTags:(NSArray *)tags layout:(HXTagCollectionViewFlowLayout *)layout tagAttribute:(HXTagAttribute *)tagAttribute width:(CGFloat)width
++ (CGFloat)getCellHeightWithTags:(NSArray *)tags layout:(HXTagCollectionViewFlowLayout *)layout tagAttribute:(HXTagAttribute *)tagAttribute width:(CGFloat)width
 {
     CGFloat contentHeight;
     
@@ -195,7 +195,7 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
     if (tagAttribute.titleSize <= 0) {
         tagAttribute = [[HXTagAttribute alloc] init];
     }
-    
+
     //cell的高度 = 顶部 + 高度
     contentHeight = layout.sectionInset.top + layout.itemSize.height;
     
@@ -225,7 +225,7 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
             originX += itemSize.width + layout.minimumInteritemSpacing;
         }
     }
-    
+
     contentHeight += layout.sectionInset.bottom;
     return contentHeight;
 }

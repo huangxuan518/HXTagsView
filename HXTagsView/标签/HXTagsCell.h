@@ -1,9 +1,9 @@
 //
-//  HXTagsView.h
-//  黄轩 https://github.com/huangxuan518
+//  HXTagsCell.h
+//  HXTagsView
 //
-//  Created by 黄轩 on 16/1/13.
-//  Copyright © 2015年 IT小子. All rights reserved.
+//  Created by Love on 16/6/30.
+//  Copyright © 2016年 IT小子. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -11,7 +11,7 @@
 
 @class HXTagAttribute;
 
-@interface HXTagsView : UIView
+@interface HXTagsCell : UITableViewCell
 
 @property (nonatomic,strong) NSArray *tags;//传入的标签数组 字符串数组
 @property (nonatomic,strong) HXTagCollectionViewFlowLayout *layout;//布局layout
@@ -32,6 +32,6 @@
  *  @param tagAttribute 标签样式 默认传nil 涉及到计算的主要是titleSize
  *  @param width        计算的最大范围
  */
-+ (CGFloat)getHeightWithTags:(NSArray *)tags layout:(HXTagCollectionViewFlowLayout *)layout tagAttribute:(HXTagAttribute *)tagAttribute width:(CGFloat)width;
++ (CGFloat)getCellHeightWithTags:(NSArray *)tags layout:(HXTagCollectionViewFlowLayout *)layout tagAttribute:(HXTagAttribute *)tagAttribute width:(CGFloat)width;
 
 @end
