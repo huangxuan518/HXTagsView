@@ -139,9 +139,9 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
         [xxstr appendString:@"*"];
     }
     
-    while ([copyStr rangeOfString:key].location != NSNotFound) {
+    while ([copyStr rangeOfString:key options:NSCaseInsensitiveSearch].location != NSNotFound) {
         
-        NSRange range = [copyStr rangeOfString:key];
+        NSRange range = [copyStr rangeOfString:key options:NSCaseInsensitiveSearch];
         
         [titleStr addAttribute:NSForegroundColorAttributeName value:keyColor range:range];
         copyStr = [copyStr stringByReplacingCharactersInRange:NSMakeRange(range.location, range.length) withString:xxstr];
