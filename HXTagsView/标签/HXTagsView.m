@@ -42,6 +42,7 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    self.collectionView.frame = CGRectMake(_layout.defauleRect.origin.x, _layout.defauleRect.origin.y, self.frame.size.width, _layout.defauleRect.size.height);
 }
 
 - (void)setup
