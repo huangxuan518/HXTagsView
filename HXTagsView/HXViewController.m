@@ -7,6 +7,7 @@
 //
 
 #import "HXViewController.h"
+#import "HXTagTableViewController.h"
 #import "HXTagsView.h"
 
 @interface HXViewController () <UIActionSheetDelegate>
@@ -30,6 +31,9 @@
     UIView *view = [[UIView alloc] initWithFrame:self.view.frame];
     view.backgroundColor = [UIColor clearColor];
     [self.view addSubview:view];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"tableView使用" style:UIBarButtonItemStyleDone target:self action:@selector(gotoTagTableViewController)];
+    self.navigationItem.rightBarButtonItem = item;
     
     self.title = @"标签";
     
@@ -198,6 +202,13 @@
         [self.view addSubview:_tagsView];
     }
     return _tagsView;
+}
+
+#pragma mark - goto
+
+- (void)gotoTagTableViewController {
+    HXTagTableViewController *vc = [HXTagTableViewController new];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

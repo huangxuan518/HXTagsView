@@ -21,9 +21,9 @@
 
 static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
 
-- (id)initWithFrame:(CGRect)frame
-{
-    if (self = [super initWithFrame:frame]) {
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    self =  [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
         [self setup];
     }
     
@@ -42,6 +42,7 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    self.collectionView.frame = CGRectMake(_layout.defauleRect.origin.x, _layout.defauleRect.origin.y, self.frame.size.width, _layout.defauleRect.size.height);
 }
 
 - (void)setup
@@ -165,7 +166,7 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
 
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
-        _collectionView = [[UICollectionView alloc] initWithFrame:_layout.defauleRect collectionViewLayout:_layout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(_layout.defauleRect.origin.x, _layout.defauleRect.origin.y, self.frame.size.width, _layout.defauleRect.size.height) collectionViewLayout:_layout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.backgroundColor = [UIColor colorWithRed:241/255.0 green:241/255.0 blue:241/255.0 alpha:1.0];
@@ -180,7 +181,6 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
         _collectionView.showsHorizontalScrollIndicator = YES;
         _collectionView.showsVerticalScrollIndicator = NO;
     }
-    
     return _collectionView;
 }
 

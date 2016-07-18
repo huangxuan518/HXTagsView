@@ -25,6 +25,7 @@
 		9CB522301D211D9D0047DD2B /* HXTagCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB5222B1D211D9D0047DD2B /* HXTagCollectionViewFlowLayout.m */; };
 		9CB522311D211D9D0047DD2B /* HXTagCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB5222D1D211D9D0047DD2B /* HXTagCollectionViewCell.m */; };
 		9CB522321D211D9D0047DD2B /* HXTagsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB5222F1D211D9D0047DD2B /* HXTagsView.m */; };
+		E4968DCD1D3CDDA400102A3E /* HXTagTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4968DCC1D3CDDA400102A3E /* HXTagTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,8 @@
 		9CB5222D1D211D9D0047DD2B /* HXTagCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HXTagCollectionViewCell.m; sourceTree = "<group>"; };
 		9CB5222E1D211D9D0047DD2B /* HXTagsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HXTagsView.h; sourceTree = "<group>"; };
 		9CB5222F1D211D9D0047DD2B /* HXTagsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HXTagsView.m; sourceTree = "<group>"; };
+		E4968DCB1D3CDDA400102A3E /* HXTagTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HXTagTableViewController.h; sourceTree = "<group>"; };
+		E4968DCC1D3CDDA400102A3E /* HXTagTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HXTagTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +112,8 @@
 				30E706221C476F5200F12FD1 /* AppDelegate.m */,
 				30E706241C476F5200F12FD1 /* HXViewController.h */,
 				30E706251C476F5200F12FD1 /* HXViewController.m */,
+				E4968DCB1D3CDDA400102A3E /* HXTagTableViewController.h */,
+				E4968DCC1D3CDDA400102A3E /* HXTagTableViewController.m */,
 				30E7062A1C476F5200F12FD1 /* Assets.xcassets */,
 				30E7062F1C476F5200F12FD1 /* Info.plist */,
 				30E7061E1C476F5200F12FD1 /* Supporting Files */,
@@ -223,6 +228,7 @@
 				9CA9CF931D24AB64007F3E91 /* HXTagAttribute.m in Sources */,
 				9CA8EDBE1D23DDD700A711A2 /* README.md in Sources */,
 				30E706231C476F5200F12FD1 /* AppDelegate.m in Sources */,
+				E4968DCD1D3CDDA400102A3E /* HXTagTableViewController.m in Sources */,
 				30E706201C476F5200F12FD1 /* main.m in Sources */,
 				9CA9CF901D24AB30007F3E91 /* HXTagsCell.m in Sources */,
 				9CB522311D211D9D0047DD2B /* HXTagCollectionViewCell.m in Sources */,
