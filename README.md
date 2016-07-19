@@ -92,25 +92,29 @@ HXTagsView是一款支持自动布局的标签tag
 ![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/duohangpingpuxiaoguo.gif)
 
 # UITableView上使用HXTagsCell示例
+    - (void)viewDidLoad {
+    [super viewDidLoad];
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+        // Uncomment the following line to preserve selection between presentations.
 
-    HXTagsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(HXTagsCell.classs)];
-    if (!cell) {
-    cell = [[HXTagsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass(HXTagsCell.classs)];
+        [self.tableView registerClass:HXTagsCell.class forCellReuseIdentifier:@"cellId"];
     }
 
-    cell.tags = @[@"冒险岛游戏",@"反恐精英ol游戏",@"游戏魔域",@"诛游戏仙",@"火游戏影ol游戏",@"问游戏道",@"天游戏龙游戏八游戏部",@"枪神纪游戏",@"英魂之游戏刃",@"勇者游戏大冒险",@"nba 游戏2k",@"上古世纪游戏",@"游戏跑跑卡游戏丁车",@"传奇世界游戏",@"劲舞游戏团",@"激游戏战2"];
-    
-    [cell reloadData];
+    - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    return cell;
-}
+        HXTagsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId"];
+        if (!cell) {
+            cell = [[HXTagsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellId"];
+        }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat height = [HXTagsView getHeightWithTags:self.tagsView.tags layout:self.tagsView.layout tagAttribute:self.tagsView.tagAttribute width:self.view.frame.size.width];
-    return height;
-}
+        cell.tags = @[@"冒险岛游戏",@"反恐精英ol游戏",@"游戏魔域",@"诛游戏仙",@"火游戏影ol游戏",@"问游戏道",@"天游戏龙游戏八游戏部",@"枪神纪游戏",@"英魂之游戏刃",@"勇者游戏大冒险",@"nba 游戏2k",@"上古世纪游戏",@"游戏跑跑卡游戏丁车",@"传奇世界游戏",@"劲舞游戏团",@"激游戏战2"];
+        
+        cell.completion = ^(NSArray *selectTags,NSInteger currentIndex) {
+            NSLog(@"selectTags:%@ currentIndex:%ld",selectTags, (long)currentIndex);
+        };
+
+        return cell;
+    }
 
 #高度计算方法
 

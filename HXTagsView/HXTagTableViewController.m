@@ -52,7 +52,6 @@
     cell.completion = ^(NSArray *selectTags,NSInteger currentIndex) {
         NSLog(@"selectTags:%@ currentIndex:%ld",selectTags, (long)currentIndex);
     };
-    cell.backgroundColor = [UIColor redColor];
     
     return cell;
 }
