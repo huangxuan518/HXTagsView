@@ -50,6 +50,7 @@ HXTagsView是一款支持自动布局的标签tag
     //多行不滚动单选 ===
     NSArray *tagAry = @[@"冒险岛",@"反恐精英ol",@"魔域",@"诛仙",@"火影ol",@"问道",@"天龙八部",@"枪神纪",@"英魂之刃",@"勇者大冒险",@"nba 2k",@"上古世纪",@"跑跑卡丁车",@"传奇世界",@"劲舞团",@"激战2"];
     
+    //高度需要计算出来
     HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 300, self.view.frame.size.width, 52)];
     tagsView.tags = tagAry;
     tagsView.layout.scrollDirection = UICollectionViewScrollDirectionVertical;
@@ -71,6 +72,7 @@ HXTagsView是一款支持自动布局的标签tag
     //多行不滚动多选
     NSArray *tagAry = @[@"冒险岛游戏",@"反恐精英ol游戏",@"游戏魔域",@"诛游戏仙",@"火游戏影ol游戏",@"问游戏道",@"天游戏龙游戏八游戏部",@"枪神纪游戏",@"英魂之游戏刃",@"勇者游戏大冒险",@"nba 游戏2k",@"上古世纪游戏",@"游戏跑跑卡游戏丁车",@"传奇世界游戏",@"劲舞游戏团",@"激游戏战2"];
     
+    //高度需要计算出来
     HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 300, self.view.frame.size.width, 52)];
     tagsView.tags = tagAry;
     tagsView.layout.scrollDirection = UICollectionViewScrollDirectionVertical;
@@ -82,6 +84,7 @@ HXTagsView是一款支持自动布局的标签tag
     //多行不滚动有关键字多选
     NSArray *tagAry = @[@"冒险岛游戏",@"反恐精英ol游戏",@"游戏魔域",@"诛游戏仙",@"火游戏影ol游戏",@"问游戏道",@"天游戏龙游戏八游戏部",@"枪神纪游戏",@"英魂之游戏刃",@"勇者游戏大冒险",@"nba 游戏2k",@"上古世纪游戏",@"游戏跑跑卡游戏丁车",@"传奇世界游戏",@"劲舞游戏团",@"激游戏战2"];
 
+    //高度需要计算出来
     HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 300, self.view.frame.size.width, 52)];
     tagsView.tags = tagAry;
     tagsView.layout.scrollDirection = UICollectionViewScrollDirectionVertical;
