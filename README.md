@@ -73,7 +73,8 @@ HXTagsView是一款支持自动布局的标签tag
     NSArray *tagAry = @[@"冒险岛游戏",@"反恐精英ol游戏",@"游戏魔域",@"诛游戏仙",@"火游戏影ol游戏",@"问游戏道",@"天游戏龙游戏八游戏部",@"枪神纪游戏",@"英魂之游戏刃",@"勇者游戏大冒险",@"nba 游戏2k",@"上古世纪游戏",@"游戏跑跑卡游戏丁车",@"传奇世界游戏",@"劲舞游戏团",@"激游戏战2"];
     
     //高度需要计算出来
-    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 300, self.view.frame.size.width, 52)];
+    float height = [HXTagsCell getCellHeightWithTags:self.tags layout:self.layout tagAttribute:nil width:tableView.frame.size.width];
+    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 300, self.view.frame.size.width, height)];
     tagsView.tags = tagAry;
     tagsView.layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     tagsView.isMultiSelect = YES;
@@ -85,7 +86,8 @@ HXTagsView是一款支持自动布局的标签tag
     NSArray *tagAry = @[@"冒险岛游戏",@"反恐精英ol游戏",@"游戏魔域",@"诛游戏仙",@"火游戏影ol游戏",@"问游戏道",@"天游戏龙游戏八游戏部",@"枪神纪游戏",@"英魂之游戏刃",@"勇者游戏大冒险",@"nba 游戏2k",@"上古世纪游戏",@"游戏跑跑卡游戏丁车",@"传奇世界游戏",@"劲舞游戏团",@"激游戏战2"];
 
     //高度需要计算出来
-    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 300, self.view.frame.size.width, 52)];
+    float height = [HXTagsCell getCellHeightWithTags:self.tags layout:self.layout tagAttribute:nil width:tableView.frame.size.width];
+    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 300, self.view.frame.size.width, height)];
     tagsView.tags = tagAry;
     tagsView.layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     tagsView.isMultiSelect = YES;
@@ -95,29 +97,84 @@ HXTagsView是一款支持自动布局的标签tag
 ![image](https://github.com/huangxuan518/HXTagsView/blob/master/HXTagsView/duohangpingpuxiaoguo.gif)
 
 # UITableView上使用HXTagsCell示例
+
+    #import "HXTagTableViewController.h"
+    #import "HXTagsCell.h"
+
+    @interface HXTagTableViewController ()
+
+    @property (nonatomic,strong) HXTagCollectionViewFlowLayout *layout;//布局layout
+    @property (nonatomic,strong) NSArray *selectTags;
+
+    @end
+
+    @implementation HXTagTableViewController
+
+    - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+        self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+        if (self) {
+
+        }
+        return self;
+    }
+
+    - (HXTagCollectionViewFlowLayout *)layout {
+        if (!_layout) {
+            _layout = [HXTagCollectionViewFlowLayout new];
+            _layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+        }
+        return _layout;
+    }
+
+    - (NSArray *)tags {
+        return @[@"火游戏影ol游戏",@"问游戏道",@"天游戏龙游戏八游戏部",@"枪神纪游戏",@"英魂之游戏刃",@"勇者游戏大冒险",@"nba 游戏2k",@"上古世纪游戏",@"游戏跑跑卡游戏丁车",@"传奇世界游戏",@"劲舞游戏团",@"激游戏战2",@"蜀山ol",@"天下3",@"大话西游2",@"热血江湖",@"游戏人生",@"梦三国",@"流星蝴蝶剑",@"九阴真经",@"斗战神",@"奇迹mu",@"最终幻想14",@"宠物小精灵"];
+    }
+
     - (void)viewDidLoad {
-    [super viewDidLoad];
+        [super viewDidLoad];
 
         // Uncomment the following line to preserve selection between presentations.
 
         [self.tableView registerClass:HXTagsCell.class forCellReuseIdentifier:@"cellId"];
     }
 
+    #pragma mark UITableViewDataSource/UITableViewDelegate
+
+    - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+        return 1;
+    }
+
     - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
         HXTagsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId"];
         if (!cell) {
-            cell = [[HXTagsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellId"];
+        cell = [[HXTagsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellId"];
         }
 
-        cell.tags = @[@"冒险岛游戏",@"反恐精英ol游戏",@"游戏魔域",@"诛游戏仙",@"火游戏影ol游戏",@"问游戏道",@"天游戏龙游戏八游戏部",@"枪神纪游戏",@"英魂之游戏刃",@"勇者游戏大冒险",@"nba 游戏2k",@"上古世纪游戏",@"游戏跑跑卡游戏丁车",@"传奇世界游戏",@"劲舞游戏团",@"激游戏战2"];
-        
+        cell.tags = self.tags;
+        cell.selectedTags = [NSMutableArray arrayWithArray:_selectTags];
+        cell.layout = self.layout;
         cell.completion = ^(NSArray *selectTags,NSInteger currentIndex) {
-            NSLog(@"selectTags:%@ currentIndex:%ld",selectTags, (long)currentIndex);
+        NSLog(@"selectTags:%@ currentIndex:%ld",selectTags, (long)currentIndex);
+        _selectTags = selectTags;
         };
+        [cell reloadData];
 
         return cell;
     }
+
+    - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+        float height = [HXTagsCell getCellHeightWithTags:self.tags layout:self.layout tagAttribute:nil width:tableView.frame.size.width];
+        return height;
+    }
+
+    - (void)didReceiveMemoryWarning {
+        [super didReceiveMemoryWarning];
+        // Dispose of any resources that can be recreated.
+    }
+
+    @end
+
 
 #高度计算方法
 

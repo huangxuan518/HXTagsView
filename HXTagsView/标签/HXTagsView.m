@@ -163,6 +163,8 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
         [_collectionView registerClass:[HXTagCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     }
     
+    _collectionView.collectionViewLayout = _layout;
+    
     if (_layout.scrollDirection == UICollectionViewScrollDirectionVertical) {
         //垂直
         _collectionView.showsVerticalScrollIndicator = YES;
