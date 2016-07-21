@@ -39,19 +39,12 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
     return self;
 }
 
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    self.collectionView.frame = CGRectMake(_layout.defauleRect.origin.x, _layout.defauleRect.origin.y, self.frame.size.width, _layout.defauleRect.size.height);
-}
-
 - (void)setup
 {
     //初始化样式
     _tagAttribute = [HXTagAttribute new];
     
     _layout = [[HXTagCollectionViewFlowLayout alloc] init];
-    _layout.defauleRect = self.bounds;
     [self addSubview:self.collectionView];
 }
 
@@ -91,14 +84,6 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
         
     if ([self.selectedTags containsObject:self.tags[indexPath.item]]) {
         cell.backgroundColor = _tagAttribute.selectedBackgroundColor;
-    }
-    
-    if (indexPath.item + 1 == _tags.count) {
-        if (!_layout.isMultiLineRoll) {
-        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.collectionView.collectionViewLayout.collectionViewContentSize.height);
-        } else {
-            self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, _layout.defauleRect.size.height);
-        }
     }
     
     return cell;
@@ -154,6 +139,11 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
     [self.collectionView reloadData];
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    _collectionView.frame = self.bounds;
+}
+
 #pragma mark - 懒加载
 
 - (NSMutableArray *)selectedTags
@@ -166,7 +156,7 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
 
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
-        _collectionView = [[UICollectionView alloc] initWithFrame:_layout.defauleRect collectionViewLayout:_layout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:_layout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.backgroundColor = [UIColor colorWithRed:241/255.0 green:241/255.0 blue:241/255.0 alpha:1.0];
@@ -181,6 +171,8 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
         _collectionView.showsHorizontalScrollIndicator = YES;
         _collectionView.showsVerticalScrollIndicator = NO;
     }
+    
+    _collectionView.frame = self.bounds;
     
     return _collectionView;
 }
@@ -199,32 +191,30 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
     
     //cell的高度 = 顶部 + 高度
     contentHeight = layout.sectionInset.top + layout.itemSize.height;
+
+    CGFloat originX = layout.sectionInset.left;
+    CGFloat originY = layout.sectionInset.top;
     
-    if (!layout.isMultiLineRoll) {
-        CGFloat originX = layout.sectionInset.left;
-        CGFloat originY = layout.sectionInset.top;
+    NSInteger itemCount = tags.count;
+    
+    for (NSInteger i = 0; i < itemCount; i++) {
+        CGSize maxSize = CGSizeMake(width - layout.sectionInset.left - layout.sectionInset.right, layout.itemSize.height);
         
-        NSInteger itemCount = tags.count;
+        CGRect frame = [tags[i] boundingRectWithSize:maxSize options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:tagAttribute.titleSize]} context:nil];
         
-        for (NSInteger i = 0; i < itemCount; i++) {
-            CGSize maxSize = CGSizeMake(width - layout.sectionInset.left - layout.sectionInset.right, layout.itemSize.height);
-            
-            CGRect frame = [tags[i] boundingRectWithSize:maxSize options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:tagAttribute.titleSize]} context:nil];
-            
-            CGSize itemSize = CGSizeMake(frame.size.width + tagAttribute.tagSpace, layout.itemSize.height);
-            
-            if (layout.scrollDirection == UICollectionViewScrollDirectionVertical) {
-                //垂直滚动
-                if ((originX + itemSize.width + layout.sectionInset.right/2) > width) {
-                    originX = layout.sectionInset.left;
-                    originY += itemSize.height + layout.minimumLineSpacing;
-                    
-                    contentHeight += itemSize.height + layout.minimumLineSpacing;
-                }
+        CGSize itemSize = CGSizeMake(frame.size.width + tagAttribute.tagSpace, layout.itemSize.height);
+        
+        if (layout.scrollDirection == UICollectionViewScrollDirectionVertical) {
+            //垂直滚动
+            if ((originX + itemSize.width + layout.sectionInset.right/2) > width) {
+                originX = layout.sectionInset.left;
+                originY += itemSize.height + layout.minimumLineSpacing;
+                
+                contentHeight += itemSize.height + layout.minimumLineSpacing;
             }
-            
-            originX += itemSize.width + layout.minimumInteritemSpacing;
         }
+        
+        originX += itemSize.width + layout.minimumInteritemSpacing;
     }
     
     contentHeight += layout.sectionInset.bottom;

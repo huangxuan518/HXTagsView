@@ -14,6 +14,7 @@
 @interface HXTagsCell : UITableViewCell
 
 @property (nonatomic,strong) NSArray *tags;//传入的标签数组 字符串数组
+@property (nonatomic,strong) NSMutableArray *selectedTags; //选择的标签数组
 @property (nonatomic,strong) HXTagCollectionViewFlowLayout *layout;//布局layout
 @property (nonatomic,strong) HXTagAttribute *tagAttribute;//按钮样式对象
 @property (nonatomic,assign) BOOL isMultiSelect;//是否可以多选 默认:NO 单选

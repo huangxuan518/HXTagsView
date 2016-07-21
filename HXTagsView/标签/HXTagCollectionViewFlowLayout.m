@@ -79,12 +79,6 @@
 
 - (CGSize)collectionViewContentSize
 {
-    if (!_isMultiLineRoll) {
-        self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x, self.collectionView.frame.origin.y, self.collectionView.frame.size.width, self.contentHeight);
-    } else {
-        self.collectionView.frame = _defauleRect;
-    }
-    
     if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
         return CGSizeMake(self.collectionView.frame.size.width, self.contentHeight);
     } else {

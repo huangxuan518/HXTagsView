@@ -56,15 +56,16 @@
         _isScrollDirection = on;
     } else if (sender.tag == 2) {
         //滚动不滚动开关
-        self.tagsView.layout.isMultiLineRoll = on;
         _isMultiLineRoll = on;
     } else if (sender.tag == 3) {
         //单选多选开关
         self.tagsView.isMultiSelect = on;
         _isMultiSelect = on;
     }
-    [self.tagsView reloadData];
-    
+
+    CGFloat height = [HXTagsView getHeightWithTags:self.tagsView.tags layout:self.tagsView.layout tagAttribute:self.tagsView.tagAttribute width:self.view.frame.size.width];
+    NSLog(@"高度:==== %f",height);
+
     NSMutableString *str;
     
     if (_isScrollDirection) {
@@ -73,11 +74,14 @@
         
         if (_isMultiLineRoll) {
             [str appendString:@"滚动"];
+            self.tagsView.frame = CGRectMake(0, 300, self.view.frame.size.width, 100);
         } else {
             [str appendString:@"不滚动"];
+            self.tagsView.frame = CGRectMake(0, 300, self.view.frame.size.width, height);
         }
     } else {
         str = [NSMutableString stringWithString:@"单行"];
+        self.tagsView.frame = CGRectMake(0, 300, self.view.frame.size.width, 52);
         _multiLineRollView.hidden = YES;
     }
     
@@ -89,9 +93,7 @@
     
     self.titleLabel.text = str;
     
-    
-    CGFloat height = [HXTagsView getHeightWithTags:self.tagsView.tags layout:self.tagsView.layout tagAttribute:self.tagsView.tagAttribute width:self.view.frame.size.width];
-    NSLog(@"高度:==== %f",height);
+    [self.tagsView reloadData];
 }
 
 /**

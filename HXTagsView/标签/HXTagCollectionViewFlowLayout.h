@@ -10,7 +10,4 @@
 
 @interface HXTagCollectionViewFlowLayout : UICollectionViewFlowLayout
 
-@property (nonatomic, assign) CGRect defauleRect;//默认rect
-@property (nonatomic,assign) BOOL isMultiLineRoll;//是否多行滚动 默认不滚动
-
 @end

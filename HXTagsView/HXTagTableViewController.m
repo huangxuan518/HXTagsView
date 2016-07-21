@@ -11,6 +11,9 @@
 
 @interface HXTagTableViewController ()
 
+@property (nonatomic,strong) HXTagCollectionViewFlowLayout *layout;//布局layout
+@property (nonatomic,strong) NSArray *selectTags;
+
 @end
 
 @implementation HXTagTableViewController
@@ -21,6 +24,14 @@
 
     }
     return self;
+}
+
+- (HXTagCollectionViewFlowLayout *)layout {
+    if (!_layout) {
+        _layout = [HXTagCollectionViewFlowLayout new];
+        _layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    }
+    return _layout;
 }
 
 - (NSArray *)tags {
@@ -49,15 +60,18 @@
     }
     
     cell.tags = self.tags;
+    cell.selectedTags = [NSMutableArray arrayWithArray:_selectTags];
+    cell.layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     cell.completion = ^(NSArray *selectTags,NSInteger currentIndex) {
         NSLog(@"selectTags:%@ currentIndex:%ld",selectTags, (long)currentIndex);
+        _selectTags = selectTags;
     };
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    float height = [HXTagsCell getCellHeightWithTags:self.tags layout:nil tagAttribute:nil width:tableView.frame.size.width];
+    float height = [HXTagsCell getCellHeightWithTags:self.tags layout:self.layout tagAttribute:nil width:tableView.frame.size.width];
     return height;
 }
 
