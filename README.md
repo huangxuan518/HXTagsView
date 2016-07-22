@@ -61,7 +61,8 @@ HXTagsView是一款支持自动布局的标签tag
     //多行滚动单选 ===
     NSArray *tagAry = @[@"蜀山ol",@"天下3",@"大话西游2",@"热血江湖",@"游戏人生",@"梦三国",@"流星蝴蝶剑",@"九阴真经",@"斗战神",@"奇迹mu",@"最终幻想14",@"宠物小精灵",@"天龙八部3",@"qq三国",@"倩女幽魂ol",@"御龙在天"];
     
-    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 300, self.view.frame.size.width, 52)];
+    float height = [HXTagsCell getCellHeightWithTags:self.tags layout:self.layout tagAttribute:nil width:tableView.frame.size.width];
+    HXTagsView *tagsView = [[HXTagsView alloc] initWithFrame:CGRectMake(0, 300, self.view.frame.size.width, height)];
     tagsView.tags = tagAry;
     tagsView.layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     tagsView.layout.isMultiLineRoll = YES;
@@ -192,6 +193,10 @@ HXTagsView是一款支持自动布局的标签tag
 # 刷新方法
 
 - (void)reloadData;
+
+# 说明
+1.当多行模式下，自定义高度小于计算出的高度时则滚动，大于或者等于计算出的高度时则不滚动
+2.用高度计算方法，因为涉及到很多参数，所以如果需要计算，请设置layout，默认可以不设置，则是默认参数
 
 更改参数后，请执行reloadData
 
