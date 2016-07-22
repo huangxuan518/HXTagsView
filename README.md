@@ -15,7 +15,7 @@ HXTagsView是一款支持自动布局的标签tag
 
 -支持搜索关键词标签加亮以及关键词颜色自定义,设置key字段的值即可
 
--标签样式更改tagAttribute
+-标签样式更改tagAttribute,tagSpace是标签内部左右间隔和，还有titleSize，这2个参数影响到计算
 
 -标签布局计算属性更改layout,即更改HXTagCollectionViewFlowLayout的属性，包括.scrollDirection .itemSize .minimumInteritemSpacing .minimumLineSpacing .sectionInset等属性，用法同UICollectionViewFlowLayout;
 
