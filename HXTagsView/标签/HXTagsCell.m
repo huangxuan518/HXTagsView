@@ -1,7 +1,7 @@
 //
 //  HXTagsCell.m
-//  HXTagsView
-//
+//  HXTagsView https://github.com/huangxuan518/HXTagsView
+//  博客地址 http://blog.libuqing.com/
 //  Created by Love on 16/6/30.
 //  Copyright © 2016年 IT小子. All rights reserved.
 //
