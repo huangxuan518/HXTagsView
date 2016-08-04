@@ -19,7 +19,6 @@
 		30E706231C476F5200F12FD1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E706221C476F5200F12FD1 /* AppDelegate.m */; };
 		30E706261C476F5200F12FD1 /* HXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E706251C476F5200F12FD1 /* HXViewController.m */; };
 		30E7062B1C476F5200F12FD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30E7062A1C476F5200F12FD1 /* Assets.xcassets */; };
-		9CA8EDBE1D23DDD700A711A2 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 9CA8EDBD1D23DDD700A711A2 /* README.md */; };
 		9CA9CF901D24AB30007F3E91 /* HXTagsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CA9CF8F1D24AB30007F3E91 /* HXTagsCell.m */; };
 		9CA9CF931D24AB64007F3E91 /* HXTagAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CA9CF921D24AB64007F3E91 /* HXTagAttribute.m */; };
 		9CB522301D211D9D0047DD2B /* HXTagCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB5222B1D211D9D0047DD2B /* HXTagCollectionViewFlowLayout.m */; };
@@ -226,7 +225,6 @@
 				30E706261C476F5200F12FD1 /* HXViewController.m in Sources */,
 				9CB522321D211D9D0047DD2B /* HXTagsView.m in Sources */,
 				9CA9CF931D24AB64007F3E91 /* HXTagAttribute.m in Sources */,
-				9CA8EDBE1D23DDD700A711A2 /* README.md in Sources */,
 				30E706231C476F5200F12FD1 /* AppDelegate.m in Sources */,
 				E4968DCD1D3CDDA400102A3E /* HXTagTableViewController.m in Sources */,
 				30E706201C476F5200F12FD1 /* main.m in Sources */,

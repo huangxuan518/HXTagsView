@@ -156,8 +156,7 @@ HXTagsView是一款支持自动布局的标签tag
         cell.selectedTags = [NSMutableArray arrayWithArray:_selectTags];
         cell.layout = self.layout;
         cell.completion = ^(NSArray *selectTags,NSInteger currentIndex) {
-        NSLog(@"selectTags:%@ currentIndex:%ld",selectTags, (long)currentIndex);
-        _selectTags = selectTags;
+            _selectTags = selectTags;
         };
         [cell reloadData];
 
@@ -187,7 +186,7 @@ HXTagsView是一款支持自动布局的标签tag
 # 选择回调方法
     
     self.tagsView.completion = ^(NSArray *selectTags,NSInteger currentIndex) {
-        NSLog(@"selectTags:%@ currentIndex:%ld",selectTags, (long)currentIndex);
+
     };
     
 # 刷新方法
