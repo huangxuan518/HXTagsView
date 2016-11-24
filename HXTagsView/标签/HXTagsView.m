@@ -208,7 +208,8 @@ static NSString * const reuseIdentifier = @"HXTagCollectionViewCellId";
         
         if (layout.scrollDirection == UICollectionViewScrollDirectionVertical) {
             //垂直滚动
-            if ((originX + itemSize.width + layout.sectionInset.right/2) > width) {
+            //当前CollectionViewCell的起点 + 当前CollectionViewCell的宽度 + 当前CollectionView距离右侧的间隔 > collectionView的宽度
+            if ((originX + itemSize.width + layout.sectionInset.right) > width) {
                 originX = layout.sectionInset.left;
                 originY += itemSize.height + layout.minimumLineSpacing;
                 

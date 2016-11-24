@@ -57,7 +57,8 @@
 
         if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
             //垂直滚动
-            if ((originX + itemSize.width + self.sectionInset.right/2) > self.collectionView.frame.size.width) {
+            //当前CollectionViewCell的起点 + 当前CollectionViewCell的宽度 + 当前CollectionView距离右侧的间隔 > collectionView的宽度
+            if ((originX + itemSize.width + self.sectionInset.right) > self.collectionView.frame.size.width) {
                 originX = self.sectionInset.left;
                 originY += itemSize.height + self.minimumLineSpacing;
                 
