@@ -1,4 +1,4 @@
-# HXTagsView 如果对你有一点点帮助,请给一颗★,你的支持是对我的最大鼓励！
+# HXTagsView 如果对你有一点点帮助,请给一颗★,你的支持是对我的最大鼓励！推荐工具 iOS打包机器人 https://github.com/huangxuan518/HXPackRobot
 HXTagsView是一款支持自动布局的标签tag
 
 特性： 
