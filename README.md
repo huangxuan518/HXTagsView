@@ -198,9 +198,3 @@ HXTagsView是一款支持自动布局的标签tag
 2.用高度计算方法，因为涉及到很多参数，所以如果需要计算，请设置layout，默认可以不设置，则是默认参数
 
 更改参数后，请执行reloadData
-
-# 在线预览
-https://appetize.io/app/f9a5kn2tnfe0kade2zy7g2mja
-
-# 博客交流
- http://blog.libuqing.com/
